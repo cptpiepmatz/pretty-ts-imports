@@ -6,19 +6,29 @@ import FormattingOptions from "./FormattingOptions";
 
 export default class Import {
 
+  /** The source of the import, the right side. */
   readonly source: ImportSource;
 
+  /** The imported elements, does not contain the default import. */
   readonly elements: ImportElement[];
 
   /** If {@link #isNamed} is true, this can hold an element. */
   readonly defaultElement?: ImportElement;
 
+  /** If only types were imported. Uses the syntax: "import type". */
   readonly isTypeOnly: boolean;
 
+  /** If the namespace import was used. i.e.: "import * as yourMom". */
   readonly isNamespace: boolean = false;
 
+  /** If the named imports were used. i.e.: "import {a, b, c}". */
   readonly isNamed: boolean = false;
 
+  /**
+   * Constructor for the import.
+   * Directly reads out the declaration to make it's uses easier.
+   * @param importDeclaration declaration from the AST
+   */
   constructor(importDeclaration: ImportDeclaration) {
     // inspect the source
     let sourceText = importDeclaration.moduleSpecifier.getText();
@@ -116,6 +126,11 @@ export default class Import {
     return this;
   }
 
+  /**
+   * The basic toString function to format this to a string.
+   * If give some formatting options, it will format to the given options.
+   * @param formattingOptions options to format the output
+   */
   toString(formattingOptions: FormattingOptions = {
     indent: 2,
     bracketIndent: 0,
@@ -160,6 +175,11 @@ export default class Import {
 
 }
 
+/**
+ * Helper function to check if a columns exceeds the maximum column width.
+ * @param toCheck the string to check
+ * @param maxColumns the max width to check against
+ */
 function maxColumnsCheck(toCheck: string, maxColumns: number): boolean {
   return toCheck.split("\n").some(line => line.length > maxColumns);
 }
