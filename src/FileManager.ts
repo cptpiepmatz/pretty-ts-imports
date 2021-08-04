@@ -41,7 +41,9 @@ export default class FileManager {
       const imports: Import[] = [];
       for (let statement of sourceFile.sourceFile.statements) {
         if (statement.kind !== SyntaxKind.ImportDeclaration) break;
-        imports.push(new Import(statement as ImportDeclaration));
+        imports.push(
+          new Import(statement as ImportDeclaration, sourceFile.sourceFile)
+        );
       }
       this.imports.push({
         path: sourceFile.path,

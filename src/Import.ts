@@ -1,4 +1,4 @@
-import {ImportDeclaration, SyntaxKind} from "typescript";
+import {ImportDeclaration, SourceFile, SyntaxKind} from "typescript";
 
 import ImportElement from "./ImportElement";
 import ImportSource from "./ImportSource";
@@ -28,10 +28,12 @@ export default class Import {
    * Constructor for the import.
    * Directly reads out the declaration to make it's uses easier.
    * @param importDeclaration declaration from the AST
+   * @param sourceFile source file to get the texts from it
    */
-  constructor(importDeclaration: ImportDeclaration) {
+  constructor(importDeclaration: ImportDeclaration, sourceFile: SourceFile) {
     // inspect the source
-    let sourceText = importDeclaration.moduleSpecifier.getText();
+    let sourceText = importDeclaration.moduleSpecifier.getText(sourceFile);
+    sourceText = sourceText.substring(1, sourceText.length - 1);
     let sourceIsRelative =
       (sourceText.startsWith("./") || sourceText.startsWith("../"));
     this.source = {
@@ -48,7 +50,7 @@ export default class Import {
 
     if (importClause.name) {
       // if the clause has the name attribute, a default is imported
-      const name = importClause.name.getText();
+      const name = importClause.name.getText(sourceFile);
       this.defaultElement = {
         name: name,
         isDefault: true,
@@ -68,7 +70,7 @@ export default class Import {
           this.isNamed = true;
           // something like: "{a, b as c}"
           for (let element of bindings.elements) {
-            const name = element.name.getText();
+            const name = element.name.getText(sourceFile);
             let importElement: ImportElement = {
               name: name,
               isDefault: false,
@@ -79,7 +81,7 @@ export default class Import {
             };
             if (element.propertyName) {
               // if the property name is set a rename was used
-              const originalName = element.propertyName.getText();
+              const originalName = element.propertyName.getText(sourceFile);
               // destructuring for easy override
               importElement = {
                 ...importElement,
@@ -97,7 +99,7 @@ export default class Import {
         case SyntaxKind.NamespaceImport:
           this.isNamespace = true;
           // something like: "* as imported"
-          const name = bindings.name.getText();
+          const name = bindings.name.getText(sourceFile);
           this.elements.push({
             name: name,
             isDefault: false,
@@ -155,7 +157,13 @@ export default class Import {
     if (this.defaultElement) importElements.push(this.defaultElement.name);
     if (this.isNamed) {
       let namedElements: string[] = [];
-      this.elements.forEach(element => namedElements.push(element.name));
+      this.elements.forEach(element => {
+        if (element.isRenamed) {
+          namedElements.push(`${element.originalName} as ${element.name}`);
+          return;
+        }
+        namedElements.push(element.name)
+      });
       importElements.push("{" +
         bracketIndentString +
         namedElements.join(", ") +
