@@ -1,6 +1,6 @@
 import Import from "../Import";
 
-/** Interface to describe function to compare Imports. */
+/** Interface to describe function to compare imports. */
 export default interface ImportCompareFunction {
   /**
    * Compare function.
