@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx jasmine-ts"
+    "test": "npx jasmine-ts",
+    "build": "npm run tsc; npm run ulgifyjs",
+    "build:clean": "npx del-cli dist",
+    "build:tsc": "npx tsc",
+    "build:uglify": "npx uglifyjs-folder dist",
+    "nope-postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -18,13 +23,15 @@
   "homepage": "https://github.com/derPiepmatz/pretty-ts-imports#readme",
   "dependencies": {
     "typescript": "^4.3.5",
-    "yargs": "^17.0.1"
+    "yargs": "^17.1.0"
   },
   "devDependencies": {
     "@types/jasmine": "^3.8.2",
-    "@types/node": "^16.4.11",
+    "@types/node": "^16.4.12",
+    "del-cli": "^4.0.1",
     "jasmine": "^3.8.0",
     "jasmine-ts": "^0.4.0",
-    "ts-node": "^10.1.0"
+    "ts-node": "^10.1.0",
+    "uglifyjs-folder": "^3.0.0"
   }
 }
