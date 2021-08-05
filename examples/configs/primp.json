@@ -1,0 +1,27 @@
+{
+  "sortImports": [
+    "packagesFirst",
+    "comparePaths",
+    "flatPathsFirst",
+    "namespacesBeforeNamed",
+    "defaultTypesFirst",
+    "compareSources"
+  ],
+  "sortImportElements": [
+    "typesBeforeObjects",
+    "compareTypes",
+    "compareElements"
+  ],
+  "groupBy": [
+    "types"
+  ],
+  "formatting": {
+    "indent": 2,
+    "bracketIndent": 0,
+    "quoteStyle": "double",
+    "maxColumns": 80
+  },
+  "require": {
+    "dotJSFirst": "../compare_functions/imports/dotJSFirst.ts"
+  }
+}
