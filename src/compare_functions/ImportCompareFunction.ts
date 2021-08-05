@@ -1,4 +1,4 @@
-import Import from "../Import";
+import Import from "../import_management/Import";
 
 /** Interface to describe function to compare imports. */
 export default interface ImportCompareFunction {

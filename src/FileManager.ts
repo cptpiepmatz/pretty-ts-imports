@@ -7,7 +7,7 @@ import {
   SyntaxKind, ImportDeclaration
 } from "typescript";
 import {accessSync, readFileSync} from "fs";
-import Import from "./Import";
+import Import from "./import_management/Import";
 
 export default class FileManager {
 

@@ -1,5 +1,5 @@
 import ImportCompareFunction from "../ImportCompareFunction";
-import Import from "../../Import";
+import Import from "../../import_management/Import";
 
 /**
  * Simply compares the source names.

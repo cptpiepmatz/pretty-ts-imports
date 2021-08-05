@@ -1,6 +1,6 @@
-import Import from "../src/Import";
+import Import from "../../src/import_management/Import";
 import {createSourceFile, ImportDeclaration, ScriptTarget, SyntaxKind} from "typescript";
-import ImportElement from "../src/ImportElement";
+import ImportElement from "../../src/import_management/ImportElement";
 
 const importedStuff = `
 import {b, c, a} from "alphabet";
