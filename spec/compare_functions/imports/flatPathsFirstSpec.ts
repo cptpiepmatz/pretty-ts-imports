@@ -1,3 +1,4 @@
+/// <reference path="../../types/matchers.d.ts" />
 import flatPathsFirst from "../../../src/compare_functions/imports/flatPathsFirst";
 
 describe("compare_functions/imports/flatPathsFirst", function() {

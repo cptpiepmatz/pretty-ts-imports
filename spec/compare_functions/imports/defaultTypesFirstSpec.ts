@@ -1,3 +1,4 @@
+/// <reference path="../../types/matchers.d.ts" />
 import defaultsTypesFirst from "../../../src/compare_functions/imports/defaultsTypesFirst";
 
 describe("compare_functions/imports/defaultTypesFirst", function() {

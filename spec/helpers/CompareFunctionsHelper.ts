@@ -4,17 +4,6 @@ import {createSourceFile, ImportDeclaration, ScriptTarget, SyntaxKind} from "typ
 import CustomMatcher = jasmine.CustomMatcher;
 import CustomMatcherResult = jasmine.CustomMatcherResult;
 
-declare global {
-  namespace jasmine {
-    interface Matchers<T> {
-      toBeImportSorted(
-        expected: string[],
-        compareFunction: ImportCompareFunction
-      ): boolean;
-    }
-  }
-}
-
 beforeEach(function() {
   jasmine.addMatchers({
     toBeImportSorted: function(): CustomMatcher {

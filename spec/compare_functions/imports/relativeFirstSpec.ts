@@ -1,3 +1,4 @@
+/// <reference path="../../types/matchers.d.ts" />
 import relativesFirst from "../../../src/compare_functions/imports/relativesFirst";
 
 describe("compare_functions/imports/relativesFirst", function() {

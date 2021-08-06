@@ -1,3 +1,4 @@
+/// <reference path="../../types/matchers.d.ts" />
 import comparePaths from "../../../src/compare_functions/imports/comparePaths";
 
 describe("compare_functions/imports/comparePaths", function() {
