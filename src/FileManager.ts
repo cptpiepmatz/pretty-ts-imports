@@ -6,8 +6,10 @@ import {
   SourceFile,
   SyntaxKind, ImportDeclaration
 } from "typescript";
-import {accessSync, readFileSync} from "fs";
+import {accessSync, readdirSync, readFileSync} from "fs";
 import Import from "./import_management/Import";
+import {statSync} from "fs";
+import {join} from "path";
 
 /**
  * Class holding all the imports from the given paths.
@@ -98,5 +100,36 @@ export default class FileManager {
     catch (e) {
       return;
     }
+  }
+
+  /**
+   * Given a path to whether a file or a directory, this finds all the .ts files.
+   * If the path is a directory, it will return all .ts files in that directory.
+   * If recursive is true, it will search the directory recursively.
+   * Accepts wildcards.
+   * @param path Path to a file or directory.
+   * @param recursive If this should work recursively.
+   */
+  static getFiles(path: string, recursive?: boolean): string | string[] {
+    const stat = statSync(path);
+    if (stat.isFile()) return path;
+    if (stat.isDirectory()) {
+      let filePaths: string[] = [];
+      if (recursive) {
+        for (let innerPath of readdirSync(path)) {
+          filePaths = filePaths
+            .concat(FileManager.getFiles(join(path, innerPath), true));
+        }
+      }
+      else {
+        for (let innerPath of readdirSync(path)) {
+          const joinedInnerPath = join(path, innerPath);
+          const innerStat = statSync(joinedInnerPath);
+          if (innerStat.isFile()) filePaths.push(joinedInnerPath);
+        }
+      }
+      return filePaths;
+    }
+    throw new Error("Given path is neither a file nor a directory");
   }
 }

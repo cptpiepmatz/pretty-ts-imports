@@ -18,4 +18,17 @@ describe("FileManager", function() {
     expect(imports[1].toString())
       .toBe('import * as someThing from "package-b";');
   });
+
+  it("should find files correctly", function() {
+    const startPath = join(__dirname, "./file-examples");
+    const expectedNonRecursive = [
+      join(startPath, "FileManagerReadIn.ts")
+    ];
+    const expectedRecursive = [
+      join(startPath, "deeper-path", "empty.ts")
+    ].concat(expectedNonRecursive);
+
+    expect(FileManager.getFiles(startPath)).toEqual(expectedNonRecursive);
+    expect(FileManager.getFiles(startPath, true)).toEqual(expectedRecursive);
+  });
 });
