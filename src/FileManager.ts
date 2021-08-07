@@ -9,15 +9,28 @@ import {
 import {accessSync, readFileSync} from "fs";
 import Import from "./import_management/Import";
 
+/**
+ * Class holding all the imports from the given paths.
+ */
 export default class FileManager {
 
+  /** The imported files in their read in form. */
   readonly imports: {path: string, imports: Import[]}[] = [];
 
+  /**
+   * Constructor.
+   * This takes a ts config to search for it's target and some file paths to
+   * read them in and construct {@link Import}s from.
+   * @param tsconfigPath The path for the ts config
+   * @param filePaths One or many file paths for the .ts files
+   */
   constructor(tsconfigPath: string, filePaths: string | string[]) {
+    // Read the ts config.
     const configPath = findConfigFile(tsconfigPath, FileManager.fileExists);
     if (!configPath) throw new Error("Couldn't find tsconfig");
     const config = readConfigFile(configPath, FileManager.readFile).config;
 
+    // Read the .ts files.
     filePaths = [filePaths].flat();
     const files: {path: string, content: string}[] = [];
     for (let filePath of filePaths) {
@@ -29,6 +42,7 @@ export default class FileManager {
       });
     }
 
+    // Create source files from them.
     const sourceFiles: {path: string, sourceFile: SourceFile}[] = [];
     for (let file of files) {
       sourceFiles.push({
@@ -41,6 +55,7 @@ export default class FileManager {
       });
     }
 
+    // Make imports out of them.
     for (let sourceFile of sourceFiles) {
       const imports: Import[] = [];
       for (let statement of sourceFile.sourceFile.statements) {
