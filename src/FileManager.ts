@@ -33,7 +33,11 @@ export default class FileManager {
     for (let file of files) {
       sourceFiles.push({
         path: file.path,
-        sourceFile: createSourceFile(file.path, file.content, config.target)
+        sourceFile: createSourceFile(
+          file.path,
+          file.content,
+          config.compilerOptions.target
+        )
       });
     }
 
