@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npx jasmine-ts",
     "run-dev": "npx ts-node .",
-    "build": "npm run tsc; npm run ulgifyjs",
+    "build": "npm run build:clean && npm run build:tsc && npm run build:uglify",
     "build:clean": "npx del-cli dist",
     "build:tsc": "npx tsc",
     "build:uglify": "npx uglifyjs-folder dist",
