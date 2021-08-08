@@ -1,8 +1,8 @@
 /// <reference path="../../types/matchers.d.ts" />
 import namespaceBeforeNamed
-  from "../../../src/compare_functions/imports/namespaceBeforeNamed";
+  from "../../../src/sort_rules/imports/namespaceBeforeNamed";
 
-describe("compare_functions/imports/namespaceBeforeNamed", function() {
+describe("sort_rules/imports/namespaceBeforeNamed", function() {
   const imports = [
     'import {stuff} from "package";',
     'import * as stuff from "package";'

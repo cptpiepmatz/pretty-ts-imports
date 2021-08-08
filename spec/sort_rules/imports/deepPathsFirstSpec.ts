@@ -1,8 +1,8 @@
 /// <reference path="../../types/matchers.d.ts" />
 import deepPathsFirst
-  from "../../../src/compare_functions/imports/deepPathsFirst";
+  from "../../../src/sort_rules/imports/deepPathsFirst";
 
-describe("compare_functions/imports/deepPathsFirst", function() {
+describe("sort_rules/imports/deepPathsFirst", function() {
   const imports = [
     'import elements from "a/b/c/d";',
     'import elements from "a/b/c";',

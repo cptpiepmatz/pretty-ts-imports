@@ -1,8 +1,8 @@
 /// <reference path="../../types/matchers.d.ts" />
 import defaultsTypesFirst
-  from "../../../src/compare_functions/imports/defaultsTypesFirst";
+  from "../../../src/sort_rules/imports/defaultsTypesFirst";
 
-describe("compare_functions/imports/defaultTypesFirst", function() {
+describe("sort_rules/imports/defaultTypesFirst", function() {
   const imports = [
     'import Alpha from "package";',
     'import beta from "package";'

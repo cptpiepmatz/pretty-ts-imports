@@ -1,7 +1,7 @@
-import ImportCompareFunction from "../compare_functions/ImportCompareFunction";
+import ImportCompareFunction from "../sort_rules/ImportCompareFunction";
 import Import from "./Import";
 import ImportElementCompareFunction
-  from "../compare_functions/ImportElementCompareFunction";
+  from "../sort_rules/ImportElementCompareFunction";
 
 /** Class used to sort imports. To construct it, you need sort rules. */
 export default class ImportSorter {

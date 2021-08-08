@@ -1,8 +1,8 @@
 /// <reference path="../../types/matchers.d.ts" />
 import compareSources
-  from "../../../src/compare_functions/imports/compareSources";
+  from "../../../src/sort_rules/imports/compareSources";
 
-describe("compare_functions/imports/compareSources", function() {
+describe("sort_rules/imports/compareSources", function() {
   const imports = [
     'import elements from "abc";',
     'import elements from "aaa";',

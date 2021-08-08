@@ -1,8 +1,8 @@
 /// <reference path="../../types/matchers.d.ts" />
 import flatPathsFirst
-  from "../../../src/compare_functions/imports/flatPathsFirst";
+  from "../../../src/sort_rules/imports/flatPathsFirst";
 
-describe("compare_functions/imports/flatPathsFirst", function() {
+describe("sort_rules/imports/flatPathsFirst", function() {
   const imports = [
     'import elements from "a/b/c/d";',
     'import elements from "a/b/c";',

@@ -1,7 +1,7 @@
 /// <reference path="../../types/matchers.d.ts" />
-import comparePaths from "../../../src/compare_functions/imports/comparePaths";
+import comparePaths from "../../../src/sort_rules/imports/comparePaths";
 
-describe("compare_functions/imports/comparePaths", function() {
+describe("sort_rules/imports/comparePaths", function() {
   const imports = [
     'import elements from "abc/def/hij";',
     'import elements from "abc/abc/abc";',

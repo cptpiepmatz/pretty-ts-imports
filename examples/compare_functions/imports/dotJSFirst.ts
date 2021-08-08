@@ -1,5 +1,5 @@
 import ImportCompareFunction
-  from "../../../src/compare_functions/ImportCompareFunction";
+  from "../../../src/sort_rules/ImportCompareFunction";
 import Import from "../../../src/import_management/Import";
 
 /**

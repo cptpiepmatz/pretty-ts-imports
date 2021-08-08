@@ -1,8 +1,8 @@
 /// <reference path="../../types/matchers.d.ts" />
 import relativesFirst
-  from "../../../src/compare_functions/imports/relativesFirst";
+  from "../../../src/sort_rules/imports/relativesFirst";
 
-describe("compare_functions/imports/relativesFirst", function() {
+describe("sort_rules/imports/relativesFirst", function() {
   const imports = [
     'import elements from "package";',
     'import elements from "./path";'

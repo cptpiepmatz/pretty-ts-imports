@@ -48,4 +48,4 @@ require:
   # Firstly name the key how you want it to be used and secondly set the
   # value to the function path relative to this file.
   # This example puts packages that end with ".js" before others.
-  dotJSFirst: ../compare_functions/imports/dotJSFirst.ts
+  dotJSFirst: ../sort_rules/imports/dotJSFirst.ts

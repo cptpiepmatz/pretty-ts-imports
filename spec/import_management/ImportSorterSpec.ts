@@ -3,9 +3,9 @@ import createSpyObj = jasmine.createSpyObj;
 import Spy = jasmine.Spy;
 import Import from "../../src/import_management/Import";
 import ImportCompareFunction
-  from "../../src/compare_functions/ImportCompareFunction";
+  from "../../src/sort_rules/ImportCompareFunction";
 import ImportElementCompareFunction
-  from "../../src/compare_functions/ImportElementCompareFunction";
+  from "../../src/sort_rules/ImportElementCompareFunction";
 import ImportSorter from "../../src/import_management/ImportSorter";
 
 describe("ImportSorterSpec", function() {
