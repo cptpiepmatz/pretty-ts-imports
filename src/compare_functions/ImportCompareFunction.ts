@@ -1,6 +1,9 @@
 import Import from "../import_management/Import";
 
-/** Interface to describe function to compare imports. */
+/**
+ * Interface to describe function to compare imports.
+ * @see ImportElementCompareFunction
+ */
 export default interface ImportCompareFunction {
   /**
    * Compare function.
