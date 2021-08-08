@@ -1,5 +1,6 @@
 /// <reference path="../../types/matchers.d.ts" />
-import deepPathsFirst from "../../../src/compare_functions/imports/deepPathsFirst";
+import deepPathsFirst
+  from "../../../src/compare_functions/imports/deepPathsFirst";
 
 describe("compare_functions/imports/deepPathsFirst", function() {
   const imports = [

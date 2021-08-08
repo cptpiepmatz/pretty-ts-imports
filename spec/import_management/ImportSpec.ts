@@ -1,5 +1,10 @@
 import Import from "../../src/import_management/Import";
-import {createSourceFile, ImportDeclaration, ScriptTarget, SyntaxKind} from "typescript";
+import {
+  createSourceFile,
+  ImportDeclaration,
+  ScriptTarget,
+  SyntaxKind
+} from "typescript";
 import ImportElement from "../../src/import_management/ImportElement";
 
 const importedStuff = `
@@ -10,7 +15,7 @@ import {d as e} from "rename-me";
 import Alpha from "./path";
 import Beta from "./other-path";
 import {Charlie, Delta} from "types";
-`
+`;
 
 describe("Import", function() {
   const sourceFile = createSourceFile("mock.ts", importedStuff, ScriptTarget.ES2021);

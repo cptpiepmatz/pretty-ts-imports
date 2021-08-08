@@ -14,6 +14,6 @@ const packagesFirst: ImportCompareFunction = function(
   if (importA.source.isPackage && !importB.source.isPackage) return -1;
   if (!importA.source.isPackage && importB.source.isPackage) return 1;
   return 0;
-}
+};
 
 export default packagesFirst;

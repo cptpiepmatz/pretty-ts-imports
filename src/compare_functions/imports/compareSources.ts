@@ -11,6 +11,6 @@ const compareSources: ImportCompareFunction = function(
   importB: Import
 ): number {
   return importA.source.name.localeCompare(importB.source.name);
-}
+};
 
 export default compareSources;

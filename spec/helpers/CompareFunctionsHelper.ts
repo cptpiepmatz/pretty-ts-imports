@@ -1,6 +1,12 @@
-import ImportCompareFunction from "../../src/compare_functions/ImportCompareFunction";
+import ImportCompareFunction
+  from "../../src/compare_functions/ImportCompareFunction";
 import Import from "../../src/import_management/Import";
-import {createSourceFile, ImportDeclaration, ScriptTarget, SyntaxKind} from "typescript";
+import {
+  createSourceFile,
+  ImportDeclaration,
+  ScriptTarget,
+  SyntaxKind
+} from "typescript";
 import CustomMatcher = jasmine.CustomMatcher;
 import CustomMatcherResult = jasmine.CustomMatcherResult;
 
@@ -33,7 +39,7 @@ beforeEach(function() {
             return {
               message: `Expected ${expected.length} imports, but only got ${imports.length}`,
               pass: false
-            }
+            };
           }
 
           imports.sort(compareFunction);
@@ -42,9 +48,9 @@ beforeEach(function() {
           for (let i = 0; i < actual.length; i++) {
             if (imports[i].toString() !== expected[i]) pass = false;
           }
-          return {pass: pass}
+          return {pass: pass};
         }
-      }
+      };
     }
-  })
+  });
 });

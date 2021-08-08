@@ -7,13 +7,13 @@ import Import from "../../import_management/Import";
  * @param importA Import A
  * @param importB Import B
  */
-const namespaceBeforeNamed: ImportCompareFunction = function (
+const namespaceBeforeNamed: ImportCompareFunction = function(
   importA: Import,
   importB: Import
 ): -1 | 0 | 1 {
   if (importA.isNamespace && importB.isNamed) return -1;
   if (importA.isNamed && importB.isNamespace) return 1;
   return 0;
-}
+};
 
 export default namespaceBeforeNamed;

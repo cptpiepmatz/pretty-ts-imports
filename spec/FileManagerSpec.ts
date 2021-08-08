@@ -5,7 +5,7 @@ const tsConfigPath = join(__dirname, "../tsconfig.json");
 const exampleFilePath = join(__dirname, "./file-examples/FileManagerReadIn.ts");
 
 describe("FileManager", function() {
-  it("should get constructed correctly", function () {
+  it("should get constructed correctly", function() {
     const fileManager = new FileManager(tsConfigPath, exampleFilePath);
 
     expect(fileManager.imports.length).toBe(1);

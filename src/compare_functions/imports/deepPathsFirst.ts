@@ -8,7 +8,7 @@ import {dirname} from "path";
  * @param importA Import A
  * @param importB Import B
  */
-const deepPathsFirst: ImportCompareFunction = function (
+const deepPathsFirst: ImportCompareFunction = function(
   importA: Import,
   importB: Import
 ): -1 | 0 | 1 {
@@ -17,6 +17,6 @@ const deepPathsFirst: ImportCompareFunction = function (
   if (depthA < depthB) return 1;
   if (depthA > depthB) return -1;
   return 0;
-}
+};
 
 export default deepPathsFirst;

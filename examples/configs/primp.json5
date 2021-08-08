@@ -41,11 +41,15 @@
   ],
   formatting: {
     // This is the setting to format the imports.
-    indent: 2, // Spaces used to indent if max columns is exceeded.
-    bracketIndent: 0, // Spaces used at the start and end of import brackets.
-    quoteStyle: "double", // How the "from" should be quoted.
+    // Spaces used to indent if max columns is exceeded.
+    indent: 2,
+    // Spaces used at the start and end of import brackets.
+    bracketIndent: 0,
+    // How the "from" should be quoted.
     //quoteStyle: "single", // "single" is also possible.
-    maxColumns: 80 // The maximum column width, primp tries to not exceed this
+    quoteStyle: "double",
+    // The maximum column width, primp tries to not exceed this
+    maxColumns: 80
   },
   require: {
     // If you need more compare functions than provided you can require them

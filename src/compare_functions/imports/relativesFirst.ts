@@ -14,6 +14,6 @@ const relativesFirst: ImportCompareFunction = function(
   if (importA.source.isRelative && !importB.source.isRelative) return -1;
   if (!importA.source.isRelative && importB.source.isRelative) return 1;
   return 0;
-}
+};
 
 export default relativesFirst;

@@ -1,4 +1,5 @@
-import ImportCompareFunction from "../../../src/compare_functions/ImportCompareFunction";
+import ImportCompareFunction
+  from "../../../src/compare_functions/ImportCompareFunction";
 import Import from "../../../src/import_management/Import";
 
 /**
@@ -17,4 +18,4 @@ const dotJSFirst: ImportCompareFunction = function(
   if (importA.source.isPackage && matchesA && !matchesB) return -1;
   if (importB.source.isPackage && !matchesA && matchesB) return 1;
   return 0;
-}
+};

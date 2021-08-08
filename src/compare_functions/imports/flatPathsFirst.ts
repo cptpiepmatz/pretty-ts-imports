@@ -8,7 +8,7 @@ import {dirname} from "path";
  * @param importA Import A
  * @param importB Import B
  */
-const flatPathsFirst: ImportCompareFunction = function (
+const flatPathsFirst: ImportCompareFunction = function(
   importA: Import,
   importB: Import
 ): -1 | 0 | 1 {
@@ -17,6 +17,6 @@ const flatPathsFirst: ImportCompareFunction = function (
   if (depthA < depthB) return -1;
   if (depthA > depthB) return 1;
   return 0;
-}
+};
 
 export default flatPathsFirst;

@@ -20,6 +20,6 @@ const defaultsTypesFirst: ImportCompareFunction = function(
     }
   }
   return 0;
-}
+};
 
 export default defaultsTypesFirst;

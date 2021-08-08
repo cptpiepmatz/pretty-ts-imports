@@ -77,7 +77,7 @@ export default class Import {
               isWildcard: false,
               isRenamed: false,
               isType: !!name.match(/^[A-Z]/),
-              isFunctionOrObject: !name.match(/^[A-Z]/),
+              isFunctionOrObject: !name.match(/^[A-Z]/)
             };
             if (element.propertyName) {
               // if the property name is set a rename was used
@@ -162,7 +162,7 @@ export default class Import {
           namedElements.push(`${element.originalName} as ${element.name}`);
           return;
         }
-        namedElements.push(element.name)
+        namedElements.push(element.name);
       });
       importElements.push("{" +
         bracketIndentString +

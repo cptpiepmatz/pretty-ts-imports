@@ -1,5 +1,6 @@
 /// <reference path="../../types/matchers.d.ts" />
-import compareSources from "../../../src/compare_functions/imports/compareSources";
+import compareSources
+  from "../../../src/compare_functions/imports/compareSources";
 
 describe("compare_functions/imports/compareSources", function() {
   const imports = [

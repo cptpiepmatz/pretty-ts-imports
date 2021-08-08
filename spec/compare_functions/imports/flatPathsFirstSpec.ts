@@ -1,5 +1,6 @@
 /// <reference path="../../types/matchers.d.ts" />
-import flatPathsFirst from "../../../src/compare_functions/imports/flatPathsFirst";
+import flatPathsFirst
+  from "../../../src/compare_functions/imports/flatPathsFirst";
 
 describe("compare_functions/imports/flatPathsFirst", function() {
   const imports = [

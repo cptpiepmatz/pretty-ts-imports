@@ -10,7 +10,7 @@ import {dirname} from "path";
  * @param importA Import A
  * @param importB Import B
  */
-const comparePaths: ImportCompareFunction = function (
+const comparePaths: ImportCompareFunction = function(
   importA: Import,
   importB: Import
 ): number {
@@ -22,6 +22,6 @@ const comparePaths: ImportCompareFunction = function (
     if (comparison !== 0) return comparison;
   }
   return 0;
-}
+};
 
 export default comparePaths;

@@ -11,7 +11,7 @@ import Import from "../../import_management/Import";
  * @param importA Import A
  * @param importB Import B
  */
-const defaultsCompareTypes: ImportCompareFunction = function (
+const defaultsCompareTypes: ImportCompareFunction = function(
   importA: Import,
   importB: Import
 ): number {
@@ -25,7 +25,7 @@ const defaultsCompareTypes: ImportCompareFunction = function (
     }
   }
   return 0;
-}
+};
 
 /**
  * Extracts the parts from a name separating by their capital letters.

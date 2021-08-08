@@ -1,5 +1,6 @@
 /// <reference path="../../types/matchers.d.ts" />
-import namespaceBeforeNamed from "../../../src/compare_functions/imports/namespaceBeforeNamed";
+import namespaceBeforeNamed
+  from "../../../src/compare_functions/imports/namespaceBeforeNamed";
 
 describe("compare_functions/imports/namespaceBeforeNamed", function() {
   const imports = [

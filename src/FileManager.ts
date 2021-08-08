@@ -1,14 +1,13 @@
 import {
   createSourceFile,
   findConfigFile,
+  ImportDeclaration,
   readConfigFile,
-  parseConfigFileTextToJson,
   SourceFile,
-  SyntaxKind, ImportDeclaration
+  SyntaxKind
 } from "typescript";
-import {accessSync, readdirSync, readFileSync} from "fs";
+import {accessSync, readdirSync, readFileSync, statSync} from "fs";
 import Import from "./import_management/Import";
-import {statSync} from "fs";
 import {join} from "path";
 
 /**
@@ -103,9 +102,9 @@ export default class FileManager {
   }
 
   /**
-   * Given a path to whether a file or a directory, this finds all the .ts files.
-   * If the path is a directory, it will return all .ts files in that directory.
-   * If recursive is true, it will search the directory recursively.
+   * Given a path to whether a file or a directory, this finds all the .ts
+   * files. If the path is a directory, it will return all .ts files in that
+   * directory. If recursive is true, it will search the directory recursively.
    * Accepts wildcards.
    * @param path Path to a file or directory.
    * @param recursive If this should work recursively.
