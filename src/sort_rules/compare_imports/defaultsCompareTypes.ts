@@ -2,7 +2,7 @@ import ImportCompareFunction from "../ImportCompareFunction";
 import Import from "../../import_management/Import";
 
 /**
- * If the two imports use the default import.
+ * If the two compare_imports use the default import.
  * It checks if the imported elements both are a type.
  * If so, compare them from the back to the front.
  * @example

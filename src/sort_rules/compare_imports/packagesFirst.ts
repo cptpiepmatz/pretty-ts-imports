@@ -2,7 +2,7 @@ import ImportCompareFunction from "../ImportCompareFunction";
 import Import from "../../import_management/Import";
 
 /**
- * Compares two imports for their package.
+ * Compares two compare_imports for their package.
  * Sort packages higher than non packages.
  * @param importA Import A
  * @param importB Import B

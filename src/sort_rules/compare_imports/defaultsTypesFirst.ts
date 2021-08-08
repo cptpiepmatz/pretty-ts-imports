@@ -2,8 +2,8 @@ import ImportCompareFunction from "../ImportCompareFunction";
 import Import from "../../import_management/Import";
 
 /**
- * Compares two default imports.
- * Default imports that represent a type are first.
+ * Compares two default compare_imports.
+ * Default compare_imports that represent a type are first.
  * @param importA Import A
  * @param importB Import B
  */

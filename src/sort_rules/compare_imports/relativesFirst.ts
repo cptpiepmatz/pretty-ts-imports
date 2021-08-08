@@ -2,7 +2,7 @@ import ImportCompareFunction from "../ImportCompareFunction";
 import Import from "../../import_management/Import";
 
 /**
- * Compares two imports for their relative stats.
+ * Compares two compare_imports for their relative stats.
  * Sort relatives higher than non relatives.
  * @param importA Import A
  * @param importB Import B

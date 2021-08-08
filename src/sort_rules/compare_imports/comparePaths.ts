@@ -3,10 +3,10 @@ import Import from "../../import_management/Import";
 import {dirname} from "path";
 
 /**
- * Compares two paths of imports.
+ * Compares two paths of compare_imports.
  * Every element of the path gets compared.
  * If this returns 0 the path depth is either exhausted with no differences or
- * imports share the same directory.
+ * compare_imports share the same directory.
  * @param importA Import A
  * @param importB Import B
  */

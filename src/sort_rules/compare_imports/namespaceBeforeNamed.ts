@@ -2,7 +2,7 @@ import ImportCompareFunction from "../ImportCompareFunction";
 import Import from "../../import_management/Import";
 
 /**
- * Compare two imports for their import types.
+ * Compare two compare_imports for their import types.
  * A namespace import (* as something) comes before a named import ({a}).
  * @param importA Import A
  * @param importB Import B

@@ -3,7 +3,7 @@ import Import from "../../import_management/Import";
 import {dirname} from "path";
 
 /**
- * Compares the path depth of two imports.
+ * Compares the path depth of two compare_imports.
  * Longer paths first.
  * @param importA Import A
  * @param importB Import B
