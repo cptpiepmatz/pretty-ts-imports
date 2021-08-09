@@ -8,16 +8,13 @@ import Import from "../../import_management/Import";
  * @example
  *    [AlphaStuff, BetaStuff, CharlieItem]
  * => [CharlieItem, AlphaStuff, BetaStuff]
- * @param importA Import A
- * @param importB Import B
+ * @param a Import A
+ * @param b Import B
  */
-const defaultsCompareTypes: ImportCompareFunction = function(
-  importA: Import,
-  importB: Import
-): number {
-  if (importA.defaultElement?.isType && importB.defaultElement?.isType) {
-    const partNamesA = extractPartNames(importA.defaultElement.name).reverse();
-    const partNamesB = extractPartNames(importB.defaultElement.name).reverse();
+const defaultsCompareTypes: ImportCompareFunction = function(a, b): number {
+  if (a.defaultElement?.isType && b.defaultElement?.isType) {
+    const partNamesA = extractPartNames(a.defaultElement.name).reverse();
+    const partNamesB = extractPartNames(b.defaultElement.name).reverse();
     const minPartNamesLength = Math.min(partNamesA.length, partNamesB.length);
     for (let i = 0; i < minPartNamesLength; i++) {
       const comparison = partNamesA[i].localeCompare(partNamesB[i]);

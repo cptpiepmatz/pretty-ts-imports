@@ -4,18 +4,15 @@ import Import from "../../import_management/Import";
 /**
  * Compares two default compare_imports.
  * Default compare_imports that represent a type are first.
- * @param importA Import A
- * @param importB Import B
+ * @param a Import A
+ * @param b Import B
  */
-const defaultsTypesFirst: ImportCompareFunction = function(
-  importA: Import,
-  importB: Import
-): -1 | 0 | 1 {
-  if (importA.defaultElement && importB.defaultElement) {
-    if (importA.defaultElement.isType && !importB.defaultElement.isType) {
+const defaultsTypesFirst: ImportCompareFunction = function(a, b): -1 | 0 | 1 {
+  if (a.defaultElement && b.defaultElement) {
+    if (a.defaultElement.isType && !b.defaultElement.isType) {
       return -1;
     }
-    if (!importA.defaultElement.isType && importB.defaultElement.isType) {
+    if (!a.defaultElement.isType && b.defaultElement.isType) {
       return 1;
     }
   }

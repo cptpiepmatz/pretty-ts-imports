@@ -4,15 +4,12 @@ import Import from "../../import_management/Import";
 /**
  * Compare two compare_imports for their import types.
  * A namespace import (* as something) comes before a named import ({a}).
- * @param importA Import A
- * @param importB Import B
+ * @param a Import A
+ * @param b Import B
  */
-const namespaceBeforeNamed: ImportCompareFunction = function(
-  importA: Import,
-  importB: Import
-): -1 | 0 | 1 {
-  if (importA.isNamespace && importB.isNamed) return -1;
-  if (importA.isNamed && importB.isNamespace) return 1;
+const namespaceBeforeNamed: ImportCompareFunction = function(a, b): -1 | 0 | 1 {
+  if (a.isNamespace && b.isNamed) return -1;
+  if (a.isNamed && b.isNamespace) return 1;
   return 0;
 };
 

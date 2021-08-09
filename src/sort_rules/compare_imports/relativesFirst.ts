@@ -4,15 +4,12 @@ import Import from "../../import_management/Import";
 /**
  * Compares two compare_imports for their relative stats.
  * Sort relatives higher than non relatives.
- * @param importA Import A
- * @param importB Import B
+ * @param a Import A
+ * @param b Import B
  */
-const relativesFirst: ImportCompareFunction = function(
-  importA: Import,
-  importB: Import
-): -1 | 0 | 1 {
-  if (importA.source.isRelative && !importB.source.isRelative) return -1;
-  if (!importA.source.isRelative && importB.source.isRelative) return 1;
+const relativesFirst: ImportCompareFunction = function(a, b): -1 | 0 | 1 {
+  if (a.source.isRelative && !b.source.isRelative) return -1;
+  if (!a.source.isRelative && b.source.isRelative) return 1;
   return 0;
 };
 

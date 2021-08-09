@@ -3,15 +3,12 @@ import ImportElementCompareFunction from "../ImportElementCompareFunction";
 
 /**
  * Puts Types in front of functions and objects.
- * @param importElementA Import element A
- * @param importElementB Import element B
+ * @param a Import element A
+ * @param b Import element B
  */
-const typesFirst: ImportElementCompareFunction = function(
-  importElementA: ImportElement,
-  importElementB: ImportElement
-): -1 | 0 | 1 {
-  if (importElementA.isType && !importElementB.isType) return -1;
-  if (!importElementA.isType && importElementB.isType) return 1;
+const typesFirst: ImportElementCompareFunction = function(a, b): -1 | 0 | 1 {
+  if (a.isType && !b.isType) return -1;
+  if (!a.isType && b.isType) return 1;
   return 0;
 }
 
