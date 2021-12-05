@@ -12,8 +12,3 @@ const fileManager = new FileManager(tsConfigPath, files);
 const configPath = cliHandler.primpConfigPath ??
   ConfigHandler.findConfig(cliHandler.givenFileOrDirPath);
 const configHandler = new ConfigHandler(configPath);
-console.log(configHandler);
-let imports = fileManager.imports[0].imports;
-for (let importElement of imports) {
-  //console.log(importElement.toString());
-}
