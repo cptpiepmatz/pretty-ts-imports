@@ -193,6 +193,10 @@ export default class Import {
           "\n}" +
           splitOutput[2];
       }
+
+      // TODO: check for line breaks like this:
+      // import ImportElementCompareFunction
+      //   from "./sort_rules/ImportElementCompareFunction";
     }
 
     return output;
