@@ -33,6 +33,8 @@ export const supportedConfigNames = [
  */
 export default class ConfigHandler implements FullConfig {
 
+  // TODO: test me
+
   readonly formatting: Required<FormattingOptions>;
   readonly sortImports: string[];
   readonly sortImportElements: string[];

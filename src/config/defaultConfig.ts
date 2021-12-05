@@ -7,15 +7,14 @@ export const defaultConfig: FullConfig = {
     "packagesFirst",
     "comparePaths",
     "flatPathsFirst",
-    "namespacesBeforeNamed",
-    "defaultTypesFirst",
+    "namespaceBeforeNamed",
+    "defaultsTypesFirst",
     "compareSources"
   ],
 
- sortImportElements: [
-    "typesBeforeObjects",
-    "compareTypes",
-    "compareElements"
+  sortImportElements: [
+    "typesFirst",
+    "groupBasenames"
   ],
 
   separateBy: [

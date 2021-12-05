@@ -14,7 +14,7 @@
     "comparePaths",
     "flatPathsFirst",
     "namespacesBeforeNamed",
-    "defaultTypesFirst",
+    "defaultsTypesFirst",
     "compareSources",
     //"deepPathsFirst",
     //"defaultsCompareTypes",

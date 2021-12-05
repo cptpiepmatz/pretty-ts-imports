@@ -13,7 +13,7 @@ sortImports:
   - comparePaths
   - flatPathsFirst
   - namespacesBeforeNamed
-  - defaultTypesFirst
+  - defaultsTypesFirst
   - dotJSFirst
   - compareSources
 # - deepPathsFirst
