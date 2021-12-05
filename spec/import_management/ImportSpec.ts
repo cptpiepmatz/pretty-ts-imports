@@ -17,6 +17,9 @@ import Beta from "./other-path";
 import {Charlie, Delta} from "types";
 `;
 
+const superLongImported =
+  'import {alfa, bravo, charlie, delta, echo, foxtrot, golf, hotel, india} from "phonetic"';
+
 describe("Import", function() {
   const sourceFile = createSourceFile("mock.ts", importedStuff, ScriptTarget.ES2021);
   const imports: Import[] = [];
@@ -25,6 +28,13 @@ describe("Import", function() {
       imports.push(new Import(statement as ImportDeclaration, sourceFile));
     }
   }
+
+  const overflowingSourceFile =
+    createSourceFile("overflow.ts", superLongImported, ScriptTarget.ES2021);
+  const overflowingImport = new Import(
+    overflowingSourceFile.statements[0] as ImportDeclaration,
+    overflowingSourceFile
+  );
 
   it("should be 7 Imports", function() {
     expect(imports.length).toBe(7);
@@ -36,6 +46,30 @@ describe("Import", function() {
       stringified += importElement.toString() + "\n";
     }
     expect(stringified).toBe(importedStuff);
+  });
+
+  it("should be broken into multiple lines, if the import is too long", function() {
+    const maxColumns = 50;
+    const indent = 2;
+    expect(superLongImported.length).toBeGreaterThan(maxColumns);
+
+    let stringified = overflowingImport.toString({maxColumns, indent});
+    expect(stringified.length).toBeGreaterThan(1);
+    expect(stringified).toMatch(
+      `
+import {
+  alfa,
+  bravo,
+  charlie,
+  delta,
+  echo,
+  foxtrot,
+  golf,
+  hotel,
+  india
+} from "phonetic"
+      `.trim()
+    );
   });
 
   it("should be that imports without default imports, show these as undefined", function() {

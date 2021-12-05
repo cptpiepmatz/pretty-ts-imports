@@ -3,6 +3,7 @@ import {ImportDeclaration, SourceFile, SyntaxKind} from "typescript";
 import ImportElement from "./ImportElement";
 import ImportSource from "./ImportSource";
 import FormattingOptions from "./FormattingOptions";
+import {defaultFormatting} from "../config/defaultConfig";
 
 export default class Import {
 
@@ -140,10 +141,12 @@ export default class Import {
     maxColumns: 80
   }): string {
     // default values, just to make sure
-    const indent = formattingOptions?.indent || 2;
-    const bracketIndent = formattingOptions?.bracketIndent || 0;
-    const quoteStyle = formattingOptions?.quoteStyle || "double";
-    const maxColumns = formattingOptions?.maxColumns || 80;
+    const {
+      indent,
+      bracketIndent,
+      quoteStyle,
+      maxColumns
+    } = Object.assign({}, defaultFormatting, formattingOptions);
 
     const indentString = " ".repeat(indent);
     const bracketIndentString = " ".repeat(bracketIndent);
@@ -177,6 +180,20 @@ export default class Import {
     output += importElements.join(", ");
 
     output += ` from ${quoteSymbol}${this.source.name}${quoteSymbol};`;
+
+    if (maxColumnsCheck(output, maxColumns)) {
+      let splitOutput = output.split(/[{}]/);
+      if (splitOutput.length === 3) {
+        let splitElements = splitOutput[1].split(", ");
+        output =
+          splitOutput[0] +
+          "{\n" +
+          indentString +
+          splitElements.join(",\n" + indentString) +
+          "\n}" +
+          splitOutput[2];
+      }
+    }
 
     return output;
   }
