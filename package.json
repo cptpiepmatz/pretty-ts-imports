@@ -23,17 +23,19 @@
   },
   "homepage": "https://github.com/derPiepmatz/pretty-ts-imports#readme",
   "dependencies": {
-    "typescript": "^4.3.5",
-    "yargs": "^17.1.0"
+    "json5": "^2.2.0",
+    "typescript": "^4.5.2",
+    "yaml": "^1.10.2",
+    "yargs": "^17.3.0"
   },
   "devDependencies": {
-    "@types/jasmine": "^3.8.2",
-    "@types/node": "^16.4.12",
-    "@types/yargs": "^17.0.2",
+    "@types/jasmine": "^3.10.2",
+    "@types/node": "^16.11.11",
+    "@types/yargs": "^17.0.7",
     "del-cli": "^4.0.1",
-    "jasmine": "^3.8.0",
+    "jasmine": "^3.10.0",
     "jasmine-ts": "^0.4.0",
-    "ts-node": "^10.1.0",
+    "ts-node": "^10.4.0",
     "uglifyjs-folder": "file:../uglifyjs-folder"
   }
 }
