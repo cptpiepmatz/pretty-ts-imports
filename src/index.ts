@@ -1,8 +1,19 @@
 import CLIHandler from "./CLIHandler";
 import FileManager from "./FileManager";
+import ConfigHandler from "./config/ConfigHandler";
 
 const cliHandler = new CLIHandler();
-console.log(FileManager.getFiles(
+const files = FileManager.getFiles(
   cliHandler.givenFileOrDirPath,
   cliHandler.shallRecursive
-));
+);
+const tsConfigPath = cliHandler.tsConfigPath ?? process.cwd();
+const fileManager = new FileManager(tsConfigPath, files);
+const configPath = cliHandler.primpConfigPath ??
+  ConfigHandler.findConfig(cliHandler.givenFileOrDirPath);
+const configHandler = new ConfigHandler(configPath);
+console.log(configHandler);
+let imports = fileManager.imports[0].imports;
+for (let importElement of imports) {
+  //console.log(importElement.toString());
+}
