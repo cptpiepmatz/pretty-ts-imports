@@ -30,7 +30,7 @@ sortImportElement:
   - typesBeforeObjects
   - compareTypes
   - compareElements
-groupBy:
+separateBy:
   # These are the categories to group by.
   #
   # Primp uses these category functions to determine where to put empty lines

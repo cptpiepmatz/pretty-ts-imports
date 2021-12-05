@@ -18,7 +18,7 @@ export const defaultConfig: FullConfig = {
     "compareElements"
   ],
 
-  groupBy: [
+  separateBy: [
     "types"
   ],
 
@@ -39,7 +39,7 @@ export const defaultSortImports = defaultConfig.sortImports;
 export const defaultSortImportElements = defaultConfig.sortImportElements;
 
 /** Default compare functions to group imports. */
-export const defaultGroupBy = defaultConfig.groupBy;
+export const defaultGroupBy = defaultConfig.separateBy;
 
 /** Default formatting options. */
 export const defaultFormatting = defaultConfig.formatting;

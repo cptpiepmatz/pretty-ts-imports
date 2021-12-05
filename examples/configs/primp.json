@@ -12,7 +12,7 @@
     "compareTypes",
     "compareElements"
   ],
-  "groupBy": [
+  "separateBy": [
     "types"
   ],
   "formatting": {

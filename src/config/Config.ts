@@ -31,7 +31,7 @@ export default interface Config {
    *
    * <b>Note: the names need to be exact with the function names.</b>
    */
-  groupBy?: string[];
+  separateBy?: string[];
 
   /**
    * Formatting options.
@@ -46,7 +46,7 @@ export default interface Config {
    *
    * To make sure the functions do work correctly, they should implement either
    * {@link ImportCompareFunction}, {@link ImportElementCompareFunction} or
-   * {@link DivideByFunction} and export their function as default.
+   * {@link SeparateByFunction} and export their function as default.
    *
    * @see ../../examples/compare_functions/imports/dotJSFirst.ts
    */

@@ -1,17 +1,17 @@
 /**
- * Expect wrapper for divider functions.
- * @param divider Function deciding whether to divide
+ * Expect wrapper for separator functions.
+ * @param separator Function deciding whether to separate
  */
-export default function expectDivider<T>(divider: (a: T, b: T) => boolean) {
-  function expectDivided(leading: T, following: T) {
-    expect(divider(leading, following))
-      .withContext("Expected: Leading is divided from following")
+export default function expectSeparator<T>(separator: (a: T, b: T) => boolean) {
+  function expectSeparated(leading: T, following: T) {
+    expect(separator(leading, following))
+      .withContext("Expected: Leading is separated from following")
       .toBeTrue();
   }
 
-  function expectNotDivided(leading: T, following: T) {
-    expect(divider(leading, following))
-      .withContext("Expected: Leading is NOT divided from following")
+  function expectNotSeparated(leading: T, following: T) {
+    expect(separator(leading, following))
+      .withContext("Expected: Leading is NOT separated from following")
       .toBeFalse();
   }
 
@@ -27,12 +27,12 @@ export default function expectDivider<T>(divider: (a: T, b: T) => boolean) {
          * @param following Following element
          */
         and: function(following: T) {
-          expectDivided(leading, following);
+          expectSeparated(leading, following);
         }
       }
     },
 
-    /** Expect not divider. */
+    /** Expect not separator. */
     not: {
       /**
        * Setter for the leading element.
@@ -45,7 +45,7 @@ export default function expectDivider<T>(divider: (a: T, b: T) => boolean) {
            * @param following Following element
            */
           and: function(following: T) {
-            expectNotDivided(leading, following);
+            expectNotSeparated(leading, following);
           }
         }
       }

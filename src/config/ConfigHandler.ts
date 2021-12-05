@@ -36,7 +36,7 @@ export default class ConfigHandler implements FullConfig {
   readonly formatting: Required<FormattingOptions>;
   readonly sortImports: string[];
   readonly sortImportElements: string[];
-  readonly groupBy: string[];
+  readonly separateBy: string[];
   readonly require: Record<string, string>;
 
   /**
@@ -65,7 +65,7 @@ export default class ConfigHandler implements FullConfig {
 
     this.sortImports = config.sortImports ?? defaultSortImports;
     this.sortImportElements = config.sortImportElements ?? defaultSortImportElements;
-    this.groupBy = config.groupBy ?? defaultGroupBy;
+    this.separateBy = config.separateBy ?? defaultGroupBy;
     this.require = config.require ?? {};
     this.formatting = Object.assign({}, defaultFormatting, config.formatting);
   }

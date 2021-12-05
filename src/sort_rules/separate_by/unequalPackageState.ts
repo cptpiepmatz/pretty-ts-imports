@@ -1,11 +1,11 @@
-import DivideByFunction from "../DivideByFunction";
+import SeparateByFunction from "../SeparateByFunction";
 
 /**
- * Place a divider if only one of the imports is package.
+ * Place a separator if only one of the imports is package.
  * @param leading Leading import
  * @param following Following import
  */
-const unequalPackageState: DivideByFunction = function(leading, following): boolean {
+const unequalPackageState: SeparateByFunction = function(leading, following): boolean {
   const leadingIsPackage = leading.source.isPackage;
   const followingIsPackage = following.source.isPackage;
   return leadingIsPackage !== followingIsPackage;
