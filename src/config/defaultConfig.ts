@@ -1,0 +1,45 @@
+import {FullConfig} from "./FullConfig";
+
+/** Default config. */
+export const defaultConfig: FullConfig = {
+
+  sortImports: [
+    "packagesFirst",
+    "comparePaths",
+    "flatPathsFirst",
+    "namespacesBeforeNamed",
+    "defaultTypesFirst",
+    "compareSources"
+  ],
+
+ sortImportElements: [
+    "typesBeforeObjects",
+    "compareTypes",
+    "compareElements"
+  ],
+
+  groupBy: [
+    "types"
+  ],
+
+  formatting: {
+    bracketIndent: 0,
+    indent: 2,
+    maxColumns: 80,
+    quoteStyle: "double"
+  },
+
+  require: {}
+}
+
+/** Default compare functions to sort elements. */
+export const defaultSortImports = defaultConfig.sortImports;
+
+/** Default compare functions to sort import elements. */
+export const defaultSortImportElements = defaultConfig.sortImportElements;
+
+/** Default compare functions to group imports. */
+export const defaultGroupBy = defaultConfig.groupBy;
+
+/** Default formatting options. */
+export const defaultFormatting = defaultConfig.formatting;
