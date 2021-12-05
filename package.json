@@ -7,9 +7,9 @@
     "test": "npx jasmine-ts",
     "run-dev": "npx ts-node .",
     "build": "npm run build:clean && npm run build:tsc && npm run build:uglify",
-    "build:clean": "npx del-cli dist",
+    "build:clean": "npx del-cli dist & npx del-cli out",
     "build:tsc": "npx tsc",
-    "build:uglify": "npx uglifyjs-folder dist",
+    "build:uglify": "npx uglifyjs-folder out -d -o dist/all.min.js",
     "nope-postinstall": "npm run build"
   },
   "repository": {
@@ -34,6 +34,6 @@
     "jasmine": "^3.8.0",
     "jasmine-ts": "^0.4.0",
     "ts-node": "^10.1.0",
-    "uglifyjs-folder": "^3.0.0"
+    "uglifyjs-folder": "file:../uglifyjs-folder"
   }
 }
