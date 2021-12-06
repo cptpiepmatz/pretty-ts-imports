@@ -6,6 +6,8 @@ import Separator from "./Separator";
 import Integrator from "./Integrator";
 import * as ts from "typescript";
 
+// TODO: put every class object at the top
+
 const cliHandler = new CLIHandler();
 const files = FileManager.getFiles(
   cliHandler.givenFileOrDirPath,
