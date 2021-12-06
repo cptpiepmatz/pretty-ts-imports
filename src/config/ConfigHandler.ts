@@ -50,7 +50,7 @@ export default class ConfigHandler implements FullConfig {
     let config: Config = {};
     if (configPath) {
       let configContent = readFileSync(configPath, "utf-8");
-      switch (extname(configContent)) {
+      switch (extname(configPath)) {
         case ".json":
           config = JSON.parse(configContent);
           break;
