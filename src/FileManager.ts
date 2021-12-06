@@ -15,6 +15,7 @@ import {
 } from "fs";
 import Import from "./import_management/Import";
 import {join, relative, resolve} from "path";
+import detectNewline from "detect-newline";
 
 /**
  * Class holding all the imports from the given paths.
@@ -83,7 +84,8 @@ export default class FileManager {
     for (let imported of this.imports) {
       if (relative(resolve(imported.path), resolve(path)).length === 0) {
         if (imported.sourceFile.text === newContent) break;
-        writeFileSync(path, newContent);
+        let eol = detectNewline(imported.sourceFile.text) ?? "\n";
+        writeFileSync(path, newContent.replaceAll(/\r?\n/g, eol));
       }
     }
   }

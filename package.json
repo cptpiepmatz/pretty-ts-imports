@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/derPiepmatz/pretty-ts-imports#readme",
   "dependencies": {
+    "detect-newline": "<4.0.0",
     "json5": "^2.2.0",
     "typescript": "^4.5.2",
     "yaml": "^1.10.2",
