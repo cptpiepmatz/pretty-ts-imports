@@ -19,3 +19,5 @@ const dotJSFirst: ImportCompareFunction = function(
   if (importB.source.isPackage && !matchesA && matchesB) return 1;
   return 0;
 };
+
+export default dotJSFirst;
