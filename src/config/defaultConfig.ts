@@ -18,7 +18,7 @@ export const defaultConfig: FullConfig = {
   ],
 
   separateBy: [
-    "types"
+    "unequalPackageState"
   ],
 
   formatting: {

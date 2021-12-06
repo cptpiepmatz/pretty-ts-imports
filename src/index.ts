@@ -2,6 +2,7 @@ import CLIHandler from "./CLIHandler";
 import FileManager from "./FileManager";
 import ConfigHandler from "./config/ConfigHandler";
 import Sorter from "./Sorter";
+import Separator from "./Separator";
 
 const cliHandler = new CLIHandler();
 const files = FileManager.getFiles(
@@ -27,12 +28,5 @@ const sorter: Sorter = configPath ?
     configHandler.sortImportElements
   );
 
-let imports = fileManager.imports[0].imports;
-for (let imported of imports) {
-  console.log(imported.toString());
-}
-console.log();
-imports = sorter.sort(fileManager.imports[0].imports);
-for (let imported of imports) {
-  console.log(imported.toString());
-}
+let imports = sorter.sort(fileManager.imports[0].imports);
+const separator = new Separator(configHandler.separateBy);
