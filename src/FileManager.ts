@@ -6,9 +6,15 @@ import {
   SourceFile,
   SyntaxKind
 } from "typescript";
-import {accessSync, readdirSync, readFileSync, statSync} from "fs";
+import {
+  accessSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync
+} from "fs";
 import Import from "./import_management/Import";
-import {join} from "path";
+import {join, relative, resolve} from "path";
 
 /**
  * Class holding all the imports from the given paths.
@@ -16,7 +22,7 @@ import {join} from "path";
 export default class FileManager {
 
   /** The imported files in their read in form. */
-  readonly imports: {path: string, imports: Import[]}[] = [];
+  readonly imports: {path: string, sourceFile: SourceFile, imports: Import[]}[] = [];
 
   /**
    * Constructor.
@@ -67,8 +73,18 @@ export default class FileManager {
       }
       this.imports.push({
         path: sourceFile.path,
+        sourceFile: sourceFile.sourceFile,
         imports: imports
       });
+    }
+  }
+
+  updateFile(path: string, newContent: string) {
+    for (let imported of this.imports) {
+      if (relative(resolve(imported.path), resolve(path)).length === 0) {
+        if (imported.sourceFile.text === newContent) break;
+        writeFileSync(path, newContent);
+      }
     }
   }
 

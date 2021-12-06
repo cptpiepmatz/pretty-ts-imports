@@ -3,6 +3,8 @@ import FileManager from "./FileManager";
 import ConfigHandler from "./config/ConfigHandler";
 import Sorter from "./Sorter";
 import Separator from "./Separator";
+import Integrator from "./Integrator";
+import * as ts from "typescript";
 
 const cliHandler = new CLIHandler();
 const files = FileManager.getFiles(
@@ -28,5 +30,13 @@ const sorter: Sorter = configPath ?
     configHandler.sortImportElements
   );
 
-let imports = sorter.sort(fileManager.imports[0].imports);
 const separator = new Separator(configHandler.separateBy);
+const integrator = new Integrator(configHandler.formatting);
+for (let imported of fileManager.imports) {
+  sorter.sort(imported.imports);
+  let integrated = integrator.integrate(
+    imported.sourceFile,
+    separator.insertSeparator(imported.imports)
+  );
+  fileManager.updateFile(imported.path, integrated);
+}
