@@ -13,11 +13,7 @@ const fileManager = new FileManager(tsConfigPath, files);
 const configPath = primpConfigPath ?? ConfigHandler.findConfig(givenFileOrDirPath);
 const configHandler = new ConfigHandler(configPath);
 const {sortImports, sortImportElements} = configHandler;
-const sortParams: any[] = [sortImports, sortImportElements];
-if (configPath) sortParams.push(configPath, configHandler.require);
-const sorter = configPath
-  ? new ImportSorter(sortImports, sortImportElements, configPath!, configHandler.require)
-  : new ImportSorter(sortImports, sortImportElements);
+const sorter = new ImportSorter(sortImports, sortImportElements);
 const separator = new ImportSeparator(configHandler.separateBy);
 const integrator = new ImportIntegrator(configHandler.formatting);
 for (let imported of fileManager.imports) {
