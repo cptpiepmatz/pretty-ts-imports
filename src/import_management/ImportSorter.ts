@@ -1,68 +1,86 @@
 import ImportCompareFunction from "../sort_rules/ImportCompareFunction";
-import Import from "./Import";
+import {
+  builtinImportCompareFunctions
+} from "../sort_rules/builtins/builtinImportCompareFunctions";
 import ImportElementCompareFunction
   from "../sort_rules/ImportElementCompareFunction";
+import {
+  builtinImportElementCompareFunctions
+} from "../sort_rules/builtins/builtinImportElementCompareFunctions";
+import Import from "./Import";
+import {RequiredFunction} from "../config/OnDemandTranspiler";
 
-/** Class used to sort imports. To construct it, you need sort rules. */
 export default class ImportSorter {
+  // TODO: document me
+  // TODO: test me
 
-  /**
-   * Constructor.
-   * Stores all the given sort rules to sort later on.
-   * @param sortRules Object holding compare functions with decreasing priority
-   */
+  readonly sortImportOrder: ImportCompareFunction[] = [];
+  readonly sortImportElementOrder: ImportElementCompareFunction[] = [];
+
   constructor(
-    private sortRules: {
-      imports: ImportCompareFunction[],
-      importElements: ImportElementCompareFunction[]
-    }
-  ) {}
+    sortImports: string[],
+    sortImportElements: string[],
+    requireFunctions?: Record<string, RequiredFunction>
+  ) {
+    const importCompareFunctions = Object.assign(
+      {},
+      builtinImportCompareFunctions,
+      requireFunctions
+    ) as Record<string, ImportCompareFunction>;
 
-  /**
-   * Iterate through every compare function of the sort rules.
-   * @param importA Import A
-   * @param importB Import B
-   * @private
-   */
-  private compare = this.compareBuilder(this.sortRules.imports);
+    const importElementCompareFunctions = Object.assign(
+      {},
+      builtinImportElementCompareFunctions,
+      requireFunctions
+    ) as Record<string, ImportElementCompareFunction>;
 
-  /**
-   * Iterate through evey compare of the sort rules.
-   * This is used to sort the elements inside an import statement.
-   * @param importElementA Import element A
-   * @param importElementB Import element B
-   * @private
-   */
-  private compareElements = this.compareBuilder(this.sortRules.importElements);
-
-  /**
-   * Builds a compare function from an array of compare functions.
-   * The order of the array sets the priority.
-   * @param compareFunctions Functions to iterate through
-   * @private
-   */
-  private compareBuilder<T>(
-    compareFunctions: ((A: T, B: T) => number)[]
-  ): (compareA: T, compareB: T) => number {
-    return ((compareA, compareB) => {
-      for (let compareFunction of compareFunctions) {
-        const comparison = compareFunction(compareA, compareB);
-        if (comparison !== 0) return comparison;
+    for (let sortImport of sortImports) {
+      if (!importCompareFunctions[sortImport]) {
+        throw new Error("Could not find import compare function: " + sortImport);
       }
-      return 0;
-    });
+      this.sortImportOrder.push(builtinImportCompareFunctions[sortImport]);
+    }
+
+    for (let sortImportElement of sortImportElements) {
+      if (!importElementCompareFunctions[sortImportElement]) {
+        throw new Error("Could not find import element compare function: " + sortImportElement);
+      }
+      this.sortImportElementOrder
+        .push(builtinImportElementCompareFunctions[sortImportElement]);
+    }
   }
 
   /**
-   * Sorts the given Import objects in-place according to the sort rules.
-   * This also returns the newly sorted array.
-   * @param imports Import objects to sort.
+   * Function to chain compare functions together.
+   * @param sortRules An array of compare functions for the same type
+   * @returns A new compare function running through every compare function
+   * until it finds a non 0 value
+   */
+  static chainCompareFunctions<T>(sortRules: ((a: T, b: T) => number)[]):
+    (a: T, b: T) => number
+  {
+    return function(a: T, b: T): number {
+      for (let rule of sortRules) {
+        let result = rule(a, b);
+        if (result !== 0) return result;
+      }
+      return 0;
+    }
+  }
+
+  /**
+   * Sorts all imports according to the given sort rules.
+   * @param imports Array of imports
+   * @returns Array of sorted imports
    */
   sort(imports: Import[]): Import[] {
-    imports.sort(this.compare);
+    const importCompare = ImportSorter.chainCompareFunctions(this.sortImportOrder);
+    const importElementCompare =
+      ImportSorter.chainCompareFunctions(this.sortImportElementOrder);
+
     for (let imported of imports) {
-      imported.sort(this.compareElements);
+      imported.sort(importElementCompare);
     }
-    return imports;
+    return imports.sort(importCompare);
   }
 }

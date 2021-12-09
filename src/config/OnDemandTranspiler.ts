@@ -9,7 +9,8 @@ import SeparateByFunction from "../sort_rules/SeparateByFunction";
 import {transpile as tsTranspile} from "typescript";
 import requireFromString from "require-from-string";
 
-type RequiredFunction =
+/** Union type of all functions the transpiler may return. */
+export type RequiredFunction =
   ImportCompareFunction | ImportElementCompareFunction | SeparateByFunction;
 
 export default class OnDemandTranspiler {

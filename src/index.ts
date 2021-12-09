@@ -1,7 +1,7 @@
 import CLIHandler from "./CLIHandler";
 import FileManager from "./FileManager";
 import ConfigHandler from "./config/ConfigHandler";
-import Sorter from "./Sorter";
+import ImportSorter from "./import_management/ImportSorter";
 import Separator from "./Separator";
 import Integrator from "./Integrator";
 
@@ -16,8 +16,8 @@ const {sortImports, sortImportElements} = configHandler;
 const sortParams: any[] = [sortImports, sortImportElements];
 if (configPath) sortParams.push(configPath, configHandler.require);
 const sorter = configPath
-  ? new Sorter(sortImports, sortImportElements, configPath!, configHandler.require)
-  : new Sorter(sortImports, sortImportElements);
+  ? new ImportSorter(sortImports, sortImportElements, configPath!, configHandler.require)
+  : new ImportSorter(sortImports, sortImportElements);
 const separator = new Separator(configHandler.separateBy);
 const integrator = new Integrator(configHandler.formatting);
 for (let imported of fileManager.imports) {
