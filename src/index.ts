@@ -2,8 +2,8 @@ import CLIHandler from "./CLIHandler";
 import FileManager from "./FileManager";
 import ConfigHandler from "./config/ConfigHandler";
 import ImportSorter from "./import_management/ImportSorter";
-import Separator from "./Separator";
-import Integrator from "./Integrator";
+import ImportSeparator from "./import_management/ImportSeparator";
+import ImportIntegrator from "./import_management/ImportIntegrator";
 
 const cliHandler = new CLIHandler();
 const {givenFileOrDirPath, shallRecursive, primpConfigPath} = cliHandler;
@@ -18,8 +18,8 @@ if (configPath) sortParams.push(configPath, configHandler.require);
 const sorter = configPath
   ? new ImportSorter(sortImports, sortImportElements, configPath!, configHandler.require)
   : new ImportSorter(sortImports, sortImportElements);
-const separator = new Separator(configHandler.separateBy);
-const integrator = new Integrator(configHandler.formatting);
+const separator = new ImportSeparator(configHandler.separateBy);
+const integrator = new ImportIntegrator(configHandler.formatting);
 for (let imported of fileManager.imports) {
   sorter.sort(imported.imports);
   let integrated = integrator.integrate(

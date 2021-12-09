@@ -1,8 +1,8 @@
-import FormattingOptions from "./import_management/FormattingOptions";
-import Import from "./import_management/Import";
+import FormattingOptions from "./FormattingOptions";
+import Import from "./Import";
 import {SourceFile, SyntaxKind} from "typescript";
 
-export default class Integrator {
+export default class ImportIntegrator {
 
   private readonly formatting: FormattingOptions;
 

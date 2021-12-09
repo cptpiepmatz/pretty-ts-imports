@@ -1,10 +1,10 @@
-import SeparateByFunction from "./sort_rules/SeparateByFunction";
+import SeparateByFunction from "../sort_rules/SeparateByFunction";
 import {
   builtinSeparateByFunctions
-} from "./sort_rules/builtins/builtinSeparateByFunctions";
-import Import from "./import_management/Import";
+} from "../sort_rules/builtins/builtinSeparateByFunctions";
+import Import from "./Import";
 
-export default class Separator {
+export default class ImportSeparator {
   // TODO: doc me
   // TODO: test me
 
