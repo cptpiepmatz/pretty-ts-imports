@@ -6,7 +6,7 @@ import ImportSeparator from "./import_management/ImportSeparator";
 import ImportIntegrator from "./import_management/ImportIntegrator";
 import OnDemandTranspiler, {RequiredFunction} from "./config/OnDemandTranspiler";
 import watch from "node-watch";
-import {resolve} from "path";
+import {relative, resolve} from "path";
 import {SourceFile} from "typescript";
 import Import from "./import_management/Import";
 
@@ -35,12 +35,14 @@ for (let [path, {sourceFile, imports}] of fileManager.imports.entries()) {
 }
 
 function writeSorted(path: string, sourceFile: SourceFile, imports: Import[]) {
+  let relativePath = relative(resolve(), path);
+  console.log(relativePath);
   sorter.sort(imports);
   let integrated = integrator.integrate(
     sourceFile,
     separator.insertSeparator(imports)
   );
-  fileManager.write(path, integrated);
+  fileManager.write(relativePath, integrated);
 }
 
 if (cliHandler.shallWatch) {

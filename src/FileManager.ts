@@ -71,7 +71,7 @@ export default class FileManager {
 
   write(path: string, newContent: string) {
     let entry = this.imports.get(resolve(path));
-    if (entry!.sourceFile.text === newContent) return;
+    if (entry?.sourceFile?.text === newContent) return;
     const eol = detectNewline(entry!.sourceFile.text) ?? "\n";
     writeFileSync(path, newContent.replaceAll(/\r?\n/g, eol));
   }
