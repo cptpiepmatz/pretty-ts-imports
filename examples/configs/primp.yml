@@ -12,7 +12,7 @@ sortImports:
   - packagesFirst
   - comparePaths
   - flatPathsFirst
-  - namespacesBeforeNamed
+  - namespaceBeforeNamed
   - defaultsTypesFirst
   - dotJSFirst
   - compareSources
@@ -35,7 +35,7 @@ separateBy:
   #
   # Primp uses these category functions to determine where to put empty lines
   # as separation.
-  - types
+  - unequalPackageState
 formatting:
   # This is the setting to format the imports.
   indent: 2 # Spaces used to indent if max columns is exceeded.
@@ -48,4 +48,4 @@ require:
   # Firstly name the key how you want it to be used and secondly set the
   # value to the function path relative to this file.
   # This example puts packages that end with ".js" before others.
-  dotJSFirst: ../sort_rules/imports/dotJSFirst.ts
+  dotJSFirst: ../compare_functions/imports/dotJSFirst.ts
