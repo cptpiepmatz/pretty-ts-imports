@@ -7,14 +7,14 @@ import {
   SyntaxKind
 } from "typescript";
 import {
-  accessSync,
+  accessSync, mkdirSync,
   readdirSync,
   readFileSync,
   statSync,
   writeFileSync
 } from "fs";
 import Import from "./import_management/Import";
-import {join, relative, resolve} from "path";
+import {dirname, join, relative, resolve} from "path";
 import detectNewline from "detect-newline";
 
 /**
@@ -69,11 +69,15 @@ export default class FileManager {
     this.imports.set(fullPath, {sourceFile, imports});
   }
 
-  write(path: string, newContent: string) {
+  write(path: string, newContent: string, newPath?: string) {
     let entry = this.imports.get(resolve(path));
-    if (entry?.sourceFile?.text === newContent) return;
+    if (entry!.sourceFile.text === newContent) return;
     const eol = detectNewline(entry!.sourceFile.text) ?? "\n";
-    writeFileSync(path, newContent.replaceAll(/\r?\n/g, eol));
+    mkdirSync(dirname(newPath ?? path), {recursive: true});
+    writeFileSync(
+      newPath ?? path,
+      newContent.replaceAll(/\r?\n/g, eol)
+    );
   }
 
   /**

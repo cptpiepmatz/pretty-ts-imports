@@ -6,14 +6,19 @@ import ImportSeparator from "./import_management/ImportSeparator";
 import ImportIntegrator from "./import_management/ImportIntegrator";
 import OnDemandTranspiler, {RequiredFunction} from "./config/OnDemandTranspiler";
 import watch from "node-watch";
-import {relative, resolve} from "path";
+import {join, relative, resolve} from "path";
 import {SourceFile} from "typescript";
 import Import from "./import_management/Import";
 
 // TODO: get some fancy logging
 
 const cliHandler = new CLIHandler();
-const {givenFileOrDirPath, shallRecursive, primpConfigPath} = cliHandler;
+const {
+  givenFileOrDirPath,
+  shallRecursive,
+  primpConfigPath,
+  outputPath
+} = cliHandler;
 const files = FileManager.getFiles(givenFileOrDirPath, shallRecursive);
 const tsConfigPath = cliHandler.tsConfigPath ?? process.cwd();
 const fileManager = new FileManager(tsConfigPath, files);
@@ -35,14 +40,17 @@ for (let [path, {sourceFile, imports}] of fileManager.imports.entries()) {
 }
 
 function writeSorted(path: string, sourceFile: SourceFile, imports: Import[]) {
-  let relativePath = relative(resolve(), path);
-  console.log(relativePath);
   sorter.sort(imports);
   let integrated = integrator.integrate(
     sourceFile,
     separator.insertSeparator(imports)
   );
-  fileManager.write(relativePath, integrated);
+  if (outputPath) {
+    let newPath = join(outputPath, relative(givenFileOrDirPath, path));
+    fileManager.write(path, integrated, newPath);
+    return;
+  }
+  fileManager.write(path, integrated);
 }
 
 if (cliHandler.shallWatch) {
