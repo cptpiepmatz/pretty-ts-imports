@@ -1,7 +1,7 @@
-import {FullConfig} from "./FullConfig";
+import FullConfig from "./FullConfig";
 
 /** Default config. */
-export const defaultConfig: FullConfig = {
+const defaultConfig: FullConfig = {
 
   sortImports: [
     "packagesFirst",
@@ -42,3 +42,5 @@ export const defaultGroupBy = defaultConfig.separateBy;
 
 /** Default formatting options. */
 export const defaultFormatting = defaultConfig.formatting;
+
+export default defaultConfig;

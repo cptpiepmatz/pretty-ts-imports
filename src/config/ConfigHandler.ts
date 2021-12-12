@@ -4,7 +4,7 @@ import {basename, dirname, extname} from "path";
 import * as JSON5 from "json5";
 import * as YAML from "yaml";
 import Config from "./Config";
-import {FullConfig} from "./FullConfig";
+import FullConfig from "./FullConfig";
 import {
   defaultGroupBy,
   defaultSortImportElements,
