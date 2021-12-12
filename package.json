@@ -2,15 +2,15 @@
   "name": "pretty-ts-imports",
   "version": "0.1.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "src/cli.ts",
   "scripts": {
     "test": "jasmine-ts",
     "run-dev": "ts-node .",
-    "build": "npm run build:clean && npm run build:tsc && npm run build:uglify",
-    "build:clean": "del-cli dist & npx del-cli out",
+    "build": "npm run build:clean && npm run build:tsc && npm run build:bundle && npm run build:minify",
+    "build:clean": "del-cli dist & del-cli out",
     "build:tsc": "tsc",
-    "build:uglify": "uglifyjs-folder out -d -o dist/all.min.js",
-    "nope-postinstall": "npm run build"
+    "build:bundle": "browserify out/src/cli.js --node -o dist/cli.bundle.js --no-bundle-external",
+    "build:minify": "terser dist/cli.bundle.js -o dist/cli.bundle.min.js"
   },
   "repository": {
     "type": "git",
@@ -36,10 +36,11 @@
     "@types/node": "^16.11.11",
     "@types/require-from-string": "^1.2.1",
     "@types/yargs": "^17.0.7",
+    "browserify": "^17.0.0",
     "del-cli": "^4.0.1",
     "jasmine": "^3.10.0",
     "jasmine-ts": "^0.4.0",
-    "ts-node": "^10.4.0",
-    "uglifyjs-folder": "file:../uglifyjs-folder"
+    "terser": "^5.10.0",
+    "ts-node": "^10.4.0"
   }
 }
