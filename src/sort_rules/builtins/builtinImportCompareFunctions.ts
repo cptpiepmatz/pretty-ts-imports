@@ -9,8 +9,7 @@ import packagesFirst from "../compare_imports/packagesFirst";
 import relativesFirst from "../compare_imports/relativesFirst";
 
 /** Mapping of all builtin compare functions. */
-export const builtinImportCompareFunctions:
-  Record<string, ImportCompareFunction>
+export const builtinImportCompareFunctions
 = {
   "comparePaths": comparePaths,
   "compareSources": compareSources,
