@@ -23,11 +23,12 @@ export default class ImportSeparator {
     configPath?: string,
     requireFunctions?: Record<string, string>
   ) {
-    for (let separateByRule of separateByRules) {
-      if (!builtinSeparateByFunctions[separateByRule]) {
+    for (let separateByRule of separateByRules ) {
+      type rule = keyof typeof builtinSeparateByFunctions;
+      if (!builtinSeparateByFunctions[separateByRule as rule]) {
         throw new Error("Could not find separate by function: " + separateByRule);
       }
-      this.separateByRules.push(builtinSeparateByFunctions[separateByRule]);
+      this.separateByRules.push(builtinSeparateByFunctions[separateByRule as rule]);
     }
   }
 
