@@ -38,7 +38,7 @@ export default class ImportSorter {
       if (!importCompareFunctions[sortImport]) {
         throw new Error("Could not find import compare function: " + sortImport);
       }
-      this.sortImportOrder.push(builtinImportCompareFunctions[sortImport]);
+      this.sortImportOrder.push(importCompareFunctions[sortImport]);
     }
 
     for (let sortImportElement of sortImportElements) {
@@ -46,7 +46,7 @@ export default class ImportSorter {
         throw new Error("Could not find import element compare function: " + sortImportElement);
       }
       this.sortImportElementOrder
-        .push(builtinImportElementCompareFunctions[sortImportElement]);
+        .push(importElementCompareFunctions[sortImportElement]);
     }
   }
 
