@@ -22,8 +22,10 @@ import detectNewline from "detect-newline";
  */
 export default class FileManager {
 
+  readonly tsConfig: ReturnType<typeof readConfigFile>;
+
   /** The imported files in their read in form. */
-  readonly imports: {path: string, sourceFile: SourceFile, imports: Import[]}[] = [];
+  readonly imports: Map<string, {sourceFile: SourceFile, imports: Import[]}> = new Map();
 
   /**
    * Constructor.
@@ -36,58 +38,42 @@ export default class FileManager {
     // Read the ts config.
     const configPath = findConfigFile(tsconfigPath, FileManager.fileExists);
     if (!configPath) throw new Error("Couldn't find tsconfig");
-    const config = readConfigFile(configPath, FileManager.readFile).config;
+    this.tsConfig = readConfigFile(configPath, FileManager.readFile);
 
     // Read the .ts files.
     filePaths = [filePaths].flat();
     const files: {path: string, content: string}[] = [];
     for (let filePath of filePaths) {
-      const content = FileManager.readFile(filePath);
-      if (!content) throw new Error("Couldn't read in " + filePath);
-      files.push({
-        path: filePath,
-        content: content
-      });
+      this.reloadFromDisk(filePath);
     }
 
-    // Create source files from them.
-    const sourceFiles: {path: string, sourceFile: SourceFile}[] = [];
-    for (let file of files) {
-      sourceFiles.push({
-        path: file.path,
-        sourceFile: createSourceFile(
-          file.path,
-          file.content,
-          config.compilerOptions.target
-        )
-      });
-    }
-
-    // Make imports out of them.
-    for (let sourceFile of sourceFiles) {
-      const imports: Import[] = [];
-      for (let statement of sourceFile.sourceFile.statements) {
-        if (statement.kind !== SyntaxKind.ImportDeclaration) break;
-        imports.push(
-          new Import(statement as ImportDeclaration, sourceFile.sourceFile)
-        );
-      }
-      this.imports.push({
-        path: sourceFile.path,
-        sourceFile: sourceFile.sourceFile,
-        imports: imports
-      });
-    }
   }
 
-  updateFile(path: string, newContent: string) {
-    for (let imported of this.imports) {
-      if (relative(resolve(imported.path), resolve(path)).length === 0) {
-        if (imported.sourceFile.text === newContent) break;
-        let eol = detectNewline(imported.sourceFile.text) ?? "\n";
-        writeFileSync(path, newContent.replaceAll(/\r?\n/g, eol));
-      }
+  reloadFromDisk(path: string) {
+    const fullPath = resolve(path);
+    const content = FileManager.readFile(fullPath);
+    // TODO: make better error here
+    if (!content) throw new Error("couldn't find file");
+    const sourceFile = createSourceFile(
+      fullPath,
+      content,
+      this.tsConfig.config.compilerOptions.target
+    );
+    const imports: Import[] = [];
+    for (let statement of sourceFile.statements) {
+      if (statement.kind !== SyntaxKind.ImportDeclaration) break;
+      imports.push(
+        new Import(statement as ImportDeclaration, sourceFile)
+      );
     }
+    this.imports.set(fullPath, {sourceFile, imports});
+  }
+
+  write(path: string, newContent: string) {
+    let entry = this.imports.get(resolve(path));
+    if (entry!.sourceFile.text === newContent) return;
+    const eol = detectNewline(entry!.sourceFile.text) ?? "\n";
+    writeFileSync(path, newContent.replaceAll(/\r?\n/g, eol));
   }
 
   /**

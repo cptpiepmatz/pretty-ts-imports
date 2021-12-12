@@ -5,6 +5,12 @@ import ImportSorter from "./import_management/ImportSorter";
 import ImportSeparator from "./import_management/ImportSeparator";
 import ImportIntegrator from "./import_management/ImportIntegrator";
 import OnDemandTranspiler, {RequiredFunction} from "./config/OnDemandTranspiler";
+import watch from "node-watch";
+import {resolve} from "path";
+import {SourceFile} from "typescript";
+import Import from "./import_management/Import";
+
+// TODO: get some fancy logging
 
 const cliHandler = new CLIHandler();
 const {givenFileOrDirPath, shallRecursive, primpConfigPath} = cliHandler;
@@ -24,11 +30,31 @@ const {sortImports, sortImportElements} = configHandler;
 const sorter = new ImportSorter(sortImports, sortImportElements, requiredRecord);
 const separator = new ImportSeparator(configHandler.separateBy);
 const integrator = new ImportIntegrator(configHandler.formatting);
-for (let imported of fileManager.imports) {
-  sorter.sort(imported.imports);
+for (let [path, {sourceFile, imports}] of fileManager.imports.entries()) {
+  writeSorted(path, sourceFile, imports);
+}
+
+function writeSorted(path: string, sourceFile: SourceFile, imports: Import[]) {
+  sorter.sort(imports);
   let integrated = integrator.integrate(
-    imported.sourceFile,
-    separator.insertSeparator(imported.imports)
+    sourceFile,
+    separator.insertSeparator(imports)
   );
-  fileManager.updateFile(imported.path, integrated);
+  fileManager.write(path, integrated);
+}
+
+if (cliHandler.shallWatch) {
+  console.log("starting to watch");
+  watch(files, ((eventType, filePath) => {
+    if (eventType === "remove") return;
+    const path = resolve(filePath!);
+    try {
+      fileManager.reloadFromDisk(path);
+      let {sourceFile, imports} = fileManager.imports.get(path)!;
+      writeSorted(path, sourceFile, imports);
+    }
+    catch (e) {
+      console.warn(e);
+    }
+  }))
 }
