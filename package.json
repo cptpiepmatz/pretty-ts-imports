@@ -10,7 +10,8 @@
     "build:clean": "del-cli dist & del-cli out",
     "build:tsc": "tsc",
     "build:bundle": "browserify out/src/cli.js --node -o dist/cli.bundle.js --no-bundle-external",
-    "build:minify": "terser dist/cli.bundle.js -o dist/cli.bundle.min.js"
+    "build:minify": "terser dist/cli.bundle.js -o dist/cli.bundle.min.js",
+    "docs": "typedoc"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
     "jasmine": "^3.10.0",
     "jasmine-ts": "^0.4.0",
     "terser": "^5.10.0",
-    "ts-node": "^10.4.0"
+    "ts-node": "^10.4.0",
+    "typedoc": "^0.22.10"
   }
 }

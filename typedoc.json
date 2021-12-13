@@ -1,0 +1,6 @@
+{
+  "entryPoints": ["src/lib.ts"],
+  "out": "docs",
+  "sort": ["static-first", "alphabetical"],
+  "categorizeByGroup": true
+}
