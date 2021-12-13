@@ -13,7 +13,7 @@ export default class Import {
   /** The imported elements, does not contain the default import. */
   readonly elements: ImportElement[];
 
-  /** If {@link #isNamed} is true, this can hold an element. */
+  /** If {@link isNamed} is true, this can hold an element. */
   readonly defaultElement?: ImportElement;
 
   /** If only types were imported. Uses the syntax: "import type". */

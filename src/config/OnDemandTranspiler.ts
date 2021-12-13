@@ -32,6 +32,11 @@ export default class OnDemandTranspiler {
     this.compilerOptions = tsConfigObject.compilerOptions as any;
   }
 
+  /**
+   * Transpile a file given the source path.
+   * @param sourcePath Path of the source
+   * @returns A function used to work with other classes
+   */
   transpile(sourcePath: string): RequiredFunction {
     // TODO: add some more detection if something is wrong
     if (!this.configPath) throw new OnDemandTranspileError("No config path given");

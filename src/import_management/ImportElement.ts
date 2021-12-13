@@ -13,7 +13,7 @@ export default interface ImportElement {
   /** If the import used the "as" statement to rename the import. */
   isRenamed: boolean;
 
-  /** If {@link #isRenamed} is true, this will display the original name. */
+  /** If {@link isRenamed} is true, this will display the original name. */
   originalName?: string;
 
   /**
