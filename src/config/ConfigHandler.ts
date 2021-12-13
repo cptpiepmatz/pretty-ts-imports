@@ -11,6 +11,7 @@ import {
   defaultSortImports,
   defaultFormatting
 } from "./defaultConfig";
+import UnsupportedFileFormatError from "../errors/UnsupportedFileFormatError";
 
 /** Supported config file formats. */
 export const supportedFormats = [
@@ -61,7 +62,7 @@ export default class ConfigHandler implements FullConfig {
           config = YAML.parse(configContent);
           break;
         default:
-          throw new Error("format not supported");
+          throw new UnsupportedFileFormatError(configPath);
       }
     }
 

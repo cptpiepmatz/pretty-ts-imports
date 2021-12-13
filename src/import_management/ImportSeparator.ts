@@ -3,6 +3,7 @@ import {
   builtinSeparateByFunctions
 } from "../sort_rules/builtins/builtinSeparateByFunctions";
 import Import from "./Import";
+import InvalidConfigError from "../errors/InvalidConfigError";
 
 export default class ImportSeparator {
   // TODO: doc me
@@ -26,7 +27,11 @@ export default class ImportSeparator {
     for (let separateByRule of separateByRules ) {
       type rule = keyof typeof builtinSeparateByFunctions;
       if (!builtinSeparateByFunctions[separateByRule as rule]) {
-        throw new Error("Could not find separate by function: " + separateByRule);
+        throw new InvalidConfigError(
+          "Could not find separate by function.",
+          "separateBy",
+          separateByRule
+        );
       }
       this.separateByRules.push(builtinSeparateByFunctions[separateByRule as rule]);
     }

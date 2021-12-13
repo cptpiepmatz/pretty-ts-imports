@@ -8,6 +8,7 @@ import ImportElementCompareFunction
 import SeparateByFunction from "../sort_rules/SeparateByFunction";
 import {transpile as tsTranspile} from "typescript";
 import requireFromString from "require-from-string";
+import OnDemandTranspileError from "../errors/OnDemandTranspileError";
 
 /** Union type of all functions the transpiler may return. */
 export type RequiredFunction =
@@ -33,7 +34,7 @@ export default class OnDemandTranspiler {
 
   transpile(sourcePath: string): RequiredFunction {
     // TODO: add some more detection if something is wrong
-    if (!this.configPath) throw new Error("No config path given");
+    if (!this.configPath) throw new OnDemandTranspileError("No config path given");
     let requirePath = resolve(dirname(this.configPath), sourcePath);
     let requireContent = readFileSync(requirePath, "utf-8");
     let transpiled = tsTranspile(requireContent, this.compilerOptions);

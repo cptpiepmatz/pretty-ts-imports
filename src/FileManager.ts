@@ -16,6 +16,8 @@ import {
 import Import from "./import_management/Import";
 import {dirname, join, relative, resolve} from "path";
 import detectNewline from "detect-newline";
+import MissingFileError from "./errors/MissingFileError";
+import CLIOptionsError from "./errors/CLIOptionsError";
 
 /**
  * Class holding all the imports from the given paths.
@@ -37,7 +39,7 @@ export default class FileManager {
   constructor(tsconfigPath: string, filePaths: string | string[]) {
     // Read the ts config.
     const configPath = findConfigFile(tsconfigPath, FileManager.fileExists);
-    if (!configPath) throw new Error("Couldn't find tsconfig");
+    if (!configPath) throw new MissingFileError("Couldn't find tsconfig.");
     this.tsConfig = readConfigFile(configPath, FileManager.readFile);
 
     // Read the .ts files.
@@ -53,7 +55,7 @@ export default class FileManager {
     const fullPath = resolve(path);
     const content = FileManager.readFile(fullPath);
     // TODO: make better error here
-    if (!content) throw new Error("couldn't find file");
+    if (!content) throw new MissingFileError("Couldn't find file.", fullPath);
     const sourceFile = createSourceFile(
       fullPath,
       content,
@@ -137,6 +139,10 @@ export default class FileManager {
       }
       return filePaths;
     }
-    throw new Error("Given path is neither a file nor a directory");
+    throw new CLIOptionsError(
+      "Given path is neither a file nor a directory.",
+      "_",
+      path
+    );
   }
 }

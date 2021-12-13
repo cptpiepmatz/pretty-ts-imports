@@ -9,6 +9,7 @@ import {
 } from "../sort_rules/builtins/builtinImportElementCompareFunctions";
 import Import from "./Import";
 import {RequiredFunction} from "../config/OnDemandTranspiler";
+import InvalidConfigError from "../errors/InvalidConfigError";
 
 export default class ImportSorter {
   // TODO: document me
@@ -36,14 +37,22 @@ export default class ImportSorter {
 
     for (let sortImport of sortImports) {
       if (!importCompareFunctions[sortImport]) {
-        throw new Error("Could not find import compare function: " + sortImport);
+        throw new InvalidConfigError(
+          "Could not find import compare function.",
+          "sortImports",
+          sortImport
+        );
       }
       this.sortImportOrder.push(importCompareFunctions[sortImport]);
     }
 
     for (let sortImportElement of sortImportElements) {
       if (!importElementCompareFunctions[sortImportElement]) {
-        throw new Error("Could not find import element compare function: " + sortImportElement);
+        throw new InvalidConfigError(
+          "Could not fin import element compare function.",
+          "sortImportElement",
+          sortImportElement
+        );
       }
       this.sortImportElementOrder
         .push(importElementCompareFunctions[sortImportElement]);
