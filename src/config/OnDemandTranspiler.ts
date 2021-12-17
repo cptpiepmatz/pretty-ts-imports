@@ -1,12 +1,11 @@
 import {dirname, join, resolve} from "path";
 import {readFileSync} from "fs";
 import {parse} from "json5";
-import {CompilerOptions} from "typescript";
+import {CompilerOptions, transpile as tsTranspile} from "typescript";
 import ImportCompareFunction from "../sort_rules/ImportCompareFunction";
 import ImportElementCompareFunction
   from "../sort_rules/ImportElementCompareFunction";
 import SeparateByFunction from "../sort_rules/SeparateByFunction";
-import {transpile as tsTranspile} from "typescript";
 import requireFromString from "require-from-string";
 import OnDemandTranspileError from "../errors/OnDemandTranspileError";
 
@@ -14,14 +13,28 @@ import OnDemandTranspileError from "../errors/OnDemandTranspileError";
 export type RequiredFunction =
   ImportCompareFunction | ImportElementCompareFunction | SeparateByFunction;
 
+/**
+ * Class for transpiling external injected functions.
+ *
+ * Functions injected are expected to be written in Typescript and therefore
+ * need to be transpiled into Javascript to use them in the code.
+ * This class does exactly this.
+ */
 export default class OnDemandTranspiler {
 
-  // TODO: doc me
   // TODO: test me
 
+  /** The compiler options to transpile the files against. */
   private readonly compilerOptions: CompilerOptions;
+
+  /** The path of the primp config. */
   private readonly configPath: string | undefined;
 
+  /**
+   * Constructor
+   * @param tsConfigPath Path of the typescript config to transpile against
+   * @param configPath Path of the primp config
+   */
   constructor(tsConfigPath: string, configPath: string | undefined) {
     this.configPath = configPath;
     let tsConfigContent = readFileSync(

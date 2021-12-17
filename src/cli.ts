@@ -4,7 +4,9 @@ import ConfigHandler from "./config/ConfigHandler";
 import ImportSorter from "./import_management/ImportSorter";
 import ImportSeparator from "./import_management/ImportSeparator";
 import ImportIntegrator from "./import_management/ImportIntegrator";
-import OnDemandTranspiler, {RequiredFunction} from "./config/OnDemandTranspiler";
+import OnDemandTranspiler, {
+  RequiredFunction
+} from "./config/OnDemandTranspiler";
 import watch from "node-watch";
 import {join, relative, resolve} from "path";
 import {SourceFile} from "typescript";

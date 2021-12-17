@@ -1,4 +1,3 @@
-import ImportElement from "../../import_management/ImportElement";
 import ImportElementCompareFunction from "../ImportElementCompareFunction";
 
 /**

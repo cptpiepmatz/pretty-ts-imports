@@ -9,6 +9,7 @@ export {default as ImportSource} from "./import_management/ImportSource";
 
 // Exporting the config related stuff
 import * as config from "./config";
+
 export {config};
 
 // Exporting the sort rules

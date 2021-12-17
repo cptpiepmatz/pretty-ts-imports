@@ -7,14 +7,15 @@ import {
   SyntaxKind
 } from "typescript";
 import {
-  accessSync, mkdirSync,
+  accessSync,
+  mkdirSync,
   readdirSync,
   readFileSync,
   statSync,
   writeFileSync
 } from "fs";
 import Import from "./import_management/Import";
-import {dirname, join, relative, resolve} from "path";
+import {dirname, join, resolve} from "path";
 import detectNewline from "detect-newline";
 import MissingFileError from "./errors/MissingFileError";
 import CLIOptionsError from "./errors/CLIOptionsError";
@@ -24,6 +25,7 @@ import CLIOptionsError from "./errors/CLIOptionsError";
  */
 export default class FileManager {
 
+  /** The typescript config. */
   readonly tsConfig: ReturnType<typeof readConfigFile>;
 
   /** The imported files in their read in form. */
@@ -51,10 +53,14 @@ export default class FileManager {
 
   }
 
+  /**
+   * Read the files from the disk.
+   * Also used in the constructor.
+   * @param path Path for the file to read in
+   */
   reloadFromDisk(path: string) {
     const fullPath = resolve(path);
     const content = FileManager.readFile(fullPath);
-    // TODO: make better error here
     if (!content) throw new MissingFileError("Couldn't find file.", fullPath);
     const sourceFile = createSourceFile(
       fullPath,
@@ -71,6 +77,12 @@ export default class FileManager {
     this.imports.set(fullPath, {sourceFile, imports});
   }
 
+  /**
+   * Writes the new content into the path.
+   * @param path Path of the file
+   * @param newContent The new content
+   * @param newPath If given, the new entry point path
+   */
   write(path: string, newContent: string, newPath?: string) {
     let entry = this.imports.get(resolve(path));
     if (entry!.sourceFile.text === newContent) return;

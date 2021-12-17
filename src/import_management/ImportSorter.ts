@@ -11,30 +11,48 @@ import Import from "./Import";
 import {RequiredFunction} from "../config/OnDemandTranspiler";
 import InvalidConfigError from "../errors/InvalidConfigError";
 
+/** Class for sorting imports and the import elements. */
 export default class ImportSorter {
   // TODO: document me
   // TODO: test me
 
+  /**
+   * Array of import compare functions.
+   * The order of elements is important here.
+   */
   readonly sortImportOrder: ImportCompareFunction[] = [];
+  /**
+   * Array of import element compare functions.
+   * The order of elements is important here.
+   */
   readonly sortImportElementOrder: ImportElementCompareFunction[] = [];
 
+  /**
+   * Constructor
+   * @param sortImports Array of compare function names
+   * @param sortImportElements Array of compare function names
+   * @param requireFunctions Record of external functions mapped by their names
+   */
   constructor(
     sortImports: string[],
     sortImportElements: string[],
     requireFunctions?: Record<string, RequiredFunction>
   ) {
+    // merges the builtin compare functions with the external ones
     const importCompareFunctions = Object.assign(
       {},
       builtinImportCompareFunctions,
       requireFunctions
     ) as Record<string, ImportCompareFunction>;
 
+    // merges the builtin compare functions with the external ones
     const importElementCompareFunctions = Object.assign(
       {},
       builtinImportElementCompareFunctions,
       requireFunctions
     ) as Record<string, ImportElementCompareFunction>;
 
+    // tries to order the compare functions by the config
     for (let sortImport of sortImports) {
       if (!importCompareFunctions[sortImport]) {
         throw new InvalidConfigError(
@@ -46,6 +64,7 @@ export default class ImportSorter {
       this.sortImportOrder.push(importCompareFunctions[sortImport]);
     }
 
+    // tries to order the compare functions by the config
     for (let sortImportElement of sortImportElements) {
       if (!importElementCompareFunctions[sortImportElement]) {
         throw new InvalidConfigError(

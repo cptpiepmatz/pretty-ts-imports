@@ -1,5 +1,4 @@
 import ImportCompareFunction from "../ImportCompareFunction";
-import Import from "../../import_management/Import";
 
 /**
  * Compares two compare_imports for their package.

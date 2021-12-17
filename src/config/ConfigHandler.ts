@@ -6,10 +6,10 @@ import * as YAML from "yaml";
 import Config from "./Config";
 import FullConfig from "./FullConfig";
 import {
+  defaultFormatting,
   defaultGroupBy,
   defaultSortImportElements,
-  defaultSortImports,
-  defaultFormatting
+  defaultSortImports
 } from "./defaultConfig";
 import UnsupportedFileFormatError from "../errors/UnsupportedFileFormatError";
 
@@ -20,8 +20,8 @@ export const supportedFormats = [
   ".yaml"
 ];
 
-/** Supported config file names. ("primp" is recommended.) */
-export const supportedConfigNames = [
+/** Expected config file names. ("primp" is recommended.) */
+export const expectedConfigNames = [
   "primp",
   "pretty-ts-imports",
   "prettyTsImports".toLowerCase()
@@ -36,10 +36,19 @@ export default class ConfigHandler implements FullConfig {
 
   // TODO: test me
 
+  /** The formatting the config handler found. */
   readonly formatting: Required<FormattingOptions>;
+
+  /** The import compare function names. */
   readonly sortImports: string[];
+
+  /** The import element compare function names. */
   readonly sortImportElements: string[];
+
+  /** The separate by function names. */
   readonly separateBy: string[];
+
+  /** A record of the require function names and their paths. */
   readonly require: Record<string, string>;
 
   /**
@@ -80,7 +89,7 @@ export default class ConfigHandler implements FullConfig {
   static isSupportedConfigFile(configPath: string): boolean {
     let ext = extname(configPath);
     if (supportedFormats.includes(ext)) {
-      if (supportedConfigNames.includes(
+      if (expectedConfigNames.includes(
         basename(configPath, ext).toLowerCase())
       ) {
         return true;

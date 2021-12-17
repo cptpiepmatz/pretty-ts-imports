@@ -5,6 +5,12 @@ import ImportSource from "./ImportSource";
 import FormattingOptions from "./FormattingOptions";
 import {defaultFormatting} from "../config/defaultConfig";
 
+/**
+ * Class for easy representation of an import.
+ *
+ * This class maps the import declarations to simple attributes.
+ * Used for comparing them against each other.
+ */
 export default class Import {
 
   /** The source of the import, the right side. */
@@ -27,7 +33,7 @@ export default class Import {
 
   /**
    * Constructor for the import.
-   * Directly reads out the declaration to make it's uses easier.
+   * Directly reads out the declaration to make its uses easier.
    * @param importDeclaration declaration from the AST
    * @param sourceFile source file to get the texts from it
    */
