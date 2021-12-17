@@ -1,11 +1,4 @@
-import {
-  createSourceFile,
-  findConfigFile,
-  ImportDeclaration,
-  readConfigFile,
-  SourceFile,
-  SyntaxKind
-} from "typescript";
+import detectNewline from "detect-newline";
 import {
   accessSync,
   mkdirSync,
@@ -14,11 +7,19 @@ import {
   statSync,
   writeFileSync
 } from "fs";
-import Import from "./import_management/Import";
 import {dirname, join, resolve} from "path";
-import detectNewline from "detect-newline";
-import MissingFileError from "./errors/MissingFileError";
+import {
+  ImportDeclaration,
+  SourceFile,
+  SyntaxKind,
+  createSourceFile,
+  findConfigFile,
+  readConfigFile
+} from "typescript";
+
 import CLIOptionsError from "./errors/CLIOptionsError";
+import MissingFileError from "./errors/MissingFileError";
+import Import from "./import_management/Import";
 
 /**
  * Class holding all the imports from the given paths.

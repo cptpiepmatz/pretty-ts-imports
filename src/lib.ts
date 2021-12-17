@@ -1,3 +1,8 @@
+// Exporting the config related stuff
+import * as config from "./config";
+
+export {config};
+
 // Exporting the import management
 export {default as FileManager} from "./FileManager";
 export {default as FormattingOptions} from "./import_management/FormattingOptions";
@@ -6,11 +11,6 @@ export {default as ImportElement} from "./import_management/ImportElement";
 export {default as ImportIntegrator} from "./import_management/ImportIntegrator";
 export {default as ImportSorter} from "./import_management/ImportSorter";
 export {default as ImportSource} from "./import_management/ImportSource";
-
-// Exporting the config related stuff
-import * as config from "./config";
-
-export {config};
 
 // Exporting the sort rules
 export {default as ImportCompareFunction} from "./sort_rules/ImportCompareFunction";

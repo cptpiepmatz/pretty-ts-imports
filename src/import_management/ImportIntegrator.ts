@@ -1,6 +1,7 @@
 import FormattingOptions from "./FormattingOptions";
 import Import from "./Import";
 import {SourceFile, SyntaxKind} from "typescript";
+import IntegrationError from "../errors/IntegrationError";
 
 /** Class for integrating imports back into their source file. */
 export default class ImportIntegrator {
@@ -46,7 +47,12 @@ export default class ImportIntegrator {
       if (statement.kind !== SyntaxKind.ImportDeclaration) break;
       importEnd = statement.end;
     }
-    if (importEnd === -1) throw new Error("Couldn't find the end of imports");
+    if (importEnd === -1) {
+      throw new IntegrationError(
+        "Couldn't find the end of imports",
+        sourceFile.text
+      );
+    }
     return sourceFile.text.slice(0, importStart) +
       this.stringifyImports(imports) +
       sourceFile.text.slice(importEnd)

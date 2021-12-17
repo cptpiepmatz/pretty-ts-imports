@@ -1,16 +1,17 @@
-import CLIHandler from "./CLIHandler";
-import FileManager from "./FileManager";
-import ConfigHandler from "./config/ConfigHandler";
-import ImportSorter from "./import_management/ImportSorter";
-import ImportSeparator from "./import_management/ImportSeparator";
-import ImportIntegrator from "./import_management/ImportIntegrator";
-import OnDemandTranspiler, {
-  RequiredFunction
-} from "./config/OnDemandTranspiler";
 import watch from "node-watch";
 import {join, relative, resolve} from "path";
 import {SourceFile} from "typescript";
+
+import CLIHandler from "./CLIHandler";
+import FileManager from "./FileManager";
+import ConfigHandler from "./config/ConfigHandler";
+import OnDemandTranspiler, {
+  RequiredFunction
+} from "./config/OnDemandTranspiler";
 import Import from "./import_management/Import";
+import ImportIntegrator from "./import_management/ImportIntegrator";
+import ImportSeparator from "./import_management/ImportSeparator";
+import ImportSorter from "./import_management/ImportSorter";
 
 // TODO: get some fancy logging
 
