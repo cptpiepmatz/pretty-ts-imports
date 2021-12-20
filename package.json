@@ -5,6 +5,7 @@
   "main": "src/cli.ts",
   "scripts": {
     "test": "jasmine-ts",
+    "coverage": "nyc jasmine-ts",
     "run-dev": "ts-node .",
     "build": "npm run build:clean && npm run build:tsc && npm run build:bundle && npm run build:minify",
     "build:clean": "del-cli dist & del-cli out",
@@ -41,6 +42,7 @@
     "del-cli": "^4.0.1",
     "jasmine": "^3.10.0",
     "jasmine-ts": "^0.4.0",
+    "nyc": "^15.1.0",
     "terser": "^5.10.0",
     "ts-node": "^10.4.0",
     "typedoc": "^0.22.10"
