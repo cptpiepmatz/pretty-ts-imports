@@ -7,11 +7,11 @@ const exampleFilePath = join(__dirname, "./file-examples/FileManagerReadIn.ts");
 describe("FileManager", function() {
   it("should get constructed correctly", function() {
     const fileManager = new FileManager(tsConfigPath, exampleFilePath);
+    const [path, {imports}] = Array.from(fileManager.imports.entries())[0];
 
-    expect(fileManager.imports.length).toBe(1);
-    expect(fileManager.imports[0].path).toBe(exampleFilePath);
+    expect(fileManager.imports.size).toBe(1);
+    expect(path).toBe(exampleFilePath);
 
-    const imports = fileManager.imports[0].imports;
     expect(imports.length).toBe(2);
     expect(imports[0].toString())
       .toBe('import elements, {a, b, c} from "package-a";');
