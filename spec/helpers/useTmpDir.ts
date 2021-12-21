@@ -8,7 +8,7 @@ import {join} from "path";
  * @param whileTmpDir Function to pass while the temporary directory exists
  */
 export default function useTmpDir(whileTmpDir: (path: string) => void) {
-  const genericTmpPath = join(__dirname, "../tmp");
+  const genericTmpPath = join(__dirname, "../../tmp");
   mkdirSync(genericTmpPath, {recursive: true});
   let tmpPath = mkdtempSync(join(genericTmpPath, "/"));
   whileTmpDir(tmpPath);

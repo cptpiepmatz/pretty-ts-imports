@@ -1,10 +1,11 @@
 import {join} from "path";
 import FileManager from "../src/FileManager";
-import {mkdirSync, readFileSync, copyFileSync, writeFileSync} from "fs";
+import {copyFileSync, readFileSync, statSync, writeFileSync} from "fs";
 import useTmpDir from "./helpers/useTmpDir";
 
 const tsConfigPath = join(__dirname, "../tsconfig.json");
 const exampleFilePath = join(__dirname, "./file-examples/FileManagerReadIn.ts");
+const invalidPath = "https://cptpiepmatz.de";
 
 describe("FileManager", function() {
   it("should get constructed correctly", function() {
@@ -21,6 +22,12 @@ describe("FileManager", function() {
       .toBe('import * as someThing from "package-b";');
   });
 
+  it("should throw an error if no ts config could be found", function() {
+    expect(() => {
+      new FileManager(invalidPath, "");
+    }).toThrowError();
+  });
+
   it("should find files correctly", function() {
     const startPath = join(__dirname, "./file-examples");
     const expectedNonRecursive = [
@@ -32,6 +39,13 @@ describe("FileManager", function() {
 
     expect(FileManager.getFiles(startPath)).toEqual(expectedNonRecursive);
     expect(FileManager.getFiles(startPath, true)).toEqual(expectedRecursive);
+
+    // test if the file is directly returned if pointing to a file
+    const directPath = join(startPath, "FileManagerReadIn.ts");
+    expect(FileManager.getFiles(directPath)).toEqual(directPath);
+
+    // test for the error
+    expect(() => FileManager.getFiles(invalidPath)).toThrowError();
   });
 
   it("should write the files correctly", function() {
@@ -49,11 +63,18 @@ describe("FileManager", function() {
       let fileContent = readFileSync(filePath, "utf-8");
       expect(fileContent).toMatch(content);
 
+      // test if the file updates if no content is new
+      fileManager.reloadFromDisk(filePath);
+      let fileStats = statSync(filePath);
+      fileManager.write(filePath, content);
+      let updatedStats = statSync(filePath);
+      expect(fileStats.mtime).toEqual(updatedStats.mtime);
+
       // test with the new path
-      const newPath = join(tmpPath, "subDir", "file.ts");
+      const newPath = join(tmpPath, "file.ts");
       fileManager.write(filePath, content, newPath);
       let newFileContent = readFileSync(newPath, "utf-8");
-      expect(fileContent).toMatch(content);
+      expect(newFileContent).toMatch(content);
     });
   });
 
@@ -78,5 +99,12 @@ describe("FileManager", function() {
       // check if new content is correct
       expect(newText).toContain(newContent);
     });
+  });
+
+  it("should throw an error if the file could not be loaded", function() {
+    const fileManager = new FileManager(tsConfigPath, exampleFilePath);
+    expect(() => {
+      fileManager.reloadFromDisk(invalidPath);
+    }).toThrowError();
   });
 });

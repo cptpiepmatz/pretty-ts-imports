@@ -87,6 +87,7 @@ export default class FileManager {
   write(path: string, newContent: string, newPath?: string) {
     let entry = this.imports.get(resolve(path));
     if (entry!.sourceFile.text === newContent) return;
+    /* istanbul ignore next */
     const eol = detectNewline(entry!.sourceFile.text) ?? "\n";
     mkdirSync(dirname(newPath ?? path), {recursive: true});
     writeFileSync(
@@ -120,6 +121,7 @@ export default class FileManager {
       return readFileSync(path, "utf8");
     }
     catch (e) {
+      /* istanbul ignore next */
       return;
     }
   }
@@ -133,25 +135,29 @@ export default class FileManager {
    * @param recursive If this should work recursively.
    */
   static getFiles(path: string, recursive?: boolean): string | string[] {
-    const stat = statSync(path);
-    if (stat.isFile()) return path;
-    if (stat.isDirectory()) {
-      let filePaths: string[] = [];
-      if (recursive) {
-        for (let innerPath of readdirSync(path)) {
-          filePaths = filePaths
-            .concat(FileManager.getFiles(join(path, innerPath), true));
+    try {
+      const stat = statSync(path);
+      if (stat.isFile()) return path;
+      /* istanbul ignore next */
+      if (stat.isDirectory()) {
+        let filePaths: string[] = [];
+        if (recursive) {
+          for (let innerPath of readdirSync(path)) {
+            filePaths = filePaths
+              .concat(FileManager.getFiles(join(path, innerPath), true));
+          }
         }
-      }
-      else {
-        for (let innerPath of readdirSync(path)) {
-          const joinedInnerPath = join(path, innerPath);
-          const innerStat = statSync(joinedInnerPath);
-          if (innerStat.isFile()) filePaths.push(joinedInnerPath);
+        else {
+          for (let innerPath of readdirSync(path)) {
+            const joinedInnerPath = join(path, innerPath);
+            const innerStat = statSync(joinedInnerPath);
+            if (innerStat.isFile()) filePaths.push(joinedInnerPath);
+          }
         }
+        return filePaths;
       }
-      return filePaths;
     }
+    catch (e) {}
     throw new CLIOptionsError(
       "Given path is neither a file nor a directory.",
       "_",
