@@ -59,7 +59,7 @@ export default class FileManager {
    * Also used in the constructor.
    * @param path Path for the file to read in
    */
-  reloadFromDisk(path: string) {
+  reloadFromDisk(path: string): void {
     const fullPath = resolve(path);
     const content = FileManager.readFile(fullPath);
     if (!content) throw new MissingFileError("Couldn't find file.", fullPath);
