@@ -1,4 +1,4 @@
-import {mkdirSync, mkdtempSync, rmdirSync} from "fs";
+import {mkdirSync, mkdtempSync, rmdirSync, rmSync} from "fs";
 import {join} from "path";
 
 /**
@@ -12,5 +12,5 @@ export default function useTmpDir(whileTmpDir: (path: string) => void) {
   mkdirSync(genericTmpPath, {recursive: true});
   let tmpPath = mkdtempSync(join(genericTmpPath, "/"));
   whileTmpDir(tmpPath);
-  rmdirSync(tmpPath);
+  rmSync(tmpPath, {recursive: true});
 }
