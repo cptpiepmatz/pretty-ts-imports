@@ -6,6 +6,9 @@ import {
   SyntaxKind
 } from "typescript";
 import ImportElement from "../../src/import_management/ImportElement";
+import ImportElementCompareFunction
+  from "../../src/sort_rules/ImportElementCompareFunction";
+import FormattingOptions from "../../src/import_management/FormattingOptions";
 
 const importedStuff = `
 import {b, c, a} from "alphabet";
@@ -19,6 +22,12 @@ import {Charlie, Delta} from "types";
 
 const superLongImported =
   'import {alfa, bravo, charlie, delta, echo, foxtrot, golf, hotel, india} from "phonetic"';
+
+const superLongDefaultImport =
+  `import SomeSuperLongDefaultImportThatMayTroublesBecauseItsThisLongOrReallyLong from "stuff";`;
+
+const superLongSideEffectImport =
+  `import "./a/path/that/is/probably/super/deep/and/therefore/not/possible/to/split/correctly";`;
 
 describe("Import", function() {
   const sourceFile = createSourceFile("mock.ts", importedStuff, ScriptTarget.ES2021);
@@ -34,6 +43,26 @@ describe("Import", function() {
   const overflowingImport = new Import(
     overflowingSourceFile.statements[0] as ImportDeclaration,
     overflowingSourceFile
+  );
+
+  const overflowingDefaultSourcefile = createSourceFile(
+    "overflowDefault.ts",
+    superLongDefaultImport,
+    ScriptTarget.ES2021
+  );
+  const overflowingDefaultImport = new Import(
+    overflowingDefaultSourcefile.statements[0] as ImportDeclaration,
+    overflowingDefaultSourcefile
+  );
+
+  const overflowingSideEffectSourcefile = createSourceFile(
+    "overflowSideEffect.ts",
+    superLongSideEffectImport,
+    ScriptTarget.ES2021
+  );
+  const overflowingSideEffectImport = new Import(
+    overflowingSideEffectSourcefile.statements[0] as ImportDeclaration,
+    overflowingSideEffectSourcefile
   );
 
   it("should be 7 Imports", function() {
@@ -70,6 +99,19 @@ import {
 } from "phonetic"
       `.trim()
     );
+
+    // break at the "from" as last resort
+    let stringifiedDefault = overflowingDefaultImport.toString({maxColumns, indent});
+    expect(stringifiedDefault.split("\n").length).toBe(2);
+    expect(stringifiedDefault).toMatch(`
+import SomeSuperLongDefaultImportThatMayTroublesBecauseItsThisLongOrReallyLong
+  from "stuff";
+    `.trim());
+
+    // finally something may not be broken down
+    let stringifiedNoBreak = overflowingSideEffectImport.toString({maxColumns, indent});
+    expect(stringifiedNoBreak.split("\n").length).toBe(1);
+    expect(stringifiedNoBreak).toMatch(superLongSideEffectImport);
   });
 
   it("should be that imports without default imports, show these as undefined", function() {
@@ -161,5 +203,69 @@ import {
         expect(element.isFunctionOrObject).toBe(!shouldBeType);
       }
     }
+  });
+
+  it("should get sorted", function() {
+    const basicSort: ImportElementCompareFunction = function(a, b) {
+      return a.name.localeCompare(b.name);
+    }
+
+    const beforeSort = 'import {b, c, a} from "alphabet";';
+    const afterSort = 'import {a, b, c} from "alphabet";';
+    const basicSource = createSourceFile(
+      "mock.ts",
+      beforeSort,
+      ScriptTarget.ES2021
+    );
+    const basicImport = new Import(
+      basicSource.statements[0] as ImportDeclaration,
+      basicSource
+    );
+
+    expect(basicImport.toString()).toMatch(beforeSort);
+    expect(basicImport.sort(basicSort).toString()).toMatch(afterSort);
+  });
+
+  it("should handle imports with only side-effects", function() {
+    const sideEffectContent = `import "SideEffect";`;
+    const sideEffectsSource = createSourceFile(
+      "sideEffects.ts",
+      sideEffectContent,
+      ScriptTarget.ES2021
+    );
+    const sideEffectImport = new Import(
+      sideEffectsSource.statements[0] as ImportDeclaration,
+      sideEffectsSource
+    );
+
+    expect(sideEffectImport.source).toEqual(
+      {name: "SideEffect", isPackage: true, isRelative: false}
+    );
+    expect(sideEffectImport.elements.length).toBe(0);
+    expect(sideEffectImport.toString()).toMatch(sideEffectContent);
+  });
+
+  it("should be able to stringify both quote styles", function() {
+    const double: FormattingOptions = {quoteStyle: "double"};
+    const single: FormattingOptions = {quoteStyle: "single"};
+
+    expect(imports[0].toString(double)).toMatch(`import {b, c, a} from "alphabet";`);
+    expect(imports[0].toString(single)).toMatch(`import {b, c, a} from 'alphabet';`);
+  });
+
+  it("should be handle to typed imports", function() {
+    const typeContent = `import type {SomeThing} from "some-packages";`;
+    const typeSource = createSourceFile(
+      "type.ts",
+      typeContent,
+      ScriptTarget.ES2021
+    );
+    const typeImport = new Import(
+      typeSource.statements[0] as ImportDeclaration,
+      typeSource
+    );
+
+    expect(typeImport.toString()).toMatch(typeContent);
+    expect(typeImport.isTypeOnly).toBeTrue();
   });
 });

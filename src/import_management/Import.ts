@@ -1,4 +1,9 @@
-import {ImportDeclaration, SourceFile, SyntaxKind} from "typescript";
+import {
+  ImportDeclaration,
+  ImportEqualsDeclaration,
+  SourceFile,
+  SyntaxKind
+} from "typescript";
 
 import ImportElement from "./ImportElement";
 import ImportSource from "./ImportSource";
@@ -185,9 +190,13 @@ export default class Import {
     }
     output += importElements.join(", ");
 
-    output += ` from ${quoteSymbol}${this.source.name}${quoteSymbol};`;
+    // no "from" if import only for side effects
+    if (this.isNamed || this.isNamespace || this.defaultElement) output += " from ";
+
+    output += `${quoteSymbol}${this.source.name}${quoteSymbol};`;
 
     if (maxColumnsCheck(output, maxColumns)) {
+      // try to break on the import elements
       let splitOutput = output.split(/[{}]/);
       if (splitOutput.length === 3) {
         let splitElements = splitOutput[1].split(", ");
@@ -203,6 +212,14 @@ export default class Import {
       // TODO: check for line breaks like this:
       // import ImportElementCompareFunction
       //   from "./sort_rules/ImportElementCompareFunction";
+    }
+
+    if (maxColumnsCheck(output, maxColumns)) {
+      // try to break via reseating the "from"
+      let splitOutput = output.split(" from ");
+      if (splitOutput.length === 2) {
+        output = splitOutput[0] + "\n" + indentString + "from " + splitOutput[1];
+      }
     }
 
     return output;
