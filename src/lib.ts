@@ -1,7 +1,8 @@
-// Exporting the config related stuff
 import * as config from "./config";
+import * as error from "./errors";
 
-export {config};
+// Exporting namespaces
+export {config, error};
 
 // Exporting the import management
 export {default as FileManager} from "./FileManager";
