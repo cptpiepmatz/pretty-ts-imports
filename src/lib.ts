@@ -1,8 +1,9 @@
 import * as config from "./config";
 import * as error from "./errors";
+import * as builtin from "./sort_rules/builtins";
 
 // Exporting namespaces
-export {config, error};
+export {config, error, builtin};
 
 // Exporting the import management
 export {default as FileManager} from "./FileManager";
@@ -17,4 +18,3 @@ export {default as ImportSource} from "./import_management/ImportSource";
 export {default as ImportCompareFunction} from "./sort_rules/ImportCompareFunction";
 export {default as ImportElementCompareFunction} from "./sort_rules/ImportElementCompareFunction";
 export {default as SeparateByFunction} from "./sort_rules/SeparateByFunction";
-export {builtin} from "./sort_rules/builtins/index";

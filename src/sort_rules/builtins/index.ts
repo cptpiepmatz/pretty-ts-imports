@@ -1,11 +1,4 @@
-import {builtinImportCompareFunctions} from "./builtinImportCompareFunctions";
-import {
-  builtinImportElementCompareFunctions
-} from "./builtinImportElementCompareFunctions";
-import {builtinSeparateByFunctions} from "./builtinSeparateByFunctions";
+export {builtinImportCompareFunctions} from "./builtinImportCompareFunctions";
+export {builtinImportElementCompareFunctions} from "./builtinImportElementCompareFunctions";
+export {builtinSeparateByFunctions} from "./builtinSeparateByFunctions";
 
-export const builtin = {
-  importCompareFunctions: builtinImportCompareFunctions,
-  importElementCompareFunctions: builtinImportElementCompareFunctions,
-  separateByFunctions: builtinSeparateByFunctions
-}
