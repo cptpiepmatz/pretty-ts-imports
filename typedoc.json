@@ -1,4 +1,5 @@
 {
+  "name": "pretty-ts-imports (a.k.a. primp)",
   "entryPoints": ["src/lib.ts"],
   "out": "docs",
   "sort": ["static-first", "alphabetical"],
