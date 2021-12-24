@@ -15,7 +15,7 @@ describe("FileManager", function() {
     expect(fileManager.imports.size).toBe(1);
     expect(path).toBe(exampleFilePath);
 
-    expect(imports.length).toBe(2);
+    expect(imports).toHaveSize(2);
     expect(imports[0].toString())
       .toBe('import elements, {a, b, c} from "package-a";');
     expect(imports[1].toString())

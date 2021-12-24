@@ -66,7 +66,7 @@ describe("Import", function() {
   );
 
   it("should be 7 Imports", function() {
-    expect(imports.length).toBe(7);
+    expect(imports).toHaveSize(7);
   });
 
   it("should be the same output to stringify as the input", function() {
@@ -102,7 +102,7 @@ import {
 
     // break at the "from" as last resort
     let stringifiedDefault = overflowingDefaultImport.toString({maxColumns, indent});
-    expect(stringifiedDefault.split("\n").length).toBe(2);
+    expect(stringifiedDefault.split("\n")).toHaveSize(2);
     expect(stringifiedDefault).toMatch(`
 import SomeSuperLongDefaultImportThatMayTroublesBecauseItsThisLongOrReallyLong
   from "stuff";
@@ -110,7 +110,7 @@ import SomeSuperLongDefaultImportThatMayTroublesBecauseItsThisLongOrReallyLong
 
     // finally something may not be broken down
     let stringifiedNoBreak = overflowingSideEffectImport.toString({maxColumns, indent});
-    expect(stringifiedNoBreak.split("\n").length).toBe(1);
+    expect(stringifiedNoBreak.split("\n")).toHaveSize(1);
     expect(stringifiedNoBreak).toMatch(superLongSideEffectImport);
   });
 
@@ -167,7 +167,7 @@ import SomeSuperLongDefaultImportThatMayTroublesBecauseItsThisLongOrReallyLong
       expect(importElement.name).toBe("everything");
       expect(importElement.originalName).toBe("*");
       expect(importElement.isType).toBeFalse();
-      expect(imports[i].elements.length).toBe(1);
+      expect(imports[i].elements).toHaveSize(1);
     }
   });
 
@@ -241,7 +241,7 @@ import SomeSuperLongDefaultImportThatMayTroublesBecauseItsThisLongOrReallyLong
     expect(sideEffectImport.source).toEqual(
       {name: "SideEffect", isPackage: true, isRelative: false}
     );
-    expect(sideEffectImport.elements.length).toBe(0);
+    expect(sideEffectImport.elements).toHaveSize(0);
     expect(sideEffectImport.toString()).toMatch(sideEffectContent);
   });
 
