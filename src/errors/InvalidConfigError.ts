@@ -1,22 +1,18 @@
 /** Error class for invalid config files. */
 export default class InvalidConfigError extends Error {
 
-  /** The name of the key that is invalid. */
-  readonly configKey: string;
-
-  /** The value in the config that is invalid. */
-  readonly configValue: any;
-
   /**
    * Constructor.
-   * @param message
-   * @param configKey
-   * @param configValue
+   * @param message Message of the error
+   * @param configKey The name of the key that is invalid
+   * @param configValue The value in the config that is invalid
    */
-  constructor(message: string, configKey: string, configValue: any) {
+  constructor(
+    message: string,
+    readonly configKey: string,
+    readonly configValue: any
+  ) {
     super(message);
-    this.configKey = configKey;
-    this.configValue = configValue;
   }
 
 }

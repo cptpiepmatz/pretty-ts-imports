@@ -3,9 +3,10 @@ export default class OnDemandTranspileError extends Error {
 
   /**
    * Constructor for on demand transpile errors.
-   * @param message
+   * @param message Message of the error
+   * @param path Path of the issue
    */
-  constructor(message: string) {
+  constructor(message: string, readonly path?: string) {
     super(message);
   }
 
