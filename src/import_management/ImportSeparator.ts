@@ -7,7 +7,6 @@ import InvalidConfigError from "../errors/InvalidConfigError";
 
 /** Class to insert the separators into the imports. */
 export default class ImportSeparator {
-  // TODO: doc me
   // TODO: test me
 
   /**
