@@ -9,12 +9,12 @@ import {
 } from "fs";
 import {dirname, join, resolve} from "path";
 import {
-  ImportDeclaration,
-  SourceFile,
-  SyntaxKind,
   createSourceFile,
   findConfigFile,
-  readConfigFile
+  ImportDeclaration,
+  readConfigFile,
+  SourceFile,
+  SyntaxKind
 } from "typescript";
 
 import CLIOptionsError from "./errors/CLIOptionsError";

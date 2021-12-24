@@ -1,9 +1,4 @@
-import {
-  ImportDeclaration,
-  ImportEqualsDeclaration,
-  SourceFile,
-  SyntaxKind
-} from "typescript";
+import {ImportDeclaration, SourceFile, SyntaxKind} from "typescript";
 
 import ImportElement from "./ImportElement";
 import ImportSource from "./ImportSource";
