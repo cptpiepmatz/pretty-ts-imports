@@ -7,7 +7,7 @@ import Config from "./Config";
 import FullConfig from "./FullConfig";
 import {
   defaultFormatting,
-  defaultGroupBy,
+  defaultSeparateBy,
   defaultSortImportElements,
   defaultSortImports
 } from "./defaultConfig";
@@ -72,7 +72,7 @@ export default class ConfigHandler implements FullConfig {
 
     this.sortImports = config.sortImports ?? defaultSortImports;
     this.sortImportElements = config.sortImportElements ?? defaultSortImportElements;
-    this.separateBy = config.separateBy ?? defaultGroupBy;
+    this.separateBy = config.separateBy ?? defaultSeparateBy;
     this.require = config.require ?? {};
     this.formatting = Object.assign({}, defaultFormatting, config.formatting);
   }

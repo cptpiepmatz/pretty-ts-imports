@@ -38,7 +38,7 @@ export const defaultSortImports = defaultConfig.sortImports;
 export const defaultSortImportElements = defaultConfig.sortImportElements;
 
 /** Default compare functions to group imports. */
-export const defaultGroupBy = defaultConfig.separateBy;
+export const defaultSeparateBy = defaultConfig.separateBy;
 
 /** Default formatting options. */
 export const defaultFormatting = defaultConfig.formatting;
