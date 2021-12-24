@@ -45,6 +45,7 @@
     "nyc": "^15.1.0",
     "terser": "^5.10.0",
     "ts-node": "^10.4.0",
-    "typedoc": "^0.22.10"
+    "typedoc": "^0.22.10",
+    "typescript-json-schema": "^0.52.0"
   }
 }
