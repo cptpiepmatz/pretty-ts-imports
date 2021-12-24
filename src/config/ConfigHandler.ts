@@ -12,13 +12,7 @@ import {
   defaultSortImports
 } from "./defaultConfig";
 import UnsupportedFileFormatError from "../errors/UnsupportedFileFormatError";
-
-/** Supported config file formats. */
-export const supportedFormats = [
-  ".json",
-  ".json5",
-  ".yaml"
-];
+import SupportedConfigFormat from "./SupportedConfigFormat";
 
 /** Expected config file names. ("primp" is recommended.) */
 export const expectedConfigNames = [
@@ -60,14 +54,15 @@ export default class ConfigHandler implements FullConfig {
     let config: Config = {};
     if (configPath) {
       let configContent = readFileSync(configPath, "utf-8");
-      switch (extname(configPath)) {
-        case ".json":
+      switch (extname(configPath) as SupportedConfigFormat) {
+        case SupportedConfigFormat.JSON:
           config = JSON.parse(configContent);
           break;
-        case ".json5":
+        case SupportedConfigFormat.JSON5:
           config = JSON5.parse(configContent);
           break;
-        case ".yml":
+        case SupportedConfigFormat.YML:
+        case SupportedConfigFormat.YAML:
           config = YAML.parse(configContent);
           break;
         default:
@@ -88,7 +83,7 @@ export default class ConfigHandler implements FullConfig {
    */
   static isSupportedConfigFile(configPath: string): boolean {
     let ext = extname(configPath);
-    if (supportedFormats.includes(ext)) {
+    if (Object.values(SupportedConfigFormat).includes(ext as any)) {
       if (expectedConfigNames.includes(
         basename(configPath, ext).toLowerCase())
       ) {
