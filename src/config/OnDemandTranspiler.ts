@@ -51,13 +51,41 @@ export default class OnDemandTranspiler {
    * @returns A function used to work with other classes
    */
   transpile(sourcePath: string): RequiredFunction {
-    // TODO: add some more detection if something is wrong
     if (!this.configPath) throw new OnDemandTranspileError("No config path given");
     let requirePath = resolve(dirname(this.configPath), sourcePath);
-    let requireContent = readFileSync(requirePath, "utf-8");
-    let transpiled = tsTranspile(requireContent, this.compilerOptions);
-    let required = requireFromString(transpiled);
-    return required.default;
+    let requireContent;
+    try {
+      requireContent = readFileSync(requirePath, "utf-8");
+    }
+    catch (e) {
+      throw new OnDemandTranspileError(
+        "Could not read the file",
+        requirePath
+      );
+    }
+
+    let transpiled;
+    try {
+      transpiled = tsTranspile(requireContent, this.compilerOptions);
+    }
+    catch (e) {
+      throw new OnDemandTranspileError(
+        "Could not transpile the file",
+        requirePath
+      );
+    }
+
+    try {
+      let required = requireFromString(transpiled);
+      return required.default;
+    }
+    catch (e) {
+      throw new OnDemandTranspileError(
+        "Could not require the function",
+        requirePath
+      );
+    }
+
   }
 
 }
