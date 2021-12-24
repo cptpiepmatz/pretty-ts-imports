@@ -12,6 +12,8 @@
     "build:tsc": "tsc",
     "build:bundle": "browserify out/src/cli.js --node -o dist/cli.bundle.js --no-bundle-external",
     "build:minify": "terser dist/cli.bundle.js -o dist/cli.bundle.min.js",
+    "schema:config": "typescript-json-schema src/config/Config.ts Config --tsNodeRegister -o config.schema.json",
+    "schema": "npm run schema:config",
     "docs": "typedoc"
   },
   "repository": {
