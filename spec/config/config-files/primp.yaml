@@ -1,0 +1,12 @@
+sortImports:
+  - compareSources
+sortImportElements:
+  - groupBasenames
+separateBy:
+  - unequalPackageState
+formatting:
+  indent: 4
+  bracketIndent: 1
+  quoteStyle: single
+  maxColumns: 120
+require:
