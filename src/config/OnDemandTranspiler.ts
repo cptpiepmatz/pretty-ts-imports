@@ -36,11 +36,10 @@ export default class OnDemandTranspiler {
    * @param configPath Path of the primp config
    */
   constructor(
-    tsConfig: ReturnType<typeof readConfigFile>,
+    tsConfig: {compilerOptions: CompilerOptions},
     private readonly configPath: string | undefined
   ) {
-    this.configPath = configPath;
-    this.compilerOptions = tsConfig.config.compilerOptions;
+    this.compilerOptions = tsConfig.compilerOptions;
   }
 
   /**

@@ -27,7 +27,7 @@ import Import from "./import_management/Import";
 export default class FileManager {
 
   /** The typescript config. */
-  readonly tsConfig: ReturnType<typeof readConfigFile>;
+  readonly tsConfig: ReturnType<typeof readConfigFile>["config"];
 
   /** The imported files in their read in form. */
   readonly imports: Map<string, {sourceFile: SourceFile, imports: Import[]}> = new Map();
@@ -43,7 +43,8 @@ export default class FileManager {
     // Read the ts config.
     const configPath = findConfigFile(tsconfigPath, FileManager.fileExists);
     if (!configPath) throw new MissingFileError("Couldn't find tsconfig.");
-    this.tsConfig = readConfigFile(configPath, FileManager.readFile);
+    // TODO: handle the error attribute
+    this.tsConfig = readConfigFile(configPath, FileManager.readFile).config;
 
     // Read the .ts files.
     filePaths = [filePaths].flat();
@@ -66,7 +67,7 @@ export default class FileManager {
     const sourceFile = createSourceFile(
       fullPath,
       content,
-      this.tsConfig.config.compilerOptions.target
+      this.tsConfig.compilerOptions.target
     );
     const imports: Import[] = [];
     for (let statement of sourceFile.statements) {
