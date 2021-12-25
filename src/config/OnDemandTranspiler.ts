@@ -1,7 +1,10 @@
-import {dirname, join, resolve} from "path";
+import {dirname, resolve} from "path";
 import {readFileSync} from "fs";
-import {parse} from "json5";
-import {CompilerOptions, transpile as tsTranspile} from "typescript";
+import {
+  CompilerOptions,
+  readConfigFile,
+  transpile as tsTranspile
+} from "typescript";
 import ImportCompareFunction from "../sort_rules/ImportCompareFunction";
 import ImportElementCompareFunction
   from "../sort_rules/ImportElementCompareFunction";
@@ -27,22 +30,17 @@ export default class OnDemandTranspiler {
   /** The compiler options to transpile the files against. */
   private readonly compilerOptions: CompilerOptions;
 
-  /** The path of the primp config. */
-  private readonly configPath: string | undefined;
-
   /**
    * Constructor
-   * @param tsConfigPath Path of the typescript config to transpile against
+   * @param tsConfig Typescript config object
    * @param configPath Path of the primp config
    */
-  constructor(tsConfigPath: string, configPath: string | undefined) {
+  constructor(
+    tsConfig: ReturnType<typeof readConfigFile>,
+    private readonly configPath: string | undefined
+  ) {
     this.configPath = configPath;
-    let tsConfigContent = readFileSync(
-      join(__dirname, "../../tsconfig.json"),
-      "utf8"
-    );
-    let tsConfigObject = parse(tsConfigContent);
-    this.compilerOptions = tsConfigObject.compilerOptions as any;
+    this.compilerOptions = tsConfig.config.compilerOptions;
   }
 
   /**

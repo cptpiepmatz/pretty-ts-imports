@@ -29,7 +29,7 @@ const configPath = primpConfigPath ?? ConfigHandler.findConfig(givenFileOrDirPat
 const configHandler = new ConfigHandler(configPath);
 const requiredRecord: Record<string, RequiredFunction> = {};
 if (configPath) {
-  const onDemandTranspiler = new OnDemandTranspiler(tsConfigPath, configPath);
+  const onDemandTranspiler = new OnDemandTranspiler(fileManager.tsConfig, configPath);
   for (const [name, path] of Object.entries(configHandler.require)) {
     requiredRecord[name] = onDemandTranspiler.transpile(path);
   }
