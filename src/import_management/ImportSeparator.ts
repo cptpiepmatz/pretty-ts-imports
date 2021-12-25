@@ -1,7 +1,5 @@
 import SeparateByFunction from "../sort_rules/SeparateByFunction";
-import {
-  builtinSeparateByFunctions
-} from "../sort_rules/builtins/builtinSeparateByFunctions";
+import {builtinSeparateByFunctions} from "../sort_rules/builtins";
 import Import from "./Import";
 import InvalidConfigError from "../errors/InvalidConfigError";
 
