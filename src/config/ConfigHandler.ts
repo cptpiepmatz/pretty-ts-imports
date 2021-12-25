@@ -28,8 +28,6 @@ export const expectedConfigNames = [
  */
 export default class ConfigHandler implements FullConfig {
 
-  // TODO: test me
-
   /** The formatting the config handler found. */
   readonly formatting: Required<FormattingOptions>;
 
