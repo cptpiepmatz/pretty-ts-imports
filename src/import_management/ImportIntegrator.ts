@@ -6,16 +6,11 @@ import IntegrationError from "../errors/IntegrationError";
 /** Class for integrating imports back into their source file. */
 export default class ImportIntegrator {
 
-  /** The formatting for the imports. */
-  private readonly formatting: FormattingOptions;
-
   /**
    * Constructor
    * @param formatting Formatting for the imports
    */
-  constructor(formatting: FormattingOptions) {
-    this.formatting = formatting;
-  }
+  constructor(private readonly formatting: FormattingOptions) {}
 
   /**
    * Runs a toString on every import and concatenates them into one string.
