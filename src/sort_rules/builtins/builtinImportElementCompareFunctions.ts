@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import groupBasenames from "../compare_import_elements/groupBasenames";
 import typesFirst from "../compare_import_elements/typesFirst";
 

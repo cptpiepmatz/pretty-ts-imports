@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import comparePaths from "../compare_imports/comparePaths";
 import compareSources from "../compare_imports/compareSources";
 import deepPathsFirst from "../compare_imports/deepPathsFirst";
