@@ -9,9 +9,8 @@ declare global {
         compareFunction: ImportCompareFunction
       ): boolean;
 
-      toThrowErrorInstance (
-        // TODO: do the better type here
-        expected: any
+      toThrowErrorInstance<E extends Error["constructor"]>(
+        expected: E
       ): boolean;
     }
   }

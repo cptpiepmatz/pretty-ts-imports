@@ -55,7 +55,7 @@ beforeEach(function() {
 
     toThrowErrorInstance: function(): CustomMatcher {
       return {
-        compare: function<E extends typeof Error>(
+        compare: function<E extends Error["constructor"]>(
           actual: Function,
           expected: E
         ): CustomMatcherResult {
