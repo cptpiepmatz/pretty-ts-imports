@@ -61,20 +61,11 @@ export default class OnDemandTranspiler {
       );
     }
 
-    let transpiled;
-    try {
-      transpiled = tsTranspile(requireContent, this.compilerOptions);
-    }
-    catch (e) {
-      throw new OnDemandTranspileError(
-        "Could not transpile the file",
-        requirePath
-      );
-    }
+    let transpiled = tsTranspile(requireContent, this.compilerOptions);
 
+    let required;
     try {
-      let required = requireFromString(transpiled);
-      return required.default;
+      required = requireFromString(transpiled);
     }
     catch (e) {
       throw new OnDemandTranspileError(
@@ -82,6 +73,12 @@ export default class OnDemandTranspiler {
         requirePath
       );
     }
+
+    if (required.default) return required.default;
+    throw new OnDemandTranspileError(
+      "Transpiled function has no default export",
+      requirePath
+    );
 
   }
 
