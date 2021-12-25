@@ -51,6 +51,32 @@ beforeEach(function() {
           return {pass: pass};
         }
       };
+    },
+
+    toThrowErrorInstance: function(): CustomMatcher {
+      return {
+        compare: function<E extends typeof Error>(
+          actual: Function,
+          expected: E
+        ): CustomMatcherResult {
+          const result: any = {};
+          try {
+            actual();
+          }
+          catch (e) {
+            result.pass = e instanceof expected;
+          }
+
+          if (result.pass) {
+            result.message = `Expected ${actual} to not throw an instance of ${expected}`;
+          }
+          else {
+            result.message = `Expected ${actual} to throw an instance of ${expected}`;
+          }
+
+          return result;
+        }
+      }
     }
   });
 });

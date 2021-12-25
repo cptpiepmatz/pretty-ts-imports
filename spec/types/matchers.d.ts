@@ -8,6 +8,11 @@ declare global {
         expected: string[],
         compareFunction: ImportCompareFunction
       ): boolean;
+
+      toThrowErrorInstance (
+        // TODO: do the better type here
+        expected: any
+      ): boolean;
     }
   }
 }
