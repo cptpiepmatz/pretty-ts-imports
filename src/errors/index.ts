@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export {default as CLIOptionsError} from "./CLIOptionsError";
 export {default as IntegrationError} from "./IntegrationError";
 export {default as InvalidConfigError} from "./InvalidConfigError";

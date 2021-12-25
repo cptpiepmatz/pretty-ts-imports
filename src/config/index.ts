@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export {default as Config} from "./Config";
 export {default as ConfigHandler, expectedConfigNames} from "./ConfigHandler";
 export {default as defaultConfig} from "./defaultConfig";

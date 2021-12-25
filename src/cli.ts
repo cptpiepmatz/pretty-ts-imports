@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import watch from "node-watch";
 import {join, relative, resolve} from "path";
 import {SourceFile} from "typescript";

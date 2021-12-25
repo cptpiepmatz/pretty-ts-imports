@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import * as config from "./config";
 import * as error from "./errors";
 import * as builtin from "./sort_rules/builtins";
