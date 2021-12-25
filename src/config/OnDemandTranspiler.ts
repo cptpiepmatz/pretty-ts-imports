@@ -37,7 +37,7 @@ export default class OnDemandTranspiler {
    */
   constructor(
     tsConfig: {compilerOptions: CompilerOptions},
-    private readonly configPath: string | undefined
+    private readonly configPath?: string
   ) {
     this.compilerOptions = tsConfig.compilerOptions;
   }
