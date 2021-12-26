@@ -65,7 +65,7 @@ export default class ImportSorter {
     for (let sortImportElement of sortImportElements) {
       if (!importElementCompareFunctions[sortImportElement]) {
         throw new InvalidConfigError(
-          "Could not fin import element compare function.",
+          "Could not find import element compare function.",
           "sortImportElement",
           sortImportElement
         );
