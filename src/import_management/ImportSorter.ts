@@ -1,14 +1,12 @@
 import ImportCompareFunction from "../sort_rules/ImportCompareFunction";
 import {
-  builtinImportCompareFunctions
-} from "../sort_rules/builtins/builtinImportCompareFunctions";
+  builtinImportCompareFunctions,
+  builtinImportElementCompareFunctions
+} from "../sort_rules/builtins";
 import ImportElementCompareFunction
   from "../sort_rules/ImportElementCompareFunction";
-import {
-  builtinImportElementCompareFunctions
-} from "../sort_rules/builtins/builtinImportElementCompareFunctions";
 import Import from "./Import";
-import {RequiredFunction} from "../config/OnDemandTranspiler";
+import {RequiredFunction} from "../config";
 import InvalidConfigError from "../errors/InvalidConfigError";
 
 /** Class for sorting imports and the import elements. */
