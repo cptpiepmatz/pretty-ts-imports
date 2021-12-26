@@ -21,30 +21,32 @@ export default class ImportSeparator {
   /**
    * Constructor including external functions.
    * @param separateByRules Array of separate by rules
-   * @param configPath Path of primp config
    * @param requireFunctions Record of external functions by their function name
    */
   constructor(
     separateByRules: string[],
-    configPath: string,
-    requireFunctions: Record<string, string>
+    requireFunctions: Record<string, SeparateByFunction>
   );
   constructor(
     separateByRules: string[],
-    configPath?: string,
-    requireFunctions?: Record<string, string>
+    requireFunctions?: Record<string, SeparateByFunction>
   ) {
+    let separateByFunctions = Object.assign(
+      {},
+      builtinSeparateByFunctions,
+      requireFunctions
+    );
     for (let separateByRule of separateByRules ) {
       // insert the rules into the usable separate by functions
-      type rule = keyof typeof builtinSeparateByFunctions;
-      if (!builtinSeparateByFunctions[separateByRule as rule]) {
+      type rule = keyof typeof separateByFunctions;
+      if (!separateByFunctions[separateByRule as rule]) {
         throw new InvalidConfigError(
           "Could not find separate by function.",
           "separateBy",
           separateByRule
         );
       }
-      this.separateByRules.push(builtinSeparateByFunctions[separateByRule as rule]);
+      this.separateByRules.push(separateByFunctions[separateByRule as rule]);
     }
   }
 

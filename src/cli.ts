@@ -14,6 +14,7 @@ import Import from "./import_management/Import";
 import ImportIntegrator from "./import_management/ImportIntegrator";
 import ImportSeparator from "./import_management/ImportSeparator";
 import ImportSorter from "./import_management/ImportSorter";
+import SeparateByFunction from "./sort_rules/SeparateByFunction";
 
 // TODO: get some fancy logging
 
@@ -38,7 +39,10 @@ if (configPath) {
 }
 const {sortImports, sortImportElements} = configHandler;
 const sorter = new ImportSorter(sortImports, sortImportElements, requiredRecord);
-const separator = new ImportSeparator(configHandler.separateBy);
+const separator = new ImportSeparator(
+  configHandler.separateBy,
+  requiredRecord as Record<string, SeparateByFunction>
+);
 const integrator = new ImportIntegrator(configHandler.formatting);
 for (let [path, {sourceFile, imports}] of fileManager.imports.entries()) {
   writeSorted(path, sourceFile, imports);
