@@ -5,7 +5,6 @@ import InvalidConfigError from "../errors/InvalidConfigError";
 
 /** Class to insert the separators into the imports. */
 export default class ImportSeparator {
-  // TODO: test me
 
   /**
    * Array of separate by rules.
@@ -63,7 +62,8 @@ export default class ImportSeparator {
     a: Import | undefined | null,
     b: Import | undefined | null
   ): boolean {
-    if (!a || !b) return false;
+    /* istanbul ignore next */
+    if (!a || !b) return false; // just to make sure, should never happen
     for (let rule of this.separateByRules) {
       // check if one of the rules asks for a separator
       if (rule(a, b)) return true;
