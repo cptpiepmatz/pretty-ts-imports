@@ -11,7 +11,6 @@ import InvalidConfigError from "../errors/InvalidConfigError";
 
 /** Class for sorting imports and the import elements. */
 export default class ImportSorter {
-  // TODO: test me
 
   /**
    * Array of import compare functions.
