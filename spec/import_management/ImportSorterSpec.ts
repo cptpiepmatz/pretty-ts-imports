@@ -9,10 +9,17 @@ import ImportCompareFunction from "../../src/sort_rules/ImportCompareFunction";
 describe("ImportSorter", function() {
 
   it("should construct correctly", function() {
-    for (let [importName, importFunc]
-      of Object.entries(builtinImportCompareFunctions)) {
-      for (let [importEName, importEFunc]
-        of Object.entries(builtinImportElementCompareFunctions)) {
+    const unspiedFunction = ImportSorter.inverseComparator;
+    for (
+      let [importName, importFunc]
+      of Object.entries(builtinImportCompareFunctions)
+    ) {
+      for (
+        let [importEName, importEFunc]
+        of Object.entries(builtinImportElementCompareFunctions)
+      ) {
+        let inverseSpy = spyOn(ImportSorter, "inverseComparator");
+
         let sorter = new ImportSorter([importName], [importEName]);
         expect(sorter.sortImportOrder).toHaveSize(1);
         expect(sorter.sortImportElementOrder).toHaveSize(1);
@@ -28,10 +35,22 @@ describe("ImportSorter", function() {
             builtinImportElementCompareFunctions
           )
         );
-        expect(sorter.sortImportOrder).toHaveSize(1);
-        expect(sorter.sortImportElementOrder).toHaveSize(1);
-        expect(sorter.sortImportOrder).toEqual([importFunc]);
-        expect(sorter.sortImportElementOrder).toEqual([importEFunc]);
+        expect(requiredSorter.sortImportOrder).toHaveSize(1);
+        expect(requiredSorter.sortImportElementOrder).toHaveSize(1);
+        expect(requiredSorter.sortImportOrder).toEqual([importFunc]);
+        expect(requiredSorter.sortImportElementOrder).toEqual([importEFunc]);
+
+        expect(inverseSpy).not.toHaveBeenCalled();
+        let invertedSorter = new ImportSorter(
+          ["!" + importName],
+          ["!" + importEName]
+        );
+        expect(invertedSorter.sortImportOrder).toHaveSize(1);
+        expect(invertedSorter.sortImportElementOrder).toHaveSize(1);
+        expect(inverseSpy).toHaveBeenCalledWith(importFunc);
+        expect(inverseSpy).toHaveBeenCalledWith(importEFunc);
+
+        ImportSorter.inverseComparator = unspiedFunction;
       }
     }
 
@@ -60,16 +79,16 @@ describe("ImportSorter", function() {
     const alphabetical: ImportCompareFunction = function(a, b) {
       return a.source.name.localeCompare(b.source.name);
     }
-    const underscoreLast: ImportCompareFunction = function(a, b) {
-      let _a = a.source.name.startsWith("_") ? 1 : 0;
-      let _b = b.source.name.startsWith("_") ? 1 : 0;
+    const underscoreFirst: ImportCompareFunction = function(a, b) {
+      let _a = a.source.name.startsWith("_") ? 0 : 1;
+      let _b = b.source.name.startsWith("_") ? 0 : 1;
       return _a - _b;
     }
 
     let sorter = new ImportSorter(
-      ["underscoreLast", "alphabetical"],
+      ["!underscoreFirst", "alphabetical"],
       [],
-      {underscoreLast, alphabetical}
+      {underscoreFirst, alphabetical}
     );
     expect(sorter.sort(unsortedImports)).toEqual(sortedImports);
 

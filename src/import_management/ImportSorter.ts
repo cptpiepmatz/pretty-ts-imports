@@ -49,29 +49,62 @@ export default class ImportSorter {
     ) as Record<string, ImportElementCompareFunction>;
 
     // tries to order the compare functions by the config
-    for (let sortImport of sortImports) {
+    for (
+      let [sortImport, shouldInverse]
+      of sortImports.map(ImportSorter.shouldInverse)
+    ) {
       if (!importCompareFunctions[sortImport]) {
         throw new InvalidConfigError(
           "Could not find import compare function.",
           "sortImports",
-          sortImport
+          {sortImport, shouldInverse}
         );
       }
-      this.sortImportOrder.push(importCompareFunctions[sortImport]);
+      if (shouldInverse) {
+        this.sortImportOrder.push(
+          ImportSorter.inverseComparator(importCompareFunctions[sortImport])
+        );
+      }
+      else {
+        this.sortImportOrder.push(importCompareFunctions[sortImport]);
+      }
     }
 
     // tries to order the compare functions by the config
-    for (let sortImportElement of sortImportElements) {
+    for (
+      let [sortImportElement, shouldInverse]
+      of sortImportElements.map(ImportSorter.shouldInverse)
+    ) {
       if (!importElementCompareFunctions[sortImportElement]) {
         throw new InvalidConfigError(
           "Could not find import element compare function.",
           "sortImportElement",
-          sortImportElement
+          {sortImportElement, shouldInverse}
         );
       }
-      this.sortImportElementOrder
-        .push(importElementCompareFunctions[sortImportElement]);
+      if (shouldInverse) {
+        this.sortImportElementOrder
+          .push(ImportSorter.inverseComparator(
+            importElementCompareFunctions[sortImportElement])
+          );
+      }
+      else {
+        this.sortImportElementOrder
+          .push(importElementCompareFunctions[sortImportElement]);
+      }
+
     }
+  }
+
+  /**
+   * Helper function to get the rule name and if it should get inverted.
+   *
+   * A "!" prepending the sort rule indicates inverting it.
+   * @param rule The name of a sort rule given from the config
+   * @private
+   */
+  private static shouldInverse(rule: string): [string, boolean] {
+    return rule.startsWith("!") ? [rule.slice(1), true] : [rule, false];
   }
 
   /**
@@ -89,6 +122,21 @@ export default class ImportSorter {
         if (result !== 0) return result;
       }
       return 0;
+    }
+  }
+
+  /**
+   * Helper function to get the inverse of a comparator function.
+   * Since comparator functions simply return numbers, this just returns the
+   * negation of them.
+   * @returns inverse of a comparator function
+   * @param comparator comparator function
+   */
+  static inverseComparator<T>(
+    comparator: ((a: T, b: T) => number)
+  ): (a: T, b:T) => number {
+    return function(a: T, b: T): number {
+      return -comparator(a, b);
     }
   }
 
