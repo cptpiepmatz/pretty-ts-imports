@@ -1,11 +1,11 @@
 /* istanbul ignore file */
 
-import * as config from "./config";
-import * as error from "./errors";
-import * as builtin from "./sort_rules/builtins";
+// TODO: add module description everywhere
 
 // Exporting namespaces
-export {config, error, builtin};
+export * as config from "./config";
+export * as error from "./errors";
+export * as builtin from "./sort_rules/builtin.index";
 
 // Exporting the import management
 export {default as FileManager} from "./FileManager";

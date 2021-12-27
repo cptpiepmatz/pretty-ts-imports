@@ -1,9 +1,9 @@
 import ImportSeparator from "../../src/import_management/ImportSeparator";
-import {builtinSeparateByFunctions} from "../../src/sort_rules/builtins";
 import unequalPackageState
   from "../../src/sort_rules/separate_by/unequalPackageState";
 import Import from "../../src/import_management/Import";
 import SeparateByFunction from "../../src/sort_rules/SeparateByFunction";
+import * as builtinSeparateByFunctions from "../../src/sort_rules/separate_by";
 
 describe("ImportSeparator", function() {
 

@@ -1,7 +1,7 @@
 import SeparateByFunction from "../sort_rules/SeparateByFunction";
-import {builtinSeparateByFunctions} from "../sort_rules/builtins";
 import Import from "./Import";
 import InvalidConfigError from "../errors/InvalidConfigError";
+import * as builtinSeparateByFunctions from "../sort_rules/separate_by";
 
 /** Class to insert the separators into the imports. */
 export default class ImportSeparator {

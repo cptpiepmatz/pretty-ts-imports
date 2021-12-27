@@ -1,10 +1,9 @@
-import {
-  builtinImportCompareFunctions,
-  builtinImportElementCompareFunctions
-} from "../../src/sort_rules/builtins";
+
 import ImportSorter from "../../src/import_management/ImportSorter";
 import Import from "../../src/import_management/Import";
 import ImportCompareFunction from "../../src/sort_rules/ImportCompareFunction";
+import * as builtinImportElementCompareFunctions from "../../src/sort_rules/compare_import_elements";
+import * as builtinImportCompareFunctions from "../../src/sort_rules/compare_imports";
 
 describe("ImportSorter", function() {
 

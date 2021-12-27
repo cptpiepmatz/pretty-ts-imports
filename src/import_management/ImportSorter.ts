@@ -1,13 +1,11 @@
 import ImportCompareFunction from "../sort_rules/ImportCompareFunction";
-import {
-  builtinImportCompareFunctions,
-  builtinImportElementCompareFunctions
-} from "../sort_rules/builtins";
 import ImportElementCompareFunction
   from "../sort_rules/ImportElementCompareFunction";
 import Import from "./Import";
 import {RequiredFunction} from "../config";
 import InvalidConfigError from "../errors/InvalidConfigError";
+import * as builtinImportCompareFunctions from "../sort_rules/compare_imports";
+import * as builtinImportElementCompareFunctions from "../sort_rules/compare_import_elements";
 
 /** Class for sorting imports and the import elements. */
 export default class ImportSorter {
