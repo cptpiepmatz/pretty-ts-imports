@@ -11,14 +11,14 @@ import {dirname} from "path";
  * <b>Example:</b>
  * ```ts
  * // unsorted
- * import c from "./alpha-beta/alpha";
- * import b from "./alpha/gamma";
- * import a from "./alpha/beta";
+ * import c from "./alpha-beta/alpha/c";
+ * import b from "./alpha/gamma/b";
+ * import a from "./alpha/beta/a";
  *
  * // sorted
- * import a from "./alpha/beta";
- * import b from "./alpha/gamma";
- * import c from "./alpha-beta/alpha";
+ * import a from "./alpha/beta/a";
+ * import b from "./alpha/gamma/b";
+ * import c from "./alpha-beta/alpha/c";
  * ```
  *
  * @param a Import A
@@ -26,7 +26,7 @@ import {dirname} from "path";
  */
 const pathName: ImportCompareFunction = function(a, b) {
   if ([a, b].some(m => m.source.isPackage)) return 0;
-  const [dirsA, dirsB] = [a, b].map(m => dirname(m.source.name).split("\n"));
+  const [dirsA, dirsB] = [a, b].map(m => dirname(m.source.name).split("/"));
   const minLength = Math.min(dirsA.length, dirsB.length);
   for (let i = 0; i < minLength; i++) {
     const comparison = dirsA[i].localeCompare(dirsB[i]);
