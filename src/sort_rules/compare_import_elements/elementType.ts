@@ -13,12 +13,14 @@ import ImportElementCompareFunction from "../ImportElementCompareFunction";
  * import {a, d, B, C} from "alphabet";
  * ```
  *
+ * @see ImportElement#isFunctionOrObject
+ * @see ImportElement#isType
  * @param a Import Element A
  * @param b Import Element B
  */
 const elementType: ImportElementCompareFunction = function(a, b) {
   const [aFunction, bFunction] = [a, b].map(m => +m.isFunctionOrObject);
-  return aFunction - bFunction;
+  return bFunction - aFunction;
 }
 
 export default elementType;
