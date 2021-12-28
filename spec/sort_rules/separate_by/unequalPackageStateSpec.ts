@@ -1,22 +1,23 @@
-import createSpyObj = jasmine.createSpyObj;
 import separator from "../../../src/sort_rules/separate_by/unequalPackageState";
 import expectSeparator from "../../helpers/expectSeparator";
+import Import from "../../../src/import_management/Import";
 
 describe("sort_rules/separate_by/unequalsPackageState", function() {
-  it("should set the separator correctly", function() {
-    const packageImport = createSpyObj([], {
-      source: {
-        isPackage: true,
-        isRelative: false
-      }
-    });
-    const relativeImport = createSpyObj([], {
-      source: {
-        isPackage: false,
-        isRelative: true
-      }
-    });
+  const packageImport = {
+    source: {
+      isPackage: true,
+      isRelative: false
+    }
+  } as Import;
 
+  const relativeImport = {
+    source: {
+      isPackage: false,
+      isRelative: true
+    }
+  } as Import;
+
+  it("should set the separator correctly", function() {
     expectSeparator(separator).between(packageImport).and(relativeImport);
     expectSeparator(separator).between(relativeImport).and(packageImport);
     expectSeparator(separator).not.between(packageImport).and(packageImport);
