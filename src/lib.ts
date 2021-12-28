@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 // TODO: add module description everywhere
 
 // Exporting namespaces

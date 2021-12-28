@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 export {default as pathDepth} from "./pathDepth";
 export {default as pathName} from "./pathName";
 export {default as sourceName} from "./sourceName";

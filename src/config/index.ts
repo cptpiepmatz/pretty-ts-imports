@@ -1,4 +1,4 @@
-/* istanbul ignore file */
+/* istanbul ignore file - for some reason it finds missing functions */
 
 export {default as Config} from "./Config";
 export {default as ConfigHandler, expectedConfigNames} from "./ConfigHandler";
