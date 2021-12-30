@@ -1,19 +1,19 @@
 {
   "sortImports": [
-    "packagesFirst",
-    "comparePaths",
-    "flatPathsFirst",
-    "namespacesBeforeNamed",
-    "defaultsTypesFirst",
-    "compareSources"
+    "sourceType",
+    "dotJSFirst",
+    "!namespacePresence",
+    "pathName",
+    "sourceName"
   ],
   "sortImportElements": [
-    "typesBeforeObjects",
-    "compareTypes",
-    "compareElements"
+    "elementType",
+    "basenameGroup",
+    "elementName"
   ],
   "separateBy": [
-    "types"
+    "unequalPackageState",
+    "unequalNamespaceUse"
   ],
   "formatting": {
     "indent": 2,
