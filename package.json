@@ -48,6 +48,7 @@
     "terser": "^5.10.0",
     "ts-node": "^10.4.0",
     "typedoc": "^0.22.10",
+    "typedoc-plugin-extras": "^2.2.3",
     "typescript-json-schema": "^0.52.0"
   }
 }
