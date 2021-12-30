@@ -1,141 +1,4 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-module.exports={
-    "name": "pretty-ts-imports",
-    "version": "0.1.0",
-    "description": "",
-    "main": "./dist/lib.bundle.min.js",
-    "bin": {
-        "pretty-ts-imports": "./bin/pretty-ts-imports",
-        "primp": "./bin/primp"
-    },
-    "scripts": {
-        "test": "jasmine-ts",
-        "coverage": "nyc jasmine-ts",
-        "run-dev": "ts-node src/cli.ts",
-        "build": "npm run build:clean && npm run build:tsc && npm run build-cli:bundle && npm run build-cli:minify && npm run build-lib:bundle && npm run build-lib:minify",
-        "build:clean": "del-cli dist & del-cli out",
-        "build:tsc": "tsc",
-        "build-cli:bundle": "browserify out/src/cli.js --node -o dist/cli.bundle.js --no-bundle-external",
-        "build-cli:minify": "terser dist/cli.bundle.js -o dist/cli.bundle.min.js",
-        "build-lib:bundle": "browserify out/src/lib.js --node -o dist/lib.bundle.js --no-bundle-external",
-        "build-lib:minify": "terser dist/lib.bundle.js -o dist/lib.bundle.min.js",
-        "schema:config": "typescript-json-schema src/config/Config.ts Config --tsNodeRegister -o config.schema.json",
-        "schema": "npm run schema:config",
-        "docs": "typedoc"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/derPiepmatz/pretty-ts-imports.git"
-    },
-    "author": "Tim 'Piepmatz' Hesse",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/derPiepmatz/pretty-ts-imports/issues"
-    },
-    "homepage": "https://github.com/derPiepmatz/pretty-ts-imports#readme",
-    "dependencies": {
-        "detect-newline": "<4.0.0",
-        "json5": "^2.2.0",
-        "node-watch": "^0.7.2",
-        "require-from-string": "^2.0.2",
-        "typescript": "^4.5.2",
-        "yaml": "^1.10.2",
-        "yargs": "^17.3.0"
-    },
-    "devDependencies": {
-        "@types/jasmine": "^3.10.2",
-        "@types/node": "^16.11.11",
-        "@types/require-from-string": "^1.2.1",
-        "@types/yargs": "^17.0.7",
-        "browserify": "^17.0.0",
-        "del-cli": "^4.0.1",
-        "jasmine": "^3.10.0",
-        "jasmine-ts": "^0.4.0",
-        "nyc": "^15.1.0",
-        "terser": "^5.10.0",
-        "ts-node": "^10.4.0",
-        "typedoc": "^0.22.10",
-        "typedoc-plugin-extras": "^2.2.3",
-        "typescript-json-schema": "^0.52.0"
-    }
-}
-
-},{}],2:[function(require,module,exports){
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const helpers_1 = require("yargs/helpers");
-const yargs_1 = __importDefault(require("yargs/yargs"));
-const package_json_1 = require("../package.json");
-/**
- * This class reads in the process arguments and makes them available with the
- * use of yargs.
- */
-class CLIHandler {
-    /**
-     * Constructor.
-     * Doesn't need any arguments since it uses the argv data from the global
-     * {@link process}.
-     */
-    constructor() {
-        // Store the help output yargs generates.
-        let yargsHelp = "";
-        const argv = (0, yargs_1.default)((0, helpers_1.hideBin)(process.argv))
-            .scriptName("primp")
-            .usage("Usage: primp [options] <file|directory>")
-            .option({
-            r: {
-                type: "boolean",
-                alias: "recursive",
-                default: false,
-                describe: "read the directory recursively"
-            },
-            o: {
-                type: "string",
-                alias: "output",
-                describe: "puts the modified files there, instead of in-place"
-            },
-            t: {
-                type: "string",
-                alias: "tsconfig",
-                describe: "path to your tsconfig"
-            },
-            c: {
-                type: "string",
-                alias: "config",
-                describe: "path to your primp config"
-            },
-            w: {
-                type: "boolean",
-                alias: "watch",
-                default: false,
-                describe: "starts primp in watch mode"
-            },
-            _: {
-                type: "string",
-                demandOption: true
-            }
-        })
-            .epilog(`Tool written by ${package_json_1.author}`)
-            .showHelp(help => yargsHelp = help)
-            .parseSync();
-        this.givenFileOrDirPath = argv._[0];
-        this.shallRecursive = argv.r;
-        this.outputPath = argv.o;
-        this.tsConfigPath = argv.t;
-        this.primpConfigPath = argv.c;
-        this.shallWatch = argv.w;
-        if (!this.givenFileOrDirPath) {
-            console.log(yargsHelp);
-            process.exit(1);
-        }
-    }
-}
-exports.default = CLIHandler;
-
-},{"../package.json":1,"yargs/helpers":undefined,"yargs/yargs":undefined}],3:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -280,71 +143,7 @@ class FileManager {
 }
 exports.default = FileManager;
 
-},{"./errors/CLIOptionsError":9,"./errors/MissingFileError":12,"./import_management/Import":15,"detect-newline":undefined,"fs":undefined,"path":undefined,"typescript":undefined}],4:[function(require,module,exports){
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const node_watch_1 = __importDefault(require("node-watch"));
-const path_1 = require("path");
-const CLIHandler_1 = __importDefault(require("./CLIHandler"));
-const FileManager_1 = __importDefault(require("./FileManager"));
-const ConfigHandler_1 = __importDefault(require("./config/ConfigHandler"));
-const OnDemandTranspiler_1 = __importDefault(require("./config/OnDemandTranspiler"));
-const ImportIntegrator_1 = __importDefault(require("./import_management/ImportIntegrator"));
-const ImportSeparator_1 = __importDefault(require("./import_management/ImportSeparator"));
-const ImportSorter_1 = __importDefault(require("./import_management/ImportSorter"));
-// TODO: get some fancy logging
-const cliHandler = new CLIHandler_1.default();
-const { givenFileOrDirPath, shallRecursive, primpConfigPath, outputPath } = cliHandler;
-const files = FileManager_1.default.getFiles(givenFileOrDirPath, shallRecursive);
-const tsConfigPath = cliHandler.tsConfigPath ?? process.cwd();
-const fileManager = new FileManager_1.default(tsConfigPath, files);
-const configPath = primpConfigPath ?? ConfigHandler_1.default.findConfig(givenFileOrDirPath);
-const configHandler = new ConfigHandler_1.default(configPath);
-const requiredRecord = {};
-if (configPath) {
-    const onDemandTranspiler = new OnDemandTranspiler_1.default(fileManager.tsConfig, configPath);
-    for (const [name, path] of Object.entries(configHandler.require)) {
-        requiredRecord[name] = onDemandTranspiler.transpile(path);
-    }
-}
-const { sortImports, sortImportElements } = configHandler;
-const sorter = new ImportSorter_1.default(sortImports, sortImportElements, requiredRecord);
-const separator = new ImportSeparator_1.default(configHandler.separateBy, requiredRecord);
-const integrator = new ImportIntegrator_1.default(configHandler.formatting);
-for (let [path, { sourceFile, imports }] of fileManager.imports.entries()) {
-    writeSorted(path, sourceFile, imports);
-}
-function writeSorted(path, sourceFile, imports) {
-    sorter.sort(imports);
-    let integrated = integrator.integrate(sourceFile, separator.insertSeparator(imports));
-    if (outputPath) {
-        let newPath = (0, path_1.join)(outputPath, (0, path_1.relative)(givenFileOrDirPath, path));
-        fileManager.write(path, integrated, newPath);
-        return;
-    }
-    fileManager.write(path, integrated);
-}
-if (cliHandler.shallWatch) {
-    console.log("starting to watch");
-    (0, node_watch_1.default)(files, ((eventType, filePath) => {
-        if (eventType === "remove")
-            return;
-        const path = (0, path_1.resolve)(filePath);
-        try {
-            fileManager.reloadFromDisk(path);
-            let { sourceFile, imports } = fileManager.imports.get(path);
-            writeSorted(path, sourceFile, imports);
-        }
-        catch (e) {
-            console.warn(e);
-        }
-    }));
-}
-
-},{"./CLIHandler":2,"./FileManager":3,"./config/ConfigHandler":5,"./config/OnDemandTranspiler":6,"./import_management/ImportIntegrator":16,"./import_management/ImportSeparator":17,"./import_management/ImportSorter":18,"node-watch":undefined,"path":undefined}],5:[function(require,module,exports){
+},{"./errors/CLIOptionsError":7,"./errors/MissingFileError":10,"./import_management/Import":14,"detect-newline":undefined,"fs":undefined,"path":undefined,"typescript":undefined}],2:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -465,7 +264,7 @@ class ConfigHandler {
 }
 exports.default = ConfigHandler;
 
-},{"../errors/UnsupportedFileFormatError":14,"./SupportedConfigFormat":7,"./defaultConfig":8,"fs":undefined,"json5":undefined,"path":undefined,"yaml":undefined}],6:[function(require,module,exports){
+},{"../errors/UnsupportedFileFormatError":12,"./SupportedConfigFormat":4,"./defaultConfig":5,"fs":undefined,"json5":undefined,"path":undefined,"yaml":undefined}],3:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -524,7 +323,7 @@ class OnDemandTranspiler {
 }
 exports.default = OnDemandTranspiler;
 
-},{"../errors/OnDemandTranspileError":13,"fs":undefined,"path":undefined,"require-from-string":undefined,"typescript":undefined}],7:[function(require,module,exports){
+},{"../errors/OnDemandTranspileError":11,"fs":undefined,"path":undefined,"require-from-string":undefined,"typescript":undefined}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Supported config file formats. */
@@ -537,7 +336,7 @@ var SupportedConfigFormat;
 })(SupportedConfigFormat || (SupportedConfigFormat = {}));
 exports.default = SupportedConfigFormat;
 
-},{}],8:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultFormatting = exports.defaultSeparateBy = exports.defaultSortImportElements = exports.defaultSortImports = void 0;
@@ -576,7 +375,25 @@ exports.defaultSeparateBy = defaultConfig.separateBy;
 exports.defaultFormatting = defaultConfig.formatting;
 exports.default = defaultConfig;
 
-},{}],9:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
+"use strict";
+/* istanbul ignore file - for some reason it finds missing functions */
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SupportedConfigFormat = exports.OnDemandTranspiler = exports.defaultConfig = exports.expectedConfigNames = exports.ConfigHandler = void 0;
+var ConfigHandler_1 = require("./ConfigHandler");
+Object.defineProperty(exports, "ConfigHandler", { enumerable: true, get: function () { return __importDefault(ConfigHandler_1).default; } });
+Object.defineProperty(exports, "expectedConfigNames", { enumerable: true, get: function () { return ConfigHandler_1.expectedConfigNames; } });
+var defaultConfig_1 = require("./defaultConfig");
+Object.defineProperty(exports, "defaultConfig", { enumerable: true, get: function () { return __importDefault(defaultConfig_1).default; } });
+var OnDemandTranspiler_1 = require("./OnDemandTranspiler");
+Object.defineProperty(exports, "OnDemandTranspiler", { enumerable: true, get: function () { return __importDefault(OnDemandTranspiler_1).default; } });
+var SupportedConfigFormat_1 = require("./SupportedConfigFormat");
+Object.defineProperty(exports, "SupportedConfigFormat", { enumerable: true, get: function () { return __importDefault(SupportedConfigFormat_1).default; } });
+
+},{"./ConfigHandler":2,"./OnDemandTranspiler":3,"./SupportedConfigFormat":4,"./defaultConfig":5}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Error class for errors that are caused by bad cli options. */
@@ -595,7 +412,7 @@ class CLIOptionsError extends Error {
 }
 exports.default = CLIOptionsError;
 
-},{}],10:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Error class if something in the integration failed. */
@@ -612,7 +429,7 @@ class IntegrationError extends Error {
 }
 exports.default = IntegrationError;
 
-},{}],11:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Error class for invalid config files. */
@@ -631,7 +448,7 @@ class InvalidConfigError extends Error {
 }
 exports.default = InvalidConfigError;
 
-},{}],12:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Error class if a file is missing. */
@@ -648,7 +465,7 @@ class MissingFileError extends Error {
 }
 exports.default = MissingFileError;
 
-},{}],13:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Error class for errors that happen while then on demand transpile. */
@@ -665,7 +482,7 @@ class OnDemandTranspileError extends Error {
 }
 exports.default = OnDemandTranspileError;
 
-},{}],14:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Error class for unsupported files. */
@@ -681,7 +498,27 @@ class UnsupportedFileFormatError extends Error {
 }
 exports.default = UnsupportedFileFormatError;
 
-},{}],15:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UnsupportedFileFormatError = exports.OnDemandTranspileError = exports.MissingFileError = exports.InvalidConfigError = exports.IntegrationError = exports.CLIOptionsError = void 0;
+var CLIOptionsError_1 = require("./CLIOptionsError");
+Object.defineProperty(exports, "CLIOptionsError", { enumerable: true, get: function () { return __importDefault(CLIOptionsError_1).default; } });
+var IntegrationError_1 = require("./IntegrationError");
+Object.defineProperty(exports, "IntegrationError", { enumerable: true, get: function () { return __importDefault(IntegrationError_1).default; } });
+var InvalidConfigError_1 = require("./InvalidConfigError");
+Object.defineProperty(exports, "InvalidConfigError", { enumerable: true, get: function () { return __importDefault(InvalidConfigError_1).default; } });
+var MissingFileError_1 = require("./MissingFileError");
+Object.defineProperty(exports, "MissingFileError", { enumerable: true, get: function () { return __importDefault(MissingFileError_1).default; } });
+var OnDemandTranspileError_1 = require("./OnDemandTranspileError");
+Object.defineProperty(exports, "OnDemandTranspileError", { enumerable: true, get: function () { return __importDefault(OnDemandTranspileError_1).default; } });
+var UnsupportedFileFormatError_1 = require("./UnsupportedFileFormatError");
+Object.defineProperty(exports, "UnsupportedFileFormatError", { enumerable: true, get: function () { return __importDefault(UnsupportedFileFormatError_1).default; } });
+
+},{"./CLIOptionsError":7,"./IntegrationError":8,"./InvalidConfigError":9,"./MissingFileError":10,"./OnDemandTranspileError":11,"./UnsupportedFileFormatError":12}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const typescript_1 = require("typescript");
@@ -870,7 +707,7 @@ function maxColumnsCheck(toCheck, maxColumns) {
     return toCheck.split("\n").some(line => line.length > maxColumns);
 }
 
-},{"../config/defaultConfig":8,"typescript":undefined}],16:[function(require,module,exports){
+},{"../config/defaultConfig":5,"typescript":undefined}],15:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -930,90 +767,7 @@ class ImportIntegrator {
 }
 exports.default = ImportIntegrator;
 
-},{"../errors/IntegrationError":10,"typescript":undefined}],17:[function(require,module,exports){
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const InvalidConfigError_1 = __importDefault(require("../errors/InvalidConfigError"));
-const builtinSeparateByFunctions = __importStar(require("../sort_rules/separate_by"));
-/** Class to insert the separators into the imports. */
-class ImportSeparator {
-    constructor(separateByRules, requireFunctions) {
-        /**
-         * Array of separate by rules.
-         * Order is not relevant.
-         */
-        this.separateByRules = [];
-        let separateByFunctions = Object.assign({}, builtinSeparateByFunctions, requireFunctions);
-        for (let separateByRule of separateByRules) {
-            if (!separateByFunctions[separateByRule]) {
-                throw new InvalidConfigError_1.default("Could not find separate by function.", "separateBy", separateByRule);
-            }
-            this.separateByRules.push(separateByFunctions[separateByRule]);
-        }
-    }
-    /**
-     * Given two imports, this will decide if a separator should be placed in
-     * between according to the separate by rules.
-     *
-     * If at least one of them is not an import no more separator are needed.
-     * @param a Import A
-     * @param b Import B
-     * @private
-     */
-    decideSeparator(a, b) {
-        /* istanbul ignore next */
-        if (!a || !b)
-            return false; // just to make sure, should never happen
-        for (let rule of this.separateByRules) {
-            // check if one of the rules asks for a separator
-            if (rule(a, b))
-                return true;
-        }
-        return false;
-    }
-    /**
-     * Inserts the null elements as separator in an array of imports.
-     * @param imports Array of imports to insert the separator
-     */
-    insertSeparator(imports) {
-        let separatedImports = [imports[0]];
-        for (let imported of imports.slice(1)) {
-            let popped = separatedImports.pop();
-            separatedImports.push(popped);
-            if (this.decideSeparator(popped, imported)) {
-                // the separator is a null value
-                separatedImports.push(null);
-            }
-            separatedImports.push(imported);
-        }
-        return separatedImports;
-    }
-}
-exports.default = ImportSeparator;
-
-},{"../errors/InvalidConfigError":11,"../sort_rules/separate_by":31}],18:[function(require,module,exports){
+},{"../errors/IntegrationError":8,"typescript":undefined}],16:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -1145,7 +899,75 @@ class ImportSorter {
 }
 exports.default = ImportSorter;
 
-},{"../errors/InvalidConfigError":11,"../sort_rules/compare_import_elements":22,"../sort_rules/compare_imports":25}],19:[function(require,module,exports){
+},{"../errors/InvalidConfigError":9,"../sort_rules/compare_import_elements":22,"../sort_rules/compare_imports":25}],17:[function(require,module,exports){
+"use strict";
+// TODO: add module description everywhere
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ImportSorter = exports.ImportIntegrator = exports.Import = exports.FileManager = exports.builtin = exports.error = exports.config = void 0;
+// Exporting namespaces
+exports.config = __importStar(require("./config"));
+exports.error = __importStar(require("./errors"));
+exports.builtin = __importStar(require("./sort_rules/builtin.index"));
+// Exporting the import management
+var FileManager_1 = require("./FileManager");
+Object.defineProperty(exports, "FileManager", { enumerable: true, get: function () { return __importDefault(FileManager_1).default; } });
+var Import_1 = require("./import_management/Import");
+Object.defineProperty(exports, "Import", { enumerable: true, get: function () { return __importDefault(Import_1).default; } });
+var ImportIntegrator_1 = require("./import_management/ImportIntegrator");
+Object.defineProperty(exports, "ImportIntegrator", { enumerable: true, get: function () { return __importDefault(ImportIntegrator_1).default; } });
+var ImportSorter_1 = require("./import_management/ImportSorter");
+Object.defineProperty(exports, "ImportSorter", { enumerable: true, get: function () { return __importDefault(ImportSorter_1).default; } });
+
+},{"./FileManager":1,"./config":6,"./errors":13,"./import_management/Import":14,"./import_management/ImportIntegrator":15,"./import_management/ImportSorter":16,"./sort_rules/builtin.index":18}],18:[function(require,module,exports){
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.separateBy = exports.compareImportElements = exports.compareImports = void 0;
+exports.compareImports = __importStar(require("./compare_imports"));
+exports.compareImportElements = __importStar(require("./compare_import_elements"));
+exports.separateBy = __importStar(require("./separate_by"));
+
+},{"./compare_import_elements":22,"./compare_imports":25,"./separate_by":31}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -1589,4 +1411,4 @@ const unequalPackageState = function (leading, following) {
 };
 exports.default = unequalPackageState;
 
-},{}]},{},[4]);
+},{}]},{},[17]);

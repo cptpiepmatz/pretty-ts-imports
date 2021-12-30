@@ -2,7 +2,7 @@
   "name": "pretty-ts-imports",
   "version": "0.1.0",
   "description": "",
-  "main": "src/cli.ts",
+  "main": "./dist/lib.bundle.min.js",
   "bin": {
     "pretty-ts-imports": "./bin/pretty-ts-imports",
     "primp": "./bin/primp"
@@ -10,12 +10,14 @@
   "scripts": {
     "test": "jasmine-ts",
     "coverage": "nyc jasmine-ts",
-    "run-dev": "ts-node .",
-    "build": "npm run build:clean && npm run build:tsc && npm run build:bundle && npm run build:minify",
+    "run-dev": "ts-node src/cli.ts",
+    "build": "npm run build:clean && npm run build:tsc && npm run build-cli:bundle && npm run build-cli:minify && npm run build-lib:bundle && npm run build-lib:minify",
     "build:clean": "del-cli dist & del-cli out",
     "build:tsc": "tsc",
-    "build:bundle": "browserify out/src/cli.js --node -o dist/cli.bundle.js --no-bundle-external",
-    "build:minify": "terser dist/cli.bundle.js -o dist/cli.bundle.min.js",
+    "build-cli:bundle": "browserify out/src/cli.js --node -o dist/cli.bundle.js --no-bundle-external",
+    "build-cli:minify": "terser dist/cli.bundle.js -o dist/cli.bundle.min.js",
+    "build-lib:bundle": "browserify out/src/lib.js --node -o dist/lib.bundle.js --no-bundle-external",
+    "build-lib:minify": "terser dist/lib.bundle.js -o dist/lib.bundle.min.js",
     "schema:config": "typescript-json-schema src/config/Config.ts Config --tsNodeRegister -o config.schema.json",
     "schema": "npm run schema:config",
     "docs": "typedoc"
