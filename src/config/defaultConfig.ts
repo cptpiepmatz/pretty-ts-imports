@@ -1,4 +1,5 @@
 import FullConfig from "./FullConfig";
+
 import * as CompareImports from "../sort_rules/compare_imports";
 import * as CompareImportElements from "../sort_rules/compare_import_elements";
 import * as SeparateBy from "../sort_rules/separate_by";

@@ -1,5 +1,4 @@
 import ImportCompareFunction from "../ImportCompareFunction";
-import {dirname} from "path";
 
 /**
  * Compares two path for their depth.

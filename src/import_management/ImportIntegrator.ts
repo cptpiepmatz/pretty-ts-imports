@@ -1,6 +1,7 @@
+import {SourceFile, SyntaxKind} from "typescript";
+
 import FormattingOptions from "./FormattingOptions";
 import Import from "./Import";
-import {SourceFile, SyntaxKind} from "typescript";
 import IntegrationError from "../errors/IntegrationError";
 
 /** Class for integrating imports back into their source file. */

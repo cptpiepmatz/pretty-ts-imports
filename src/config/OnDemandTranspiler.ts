@@ -1,16 +1,17 @@
-import {dirname, resolve} from "path";
 import {readFileSync} from "fs";
+import {dirname, resolve} from "path";
+import requireFromString from "require-from-string";
 import {
-  CompilerOptions,
   readConfigFile,
-  transpile as tsTranspile
+  transpile as tsTranspile,
+  CompilerOptions
 } from "typescript";
+
+import OnDemandTranspileError from "../errors/OnDemandTranspileError";
 import ImportCompareFunction from "../sort_rules/ImportCompareFunction";
 import ImportElementCompareFunction
   from "../sort_rules/ImportElementCompareFunction";
 import SeparateByFunction from "../sort_rules/SeparateByFunction";
-import requireFromString from "require-from-string";
-import OnDemandTranspileError from "../errors/OnDemandTranspileError";
 
 /** Union type of all functions the transpiler may return. */
 export type RequiredFunction =

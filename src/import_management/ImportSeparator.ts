@@ -1,6 +1,7 @@
-import SeparateByFunction from "../sort_rules/SeparateByFunction";
 import Import from "./Import";
 import InvalidConfigError from "../errors/InvalidConfigError";
+import SeparateByFunction from "../sort_rules/SeparateByFunction";
+
 import * as builtinSeparateByFunctions from "../sort_rules/separate_by";
 
 /** Class to insert the separators into the imports. */

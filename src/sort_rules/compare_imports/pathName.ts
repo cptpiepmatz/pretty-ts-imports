@@ -1,5 +1,6 @@
-import ImportCompareFunction from "../ImportCompareFunction";
 import {dirname} from "path";
+
+import ImportCompareFunction from "../ImportCompareFunction";
 
 /**
  * Compares two source paths by their dir hierarchy from top to bottom.

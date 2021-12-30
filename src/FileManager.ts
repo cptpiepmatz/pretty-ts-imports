@@ -11,8 +11,8 @@ import {dirname, join, resolve} from "path";
 import {
   createSourceFile,
   findConfigFile,
-  ImportDeclaration,
   readConfigFile,
+  ImportDeclaration,
   SourceFile,
   SyntaxKind
 } from "typescript";

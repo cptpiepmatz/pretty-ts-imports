@@ -1,8 +1,9 @@
-import FormattingOptions from "../import_management/FormattingOptions";
 import {readdirSync, readFileSync, statSync} from "fs";
 import {basename, dirname, extname} from "path";
+
 import * as JSON5 from "json5";
 import * as YAML from "yaml";
+
 import Config from "./Config";
 import FullConfig from "./FullConfig";
 import {
@@ -11,8 +12,9 @@ import {
   defaultSortImportElements,
   defaultSortImports
 } from "./defaultConfig";
-import UnsupportedFileFormatError from "../errors/UnsupportedFileFormatError";
 import SupportedConfigFormat from "./SupportedConfigFormat";
+import UnsupportedFileFormatError from "../errors/UnsupportedFileFormatError";
+import FormattingOptions from "../import_management/FormattingOptions";
 
 /** Expected config file names. ("primp" is recommended.) */
 export const expectedConfigNames = [
