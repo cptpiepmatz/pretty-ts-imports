@@ -5,8 +5,8 @@ import * as SeparateBy from "../sort_rules/separate_by";
 
 /** Internal type used to securely type the default config. */
 type DefaultConfig = FullConfig & {
-  sortImports: (keyof typeof CompareImports)[],
-  sortImportElements: (keyof typeof CompareImportElements)[],
+  sortImports: (`${"!"|""}${keyof typeof CompareImports}`)[],
+  sortImportElements: (`${"!"|""}${keyof typeof CompareImportElements}`)[],
   separateBy: (keyof typeof SeparateBy)[],
   require: {}
 }
@@ -16,7 +16,7 @@ const defaultConfig: DefaultConfig = {
 
   sortImports: [
     "sourceType",
-    "namespacePresence",
+    "!namespacePresence",
     "pathName",
     "sourceName"
   ],
