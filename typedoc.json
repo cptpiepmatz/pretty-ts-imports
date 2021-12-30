@@ -3,5 +3,7 @@
   "entryPoints": ["src/lib.ts"],
   "out": "docs",
   "sort": ["static-first", "alphabetical"],
-  "categorizeByGroup": true
+  "categorizeByGroup": true,
+  "plugin": ["typedoc-plugin-extras"],
+  "favicon": "./icon/primp.favicon.png"
 }
