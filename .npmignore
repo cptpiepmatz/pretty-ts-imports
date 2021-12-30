@@ -9,6 +9,5 @@ src/
 tmp/
 .nycrc
 .editorconfig
-config.schema.json
 tsconfig.json
 typedoc.json
