@@ -1,6 +1,7 @@
 import {join} from "path";
-import {OnDemandTranspiler} from "../../src/config";
 import {ModuleKind, ScriptTarget} from "typescript";
+
+import {OnDemandTranspiler} from "../../src/config";
 import Import from "../../src/import_management/Import";
 import ImportCompareFunction from "../../src/sort_rules/ImportCompareFunction";
 import {OnDemandTranspileError} from "../../src/errors";

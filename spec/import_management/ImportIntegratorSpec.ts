@@ -1,6 +1,7 @@
+import {createSourceFile, ImportDeclaration, ScriptTarget} from "typescript";
+
 import FormattingOptions from "../../src/import_management/FormattingOptions";
 import ImportIntegrator from "../../src/import_management/ImportIntegrator";
-import {createSourceFile, ImportDeclaration, ScriptTarget} from "typescript";
 import Import from "../../src/import_management/Import";
 
 describe("ImportIntegrator", function() {

@@ -1,7 +1,8 @@
-import {join} from "path";
-import FileManager from "../src/FileManager";
 import {copyFileSync, readFileSync, statSync, writeFileSync} from "fs";
+import {join} from "path";
+
 import useTmpDir from "./helpers/useTmpDir";
+import FileManager from "../src/FileManager";
 
 const tsConfigPath = join(__dirname, "../tsconfig.json");
 const exampleFilePath = join(__dirname, "./file-examples/FileManagerReadIn.ts");

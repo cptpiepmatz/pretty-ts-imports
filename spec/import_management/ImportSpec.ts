@@ -1,14 +1,15 @@
-import Import from "../../src/import_management/Import";
 import {
   createSourceFile,
   ImportDeclaration,
-  ScriptTarget,
-  SyntaxKind
+  SyntaxKind,
+  ScriptTarget
 } from "typescript";
+
+import Import from "../../src/import_management/Import";
 import ImportElement from "../../src/import_management/ImportElement";
+import FormattingOptions from "../../src/import_management/FormattingOptions";
 import ImportElementCompareFunction
   from "../../src/sort_rules/ImportElementCompareFunction";
-import FormattingOptions from "../../src/import_management/FormattingOptions";
 
 const importedStuff = `
 import {b, c, a} from "alphabet";

@@ -1,7 +1,7 @@
-import expectSorted from "../../helpers/expectSorted";
+import ImportElement from "../../../src/import_management/ImportElement";
 import basenameGroup
   from "../../../src/sort_rules/compare_import_elements/basenameGroup";
-import ImportElement from "../../../src/import_management/ImportElement";
+import expectSorted from "../../helpers/expectSorted";
 
 describe("sort_rules/compare_import_elements/basenameGroup", function() {
   const AlphaStuff = {name: "AlphaStuff"} as ImportElement;

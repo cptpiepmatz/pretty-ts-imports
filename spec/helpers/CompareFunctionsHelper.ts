@@ -1,12 +1,12 @@
-import ImportCompareFunction
-  from "../../src/sort_rules/ImportCompareFunction";
-import Import from "../../src/import_management/Import";
 import {
   createSourceFile,
   ImportDeclaration,
-  ScriptTarget,
-  SyntaxKind
+  SyntaxKind,
+  ScriptTarget
 } from "typescript";
+
+import Import from "../../src/import_management/Import";
+import ImportCompareFunction from "../../src/sort_rules/ImportCompareFunction";
 import CustomMatcher = jasmine.CustomMatcher;
 import CustomMatcherResult = jasmine.CustomMatcherResult;
 

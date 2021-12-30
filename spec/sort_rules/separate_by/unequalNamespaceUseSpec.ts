@@ -1,6 +1,6 @@
+import Import from "../../../src/import_management/Import";
 import separator from "../../../src/sort_rules/separate_by/unequalNamespaceUse";
 import expectSeparator from "../../helpers/expectSeparator";
-import Import from "../../../src/import_management/Import";
 
 describe("sort_rules/separate_by/unequalsNamespaceUse", function() {
   const namespaceImport = {isNamespace: true} as Import;

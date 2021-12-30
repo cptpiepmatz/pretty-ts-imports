@@ -1,7 +1,7 @@
-import expectSorted from "../../helpers/expectSorted";
 import ImportElement from "../../../src/import_management/ImportElement";
 import elementName
   from "../../../src/sort_rules/compare_import_elements/elementName";
+import expectSorted from "../../helpers/expectSorted";
 
 describe("sort_rules/compare_import_elements/elementName", function() {
 

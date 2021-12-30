@@ -1,5 +1,4 @@
-import ImportCompareFunction
-  from "../../src/sort_rules/ImportCompareFunction";
+import ImportCompareFunction from "../../src/sort_rules/ImportCompareFunction";
 
 declare global {
   namespace jasmine {

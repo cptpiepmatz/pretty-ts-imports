@@ -1,4 +1,6 @@
+import {homedir} from "os";
 import {dirname, join} from "path";
+
 import {ConfigHandler} from "../../src/config";
 import {
   defaultFormatting,
@@ -6,7 +8,6 @@ import {
   defaultSortImportElements,
   defaultSortImports
 } from "../../src/config/defaultConfig";
-import {homedir} from "os";
 
 describe("ConfigHandler", function() {
 
