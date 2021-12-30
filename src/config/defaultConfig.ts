@@ -1,24 +1,35 @@
 import FullConfig from "./FullConfig";
+import * as CompareImports from "../sort_rules/compare_imports";
+import * as CompareImportElements from "../sort_rules/compare_import_elements";
+import * as SeparateBy from "../sort_rules/separate_by";
+
+/** Internal type used to securely type the default config. */
+type DefaultConfig = FullConfig & {
+  sortImports: (keyof typeof CompareImports)[],
+  sortImportElements: (keyof typeof CompareImportElements)[],
+  separateBy: (keyof typeof SeparateBy)[],
+  require: {}
+}
 
 /** Default config. */
-const defaultConfig: FullConfig = {
+const defaultConfig: DefaultConfig = {
 
   sortImports: [
-    "packagesFirst",
-    "comparePaths",
-    "flatPathsFirst",
-    "namespaceBeforeNamed",
-    "defaultsTypesFirst",
-    "compareSources"
+    "sourceType",
+    "namespacePresence",
+    "pathName",
+    "sourceName"
   ],
 
   sortImportElements: [
-    "typesFirst",
-    "groupBasenames"
+    "elementType",
+    "basenameGroup",
+    "elementName"
   ],
 
   separateBy: [
-    "unequalPackageState"
+    "unequalPackageState",
+    "unequalNamespaceUse"
   ],
 
   formatting: {
