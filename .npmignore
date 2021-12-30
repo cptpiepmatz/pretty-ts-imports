@@ -1,0 +1,14 @@
+.idea/
+.nyc_output/
+docs/
+examples/
+icon/
+out/
+spec/
+src/
+tmp/
+.nycrc
+.editorconfig
+config.schema.json
+tsconfig.json
+typedoc.json
