@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "",
   "main": "src/cli.ts",
+  "bin": {
+    "pretty-ts-imports": "./bin/pretty-ts-imports",
+    "primp": "./bin/primp"
+  },
   "scripts": {
     "test": "jasmine-ts",
     "coverage": "nyc jasmine-ts",
