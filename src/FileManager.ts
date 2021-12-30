@@ -62,8 +62,13 @@ export default class FileManager {
    */
   reloadFromDisk(path: string): void {
     const fullPath = resolve(path);
-    const content = FileManager.readFile(fullPath);
-    if (!content) throw new MissingFileError("Couldn't find file.", fullPath);
+    let content;
+    try {
+      content = readFileSync(fullPath, "utf-8");
+    }
+    catch (e) {
+      throw new MissingFileError("Couldn't find file.", fullPath);
+    }
     const sourceFile = createSourceFile(
       fullPath,
       content,
