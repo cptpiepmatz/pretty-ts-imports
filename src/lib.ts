@@ -12,6 +12,7 @@ export {default as Import} from "./import_management/Import";
 export {default as ImportElement} from "./import_management/ImportElement";
 export {default as ImportIntegrator} from "./import_management/ImportIntegrator";
 export {default as ImportSorter} from "./import_management/ImportSorter";
+export {default as ImportSeparator} from "./import_management/ImportSeparator";
 export {default as ImportSource} from "./import_management/ImportSource";
 
 // Exporting the sort rules
