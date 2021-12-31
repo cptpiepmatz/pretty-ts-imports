@@ -5,5 +5,6 @@
   "sort": ["static-first", "alphabetical"],
   "categorizeByGroup": true,
   "plugin": ["typedoc-plugin-extras"],
-  "favicon": "./icon/primp.favicon.png"
+  "favicon": "./icon/primp.favicon.png",
+  "media": "./icon"
 }

@@ -1,5 +1,8 @@
 <p align="center">
-  <img width="250" src="./icon/primp.svg">
+  <picture>
+    <source srcset="media://primp.svg">
+    <img width="250" src="./icon/primp.svg">
+  </picture>
 </p>
 <h1 align="center">primp</h1>
 <h3 align="center">pretty-ts-imports</h3>
