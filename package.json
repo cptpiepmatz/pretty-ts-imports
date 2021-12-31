@@ -1,7 +1,19 @@
 {
   "name": "pretty-ts-imports",
   "version": "0.1.0",
-  "description": "",
+  "description": "A Tool to sort Typescript Imports with a set of complex Rules.",
+  "keywords": [
+    "rules",
+    "typescript",
+    "prettier",
+    "ts",
+    "beautifier",
+    "import",
+    "complex",
+    "pretty",
+    "imports",
+    "primp"
+  ],
   "main": "./dist/lib.bundle.min.js",
   "sourceMap": "./dist/lib.bundle.min.js.map",
   "types": "./dist/lib.d.ts",
@@ -30,7 +42,7 @@
     "url": "git+https://github.com/derPiepmatz/pretty-ts-imports.git"
   },
   "author": "Tim 'Piepmatz' Hesse",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/derPiepmatz/pretty-ts-imports/issues"
   },
