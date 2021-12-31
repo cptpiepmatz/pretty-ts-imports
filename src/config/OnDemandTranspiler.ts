@@ -26,8 +26,6 @@ export type RequiredFunction =
  */
 export default class OnDemandTranspiler {
 
-  // TODO: test me
-
   /** The compiler options to transpile the files against. */
   private readonly compilerOptions: CompilerOptions;
 
