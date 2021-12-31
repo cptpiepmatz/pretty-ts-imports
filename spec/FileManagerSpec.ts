@@ -38,8 +38,10 @@ describe("FileManager", function() {
       join(startPath, "deeper-path", "empty.ts")
     ].concat(expectedNonRecursive);
 
-    expect(FileManager.getFiles(startPath)).toEqual(expectedNonRecursive);
-    expect(FileManager.getFiles(startPath, true)).toEqual(expectedRecursive);
+    expect((FileManager.getFiles(startPath) as string[]).sort())
+      .toEqual(expectedNonRecursive.sort());
+    expect((FileManager.getFiles(startPath, true) as string[]).sort())
+      .toEqual(expectedRecursive.sort());
 
     // test if the file is directly returned if pointing to a file
     const directPath = join(startPath, "FileManagerReadIn.ts");
