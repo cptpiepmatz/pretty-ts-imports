@@ -1,4 +1,39 @@
-// TODO: add module description everywhere
+/**
+ * These are all the main components of primp.
+ * If you wish to include anything in your own program, you can mostly do it
+ * with these classes.
+ *
+ * You can easily import the {@link ImportSorter}, {@link ImportSeparator} and
+ * {@link ImportIntegrator}, as well as the {@link FileManager} to load in your
+ * typescript files and work with them in your code.
+ * ```ts
+ * // maybe something like this
+ * import {
+ *   FileManager,
+ *   ImportSorter,
+ *   ImportIntegrator
+ * } from "pretty-ts-imports";
+ *
+ * let fileManager = new FileManager(yourTSConfigPath, someOfYourFiles);
+ * let sorter = new ImportSorter(yourGeneratedRules, []);
+ * let integrator = new ImportIntegrator({});
+ * for (let imported of fileManager.imports.values()) {
+ *   let integrated = integrator.integrate(imported.imports);
+ *   // write your integrated content somewhere
+ * }
+ * ```
+ *
+ * If you create custom functions for your primp config, you may use the
+ * function interfaces {@link ImportCompareFunction},
+ * {@link ImportElementCompareFunction} and {@link SeparateByFunction}.
+ * They help you make sure you are designing a correct comparator function.
+ *
+ * For examples check
+ * [this](https://github.com/derPiepmatz/pretty-ts-imports/tree/main/examples).
+ * Especially
+ * [the example compare function](https://github.com/derPiepmatz/pretty-ts-imports/blob/main/examples/compare_functions/imports/dotJSFirst.ts).
+ * @module
+ */
 
 // Exporting namespaces
 export * as config from "./config";

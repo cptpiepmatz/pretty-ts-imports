@@ -1,3 +1,14 @@
+/**
+ * These are all the comparator functions for comparing two {@link Import}s
+ * with each other.
+ * They all implement {@link ImportCompareFunction}.
+ *
+ * You can read the filenames as
+ * "sort imports (increasingly) by..."
+ *
+ * @module
+ */
+
 export {default as pathDepth} from "./pathDepth";
 export {default as pathName} from "./pathName";
 export {default as sourceName} from "./sourceName";
