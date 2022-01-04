@@ -29,9 +29,9 @@
  * They help you make sure you are designing a correct comparator function.
  *
  * For examples check
- * [this](https://github.com/derPiepmatz/pretty-ts-imports/tree/main/examples).
+ * [this](https://github.com/cptpiepmatz/pretty-ts-imports/tree/main/examples).
  * Especially
- * [the example compare function](https://github.com/derPiepmatz/pretty-ts-imports/blob/main/examples/compare_functions/imports/dotJSFirst.ts).
+ * [the example compare function](https://github.com/cptpiepmatz/pretty-ts-imports/blob/main/examples/compare_functions/imports/dotJSFirst.ts).
  * @module
  */
 

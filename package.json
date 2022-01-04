@@ -1,5 +1,5 @@
 {
-  "name": "pretty-ts-imports",
+  "name": "@cptpiepmatz/pretty-ts-imports",
   "version": "0.1.0",
   "description": "A Tool to sort Typescript Imports with a Set of complex Rules.",
   "keywords": [
@@ -40,14 +40,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/derPiepmatz/pretty-ts-imports.git"
+    "url": "git+https://github.com/cptpiepmatz/pretty-ts-imports.git"
   },
   "author": "Tim 'Piepmatz' Hesse",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/derPiepmatz/pretty-ts-imports/issues"
+    "url": "https://github.com/cptpiepmatz/pretty-ts-imports/issues"
   },
-  "homepage": "https://github.com/derPiepmatz/pretty-ts-imports#readme",
+  "homepage": "https://github.com/cptpiepmatz/pretty-ts-imports#readme",
   "dependencies": {
     "detect-newline": "<4.0.0",
     "json5": "^2.2.0",
