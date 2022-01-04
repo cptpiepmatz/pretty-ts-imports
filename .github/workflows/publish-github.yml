@@ -1,7 +1,7 @@
 name: publish-github
 on: [workflow_dispatch]
 jobs:
-  coverage:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -11,4 +11,4 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: npm config set registry https://npm.pkg.github.com
-      - run: npm publish --dry-run
+      - run: npm publish
