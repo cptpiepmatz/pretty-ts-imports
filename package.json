@@ -36,7 +36,8 @@
     "schema:config": "typescript-json-schema src/config/Config.ts Config --tsNodeRegister -o config.schema.json",
     "schema": "npm run schema:config",
     "primp": "npm run -- run-dev src -r && npm run -- run-dev spec -r",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "scripts:unscope": "node scripts/unscopePackage.js"
   },
   "repository": {
     "type": "git",

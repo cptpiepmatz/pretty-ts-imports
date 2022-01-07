@@ -12,7 +12,9 @@ jobs:
         with:
           node-version: "16"
           registry-url: "https://registry.npmjs.org/"
+          scope: ""
       - run: npm ci
+      - run: npm run scripts:unscope
       - run: npm run build
       - run: npm publish --access public
         env:
