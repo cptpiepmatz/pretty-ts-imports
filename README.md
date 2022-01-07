@@ -30,19 +30,19 @@ Now you can have the imports your way, if you want that.
 Simply install primp via command line with npm or yarn globally.
 ```shell
 # via npm registry
-npm install -g @cptpiepmatz/pretty-ts-imports
+npm install -g pretty-ts-imports
 
 # via github registry
-npm install -g cptpiepmatz/pretty-ts-imports
+npm install -g @cptpiepmatz/pretty-ts-imports
 ```
 
 Or in your project locally.
 ```shell
 # via npm registry
-npm install -D @cptpiepmatz/pretty-ts-imports
+npm install -D pretty-ts-imports
 
 # via github registry
-npm install -D cptpiepmatz/pretty-ts-imports
+npm install -D @cptpiepmatz/pretty-ts-imports
 ```
 
 ## Usage
