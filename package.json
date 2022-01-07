@@ -1,6 +1,6 @@
 {
   "name": "@cptpiepmatz/pretty-ts-imports",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A Tool to sort Typescript Imports with a Set of complex Rules.",
   "keywords": [
     "rules",
