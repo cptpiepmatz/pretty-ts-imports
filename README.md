@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
     <source srcset="media://primp.svg">
-    <source srcset="https://raw.githubusercontent.com/cptpiepmatz/pretty-ts-imports/main/icon/primp.svg">
-    <img width="250" src="./icon/primp.svg">
+    <source srcset="./icon/primp.svg">
+    <img width="250" src="https://raw.githubusercontent.com/cptpiepmatz/pretty-ts-imports/main/icon/primp.svg">
   </picture>
 </p>
 <h1 align="center">primp</h1>
