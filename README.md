@@ -17,6 +17,9 @@
   <a href="https://github.com/cptpiepmatz/pretty-ts-imports">
     <img alt="Version" src="https://img.shields.io/github/package-json/v/cptpiepmatz/pretty-ts-imports?style=for-the-badge&color=8683F2"/>
   </a>
+  <a href="https://www.npmjs.com/package/pretty-ts-imports">
+    <img alt="NPM" src="https://img.shields.io/npm/v/pretty-ts-imports?color=BE000A&style=for-the-badge"/>
+  </a>
   <a href="https://typescriptlang.org" target="_blank">
     <img alt="TypeScript" src="https://img.shields.io/github/package-json/dependency-version/cptpiepmatz/pretty-ts-imports/typescript?color=3178C6&style=for-the-badge"/>
   </a>
