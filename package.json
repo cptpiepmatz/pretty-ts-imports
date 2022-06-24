@@ -51,28 +51,28 @@
   "homepage": "https://github.com/cptpiepmatz/pretty-ts-imports#readme",
   "dependencies": {
     "detect-newline": "<4.0.0",
-    "json5": "^2.2.0",
-    "node-watch": "^0.7.2",
+    "json5": "^2.2.1",
+    "node-watch": "^0.7.3",
     "require-from-string": "^2.0.2",
-    "typescript": "^4.5.4",
-    "yaml": "^1.10.2",
-    "yargs": "^17.3.1"
+    "typescript": "^4.7.4",
+    "yaml": "^2.1.1",
+    "yargs": "^17.5.1"
   },
   "devDependencies": {
-    "@types/jasmine": "^3.10.2",
-    "@types/node": "^16.11.11",
+    "@types/jasmine": "<4.0.0",
+    "@types/node": "^18.0.0",
     "@types/require-from-string": "^1.2.1",
-    "@types/yargs": "^17.0.8",
+    "@types/yargs": "^17.0.10",
     "browserify": "^17.0.0",
     "del-cli": "^4.0.1",
-    "jasmine": "^3.10.0",
+    "jasmine": "<4.0.0",
     "jasmine-ts": "^0.4.0",
-    "npm-dts": "^1.3.10",
+    "npm-dts": "^1.3.12",
     "nyc": "^15.1.0",
-    "terser": "^5.10.0",
-    "ts-node": "^10.4.0",
-    "typedoc": "^0.22.10",
+    "terser": "^5.14.1",
+    "ts-node": "^10.8.1",
+    "typedoc": "^0.22.17",
     "typedoc-plugin-extras": "^2.2.3",
-    "typescript-json-schema": "^0.52.0"
+    "typescript-json-schema": "^0.53.1"
   }
 }
