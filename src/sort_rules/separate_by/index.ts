@@ -11,3 +11,4 @@
 
 export {default as unequalPackageState} from "./unequalPackageState";
 export {default as unequalNamespaceUse} from "./unequalNamespaceUse";
+export {default as unequalSideEffectUse} from "./unequalSideEffectUse";

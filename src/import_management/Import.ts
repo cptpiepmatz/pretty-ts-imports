@@ -31,6 +31,11 @@ export default class Import {
   /** If the named imports were used. i.e.: "import {a, b, c}". */
   readonly isNamed: boolean = false;
 
+  /** If the module imported only side effects. */
+  get isSideEffectOnly(): boolean {
+    return !this.elements.length && !this.defaultElement;
+  }
+
   /**
    * Constructor for the import.
    * Directly reads out the declaration to make its uses easier.

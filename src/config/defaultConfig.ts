@@ -16,6 +16,7 @@ type DefaultConfig = FullConfig & {
 const defaultConfig: DefaultConfig = {
 
   sortImports: [
+    "!sideEffect",
     "sourceType",
     "!namespacePresence",
     "pathName",
@@ -29,6 +30,7 @@ const defaultConfig: DefaultConfig = {
   ],
 
   separateBy: [
+    "unequalSideEffectUse",
     "unequalPackageState",
     "unequalNamespaceUse"
   ],

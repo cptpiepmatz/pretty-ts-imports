@@ -243,6 +243,7 @@ import SomeSuperLongDefaultImportThatMayTroublesBecauseItsThisLongOrReallyLong
       {name: "SideEffect", isPackage: true, isRelative: false}
     );
     expect(sideEffectImport.elements).toHaveSize(0);
+    expect(sideEffectImport.isSideEffectOnly).toBeTrue();
     expect(sideEffectImport.toString()).toMatch(sideEffectContent);
   });
 
@@ -269,4 +270,10 @@ import SomeSuperLongDefaultImportThatMayTroublesBecauseItsThisLongOrReallyLong
     expect(typeImport.toString()).toMatch(typeContent);
     expect(typeImport.isTypeOnly).toBeTrue();
   });
+
+  it("should mark explicit imports as not side effect only", function() {
+    for (let imported of imports) {
+      expect(imported.isSideEffectOnly).toBeFalse();
+    }
+  })
 });

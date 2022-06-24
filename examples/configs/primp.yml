@@ -9,6 +9,7 @@ sortImports:
   # doesn't return 0, therefore the order is important.
   # To always have the same expected result, at least the last function
   # should possible never return 0.
+  - !sideEffect
   - sourceType
   - dotJSFirst
   - !namespacePresence
@@ -30,6 +31,7 @@ separateBy:
   #
   # Primp uses these category functions to determine where to put empty lines
   # as separation.
+  - unequalSideEffectUse
   - unequalPackageState
   - unequalNamespaceUse
 formatting:

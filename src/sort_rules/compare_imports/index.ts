@@ -16,3 +16,4 @@ export {default as defaultPresence} from "./defaultPresence";
 export {default as defaultType} from "./defaultType";
 export {default as namespacePresence} from "./namespacePresence";
 export {default as sourceType} from "./sourceType";
+export {default as sideEffect} from "./sideEffect";

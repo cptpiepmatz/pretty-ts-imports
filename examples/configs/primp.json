@@ -1,5 +1,6 @@
 {
   "sortImports": [
+    "!sideEffect",
     "sourceType",
     "dotJSFirst",
     "!namespacePresence",
@@ -12,6 +13,7 @@
     "elementName"
   ],
   "separateBy": [
+    "unequalSideEffectUse",
     "unequalPackageState",
     "unequalNamespaceUse"
   ],
