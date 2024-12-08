@@ -13,32 +13,19 @@
 
 <br>
 
-<p align="center">
-  <a href="https://github.com/cptpiepmatz/pretty-ts-imports">
-    <img alt="Version" src="https://img.shields.io/github/package-json/v/cptpiepmatz/pretty-ts-imports?style=for-the-badge&color=8683F2"/>
-  </a>
-  <a href="https://www.npmjs.com/package/pretty-ts-imports">
-    <img alt="NPM" src="https://img.shields.io/npm/v/pretty-ts-imports?color=BE000A&style=for-the-badge"/>
-  </a>
-  <a href="https://typescriptlang.org" target="_blank">
-    <img alt="TypeScript" src="https://img.shields.io/github/package-json/dependency-version/cptpiepmatz/pretty-ts-imports/typescript?color=3178C6&style=for-the-badge"/>
-  </a>
-  <a href="https://cptpiepmatz.github.io/pretty-ts-imports/modules.html" target="_blank">
-    <img alt="TypeDoc" src="https://img.shields.io/github/package-json/dependency-version/cptpiepmatz/pretty-ts-imports/dev/typedoc?color=9600ff&style=for-the-badge"/>
-  </a>
-  <a href="https://github.com/cptpiepmatz/pretty-ts-imports/blob/main/LICENSE">
-    <img alt="LICENSE" src="https://img.shields.io/github/license/cptpiepmatz/pretty-ts-imports?style=for-the-badge">
-  </a>
-  <a href="https://github.com/cptpiepmatz/pretty-ts-imports/tree/main/spec">
-    <img alt="Test" src="https://img.shields.io/github/workflow/status/cptpiepmatz/pretty-ts-imports/test?label=Test&style=for-the-badge">
-  </a>
-  <a href="https://github.com/cptpiepmatz/pretty-ts-imports/tree/main/spec">
-    <img alt="Min Coverage" src="https://img.shields.io/nycrc/cptpiepmatz/pretty-ts-imports?style=for-the-badge">
-  </a>
-  <a href="https://github.com/cptpiepmatz/pretty-ts-imports/tree/main/spec">
-    <img alt="Test" src="https://img.shields.io/github/workflow/status/cptpiepmatz/pretty-ts-imports/coverage?label=Coverage&style=for-the-badge">
-  </a>
-</p>
+<div align="center">
+
+  [![Version](https://img.shields.io/github/package-json/v/cptpiepmatz/pretty-ts-imports?style=for-the-badge&color=8683F2)](https://github.com/cptpiepmatz/pretty-ts-imports)
+  [![NPM](https://img.shields.io/npm/v/pretty-ts-imports?color=BE000A&style=for-the-badge)](https://www.npmjs.com/package/pretty-ts-imports)
+  [![TypeScript](https://img.shields.io/github/package-json/dependency-version/cptpiepmatz/pretty-ts-imports/typescript?color=3178C6&style=for-the-badge)](https://typescriptlang.org)
+  [![TypeDoc](https://img.shields.io/github/package-json/dependency-version/cptpiepmatz/pretty-ts-imports/dev/typedoc?color=9600ff&style=for-the-badge)](https://cptpiepmatz.github.io/pretty-ts-imports/modules.html)
+  [![LICENSE](https://img.shields.io/github/license/cptpiepmatz/pretty-ts-imports?style=for-the-badge)](https://github.com/cptpiepmatz/pretty-ts-imports/blob/main/LICENSE)
+  [![Test](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/pretty-ts-imports/test.yml?label=Test&style=for-the-badge)](https://github.com/cptpiepmatz/pretty-ts-imports/tree/main/spec)
+  [![Min Coverage](https://img.shields.io/nycrc/cptpiepmatz/pretty-ts-imports?style=for-the-badge)](https://github.com/cptpiepmatz/pretty-ts-imports/tree/main/spec)
+  [![Coverage](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/pretty-ts-imports/coverage.yml?label=Coverage&style=for-the-badge)](https://github.com/cptpiepmatz/pretty-ts-imports/tree/main/spec)
+
+</div>
+
 
 **primp** is a tool to sort your typescript imports by a set of complex rules.
 Now you can have the imports your way, if you want that.
