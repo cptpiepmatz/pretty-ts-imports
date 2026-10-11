@@ -312,16 +312,23 @@ export class Import {
    */
   toString(options: FormattingOptions = {}): string {
     const {
-      indent,
-      bracketIndent,
-      quoteStyle,
-      maxColumns,
-      trailingComma,
-      breakFrom,
-    } = {
-      ...defaultFormattingOptions,
-      ...options,
-    };
+      indent = defaultFormattingOptions.indent,
+      bracketIndent = defaultFormattingOptions.bracketIndent,
+      quoteStyle = defaultFormattingOptions.quoteStyle,
+      maxColumns = defaultFormattingOptions.maxColumns,
+      trailingComma = defaultFormattingOptions.trailingComma,
+      breakFrom = defaultFormattingOptions.breakFrom,
+    } = options;
+    for (
+      const [name, value] of [
+        ["indent", indent],
+        ["bracketIndent", bracketIndent],
+      ] as const
+    ) {
+      if (!Number.isSafeInteger(value) || value < 0) {
+        throw new RangeError(`${name} must be a non-negative integer`);
+      }
+    }
     const singleQuote = quoteStyle === "single";
     const indentString = " ".repeat(indent);
     const bracketIndentString = " ".repeat(bracketIndent);
@@ -366,7 +373,8 @@ export class Import {
         (trailingComma ? "," : "") + "\n}";
       output = render(" ");
     }
-    return breakFrom && overflows(output)
+    const lastLine = output.slice(output.lastIndexOf("\n") + 1);
+    return breakFrom && lastLine.length > maxColumns
       ? render(`\n${indentString}`)
       : output;
   }

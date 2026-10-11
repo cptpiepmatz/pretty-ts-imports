@@ -91,6 +91,42 @@ Deno.test("renderer wraps only beyond the width boundary", () => {
     .toBe('import { single } from "long-module-name";');
 });
 
+Deno.test("renderer uses defaults for explicitly undefined options", () => {
+  const input = 'import { a, b } from "pkg";';
+  expect(render(input, { bracketIndent: undefined })).toBe(input);
+  expect(render(input, { maxColumns: undefined })).toBe(render(input));
+  expect(render(input, {
+    indent: undefined,
+    bracketIndent: undefined,
+    quoteStyle: undefined,
+    maxColumns: 20,
+    trailingComma: undefined,
+    breakFrom: undefined,
+  })).toBe('import {\n  a,\n  b,\n} from "pkg";');
+  const longInput = `import { a, b } from "${"x".repeat(80)}";`;
+  expect(render(longInput, { maxColumns: undefined })).toBe(render(longInput));
+});
+
+Deno.test("renderer keeps a fitting from clause beside oversized specifiers", () => {
+  expect(render(
+    'import { extraordinarilyLongBindingName, b } from "p";',
+    { maxColumns: 25, breakFrom: true },
+  )).toBe('import {\n  extraordinarilyLongBindingName,\n  b,\n} from "p";');
+});
+
+Deno.test("renderer rejects invalid spacing options", () => {
+  const imported = parseImports('import { a, b } from "pkg";').imports[0];
+  for (const name of ["indent", "bracketIndent"] as const) {
+    for (const value of [-1, 0.5, NaN, Infinity]) {
+      expect(() => imported.toString({ [name]: value })).toThrow(RangeError);
+      expect(() => imported.toString({ [name]: value })).toThrow(
+        `${name} must be a non-negative integer`,
+      );
+    }
+    expect(imported.toString({ [name]: 0 })).toBeDefined();
+  }
+});
+
 Deno.test("printer escapes module and imported names for both quote styles", () => {
   const value =
     "quotes: '\" slash: \\ controls: \0\x01\t\n\r separators: \u2028\u2029";
