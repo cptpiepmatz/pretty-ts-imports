@@ -19,12 +19,16 @@ Deno.test("--check reports only unformatted files without writing", async () => 
     );
     console.log = (message: string) => reported.push(message);
     expect(await main(["--check", "--config", config, dir])).toBe(true);
-    expect(reported).toEqual([dirty]);
+    expect(reported).toEqual([
+      dirty,
+      "Checked 3 files",
+      "Needs formatting: 1 file",
+    ]);
     expect(Deno.readTextFileSync(dirty)).toBe(original);
     expect(await main(["--config", config, dirty])).toBe(false);
     reported.length = 0;
     expect(await main(["--check", "--config", config, dir])).toBe(false);
-    expect(reported).toEqual([]);
+    expect(reported).toEqual(["Checked 3 files"]);
   } finally {
     console.log = log;
     Deno.removeSync(dir, { recursive: true });
@@ -46,12 +50,16 @@ Deno.test("--check uses exit status 1 for unformatted files", async () => {
     };
     const dirty = await run();
     expect(dirty.code).toBe(1);
-    expect(new TextDecoder().decode(dirty.stdout).trim()).toBe(file);
+    expect(new TextDecoder().decode(dirty.stdout).trim()).toBe(
+      `${file}\nChecked 1 file\nNeeds formatting: 1 file`,
+    );
     expect(Deno.readTextFileSync(file)).toBe(original);
     Deno.writeTextFileSync(file, 'import a from "a";\nimport z from "z";\n');
     const clean = await run();
     expect(clean.code).toBe(0);
-    expect(new TextDecoder().decode(clean.stdout)).toBe("");
+    expect(new TextDecoder().decode(clean.stdout)).toBe(
+      "Checked 1 file\n",
+    );
   } finally {
     Deno.removeSync(dir, { recursive: true });
   }

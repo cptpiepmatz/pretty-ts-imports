@@ -25,6 +25,24 @@ import type {
   SeparateByFunction,
 } from "./rules.ts";
 
+/** The result of formatting or checking a source file in the CLI. */
+export interface FileReport {
+  /** Absolute source file path. */
+  path: string;
+  /** Whether formatting differs from the source content. */
+  changed: boolean;
+}
+
+/** Totals for a completed CLI pass. */
+export interface SummaryReport {
+  /** Number of unique supported files processed. */
+  checked: number;
+  /** Number of files changed, or needing formatting in check mode. */
+  updated: number;
+  /** Whether this pass ran in check mode, without writing files. */
+  check: boolean;
+}
+
 /** Options for formatting, sorting, and grouping imports. */
 export interface Config {
   /** Import comparators in priority order; use `inverse(rule)` to reverse one. */
@@ -41,6 +59,28 @@ export interface Config {
 
   /** Ordered extractors; the first matching adapter handles a file. */
   extractors?: Extractor[];
+
+  /**
+   * Called by the CLI after each successful write (including unchanged files).
+   * Receives a record with the absolute source path and changed status.
+   * Defaults to printing only changed files' absolute paths, without status labels.
+   */
+  onFormat?: (report: FileReport) => void;
+
+  /**
+   * Called by the CLI for every checked file, without writing it.
+   * Receives a record with the absolute source path and changed status.
+   * Defaults to printing only absolute paths that need formatting.
+   */
+  onCheck?: (report: FileReport) => void;
+
+  /**
+   * Called after each CLI pass with a record containing checked and updated
+   * file counts and the check flag.
+   * Defaults to printing the checked total and, when nonzero, the updated total.
+   * Watch events each form a single-file pass.
+   */
+  onSummary?: (report: SummaryReport) => void;
 }
 
 /** Provide type checking and editor completion for a config's default export. */
@@ -55,6 +95,23 @@ export type FullConfig = Required<Config> & {
 
 /** Side effects, then built-ins, packages, parents, locals; values before types. */
 export const defaultConfig: FullConfig = {
+  onFormat: ({ path, changed }) => {
+    if (!changed) return;
+    console.log(path);
+  },
+  onCheck: ({ path, changed }) => {
+    if (changed) console.log(path);
+  },
+  onSummary: ({ checked, updated, check }) => {
+    console.log(`Checked ${checked} ${checked === 1 ? "file" : "files"}`);
+    if (updated > 0) {
+      console.log(
+        `${check ? "Needs formatting:" : "Updated"} ${updated} ${
+          updated === 1 ? "file" : "files"
+        }`,
+      );
+    }
+  },
   extractors: [tsExtractor],
   sortImports: [
     sideEffect,
@@ -82,9 +139,15 @@ export class ConfigHandler implements FullConfig {
   readonly sortImportElements: ImportElementCompareFunction[];
   readonly separateBy: SeparateByFunction[];
   readonly formatting: Required<FormattingOptions>;
+  readonly onFormat: (report: FileReport) => void;
+  readonly onCheck: (report: FileReport) => void;
+  readonly onSummary: (report: SummaryReport) => void;
 
   /** Fill in omitted fields from the defaults. */
   constructor(config: Config = {}) {
+    this.onFormat = config.onFormat ?? defaultConfig.onFormat;
+    this.onCheck = config.onCheck ?? defaultConfig.onCheck;
+    this.onSummary = config.onSummary ?? defaultConfig.onSummary;
     this.extractors = config.extractors ?? [...defaultConfig.extractors];
     this.sortImports = config.sortImports ?? [...defaultConfig.sortImports];
     this.sortImportElements = config.sortImportElements ??

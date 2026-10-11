@@ -157,12 +157,15 @@ test("Node executes the transpiled CLI without TypeScript support", () => {
       });
     const dirty = check();
     assert.equal(dirty.status, 1, dirty.stderr);
-    assert.equal(dirty.stdout.trim(), input);
+    assert.equal(
+      dirty.stdout.trim(),
+      `${input}\nChecked 1 file\nNeeds formatting: 1 file`,
+    );
     assert.equal(readFileSync(input, "utf8"), original);
     writeFileSync(input, 'import a from "a";\nimport z from "z";\n');
     const clean = check();
     assert.equal(clean.status, 0, clean.stderr);
-    assert.equal(clean.stdout, "");
+    assert.equal(clean.stdout, "Checked 1 file\n");
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

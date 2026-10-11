@@ -168,28 +168,38 @@ export async function main(args: string[]): Promise<boolean> {
     : commonDirectory(paths);
   const manager = new FileManager(paths);
   let changed = false;
-  const processFile = (path: string): void => {
+  const processFile = (path: string): boolean => {
     manager.reloadFromDisk(path);
     const source = manager.imports.get(resolve(path))!.sourceFile.text;
     const content = formatImports(source, config, path);
+    const fileChanged = manager.hasChanges(path, content);
     if (options.check) {
-      if (manager.hasChanges(path, content)) {
-        console.log(path);
-        changed = true;
-      }
-      return;
+      if (fileChanged) changed = true;
+      config.onCheck({ path, changed: fileChanged });
+      return fileChanged;
     }
     const target = output !== undefined && outputBase !== undefined
       ? join(output, relative(outputBase, resolve(path)))
       : undefined;
     manager.write(path, content, target);
+    config.onFormat({ path, changed: fileChanged });
+    return fileChanged;
   };
-  for (const path of paths) processFile(path);
+  let updated = 0;
+  for (const path of paths) {
+    if (processFile(path)) updated++;
+  }
+  config.onSummary({ checked: paths.length, updated, check: options.check });
   if (options.watch) {
     for (const path of paths) {
       watch(path, () => {
         try {
-          processFile(path);
+          const fileChanged = processFile(path);
+          config.onSummary({
+            checked: 1,
+            updated: Number(fileChanged),
+            check: false,
+          });
         } catch (error) {
           console.error(error);
         }

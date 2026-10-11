@@ -110,6 +110,14 @@ which other files are included. Explicit files without a matching extractor are
 skipped. With multiple inputs, `--output` preserves their relative directory
 structure.
 
+Formatting prints only modified files. Check mode prints only files needing
+formatting. Both print bare absolute paths, without status labels. Customize
+this output with the callbacks below.
+
+Each completed pass ends with `Checked N files`. When files differ, a second
+line prints `Updated N files`, or `Needs formatting: N files` in check mode. The
+second line is omitted when its count is zero; singular counts use `file`.
+
 ### Library
 
 ```ts
@@ -158,6 +166,43 @@ or `primp.config.mjs`, in that order. One config applies to all inputs. Use
 Omitted fields use defaults. Arrays you provide replace their defaults; an empty
 array disables that sorting or grouping stage. Formatting options merge with
 their defaults. Import `defaultConfig` to extend an existing rule list.
+
+### File reporting
+
+Override `onFormat` and `onCheck` to customize CLI reporting:
+
+```ts
+import { defineConfig } from "jsr:@primp/primp";
+
+export default defineConfig({
+  onFormat({ path, changed }) {
+    console.log(`${path}: ${changed ? "changed" : "unchanged"}`);
+  },
+  onCheck({ path, changed }) {
+    if (changed) console.error(`${path}: incorrectly formatted`);
+  },
+  onSummary({ checked, updated, check }) {
+    console.log(
+      `${checked} checked, ${updated} ${check ? "need formatting" : "updated"}`,
+    );
+  },
+});
+```
+
+Each synchronous per-file callback receives a `{ path, changed }` record with
+the absolute source path and a boolean for whether formatted content differs
+from the source, preserving its newline style. `onFormat` runs after a
+successful write, including unchanged files, output-directory copies, and watch
+passes. `onCheck` runs for every checked file, including correctly formatted
+ones; it replaces the default output but does not affect the check exit code.
+Use `onFormat() {}` or `onCheck() {}` to silence that mode. Library calls to
+`formatImports` do not invoke these callbacks.
+
+`onSummary({ checked, updated, check })` receives counts for unique supported
+files, excluding unmatched inputs, and whether `--check` is active. In check
+mode, `updated` counts files needing formatting; no files are written. Watch
+mode reports the initial pass and then each single-file pass. Use
+`onSummary() {}` to silence totals. A failed pass does not emit a summary.
 
 ### Default behavior
 

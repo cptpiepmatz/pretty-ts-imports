@@ -48,7 +48,12 @@ export {
   defaultConfig,
   defineConfig,
 } from "./src/configuration.ts";
-export type { Config, FullConfig } from "./src/configuration.ts";
+export type {
+  Config,
+  FileReport,
+  FullConfig,
+  SummaryReport,
+} from "./src/configuration.ts";
 
 /** Configuration types, defaults, and TypeScript config discovery. */
 export * as config from "./src/configuration.ts";
