@@ -36,6 +36,7 @@ export function formatImports(
   const separator = new ImportSeparator(options.separateBy);
   const integrator = new ImportIntegrator(options.formatting);
   let output = source;
+  const newline = source.match(/\r\n|\n|\r/)?.[0] ?? "\n";
   let nextStart = source.length;
   for (const { start, end, content } of slices) {
     if (
@@ -52,6 +53,7 @@ export function formatImports(
     const formatted = integrator.integrate(
       sourceFile,
       separator.insertSeparator(sorter.sort(imports)),
+      newline,
     );
     output = output.slice(0, start) + formatted + output.slice(end);
   }

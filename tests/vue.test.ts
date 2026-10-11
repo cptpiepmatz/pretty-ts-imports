@@ -14,6 +14,17 @@ import { fromFileUrl, join } from "@std/path";
 
 const vueConfig = { extractors: [vueExtractor] };
 
+Deno.test("Vue uses the enclosing file's newline style for extracted scripts", () => {
+  const input =
+    '<template><div /></template>\r\n<script lang="ts">import { b, a } from "pkg";</script>\r\n';
+  expect(formatImports(input, {
+    ...vueConfig,
+    formatting: { maxColumns: 20 },
+  }, "component.vue")).toBe(
+    '<template><div /></template>\r\n<script lang="ts">import {\r\n  a,\r\n  b,\r\n} from "pkg";</script>\r\n',
+  );
+});
+
 // Indented Vue fixtures with a single final newline.
 function vue(strings: TemplateStringsArray): string {
   const lines = strings[0].replaceAll("\r\n", "\n").split("\n");

@@ -120,19 +120,16 @@ export const defaultFormattingOptions: Required<FormattingOptions> = {
   breakFrom: false,
 };
 
-function quoteString(value: string, quote: string): string {
-  // Control characters must be escaped to keep decoded TypeScript string values valid.
-  // deno-lint-ignore no-control-regex
-  const escaped = value.replace(/[\\\x00-\x1f\u2028\u2029'"]/g, (character) => {
-    if (character === "\\") return "\\\\";
-    if (character === quote) return `\\${character}`;
-    if (character === "\n") return "\\n";
-    if (character === "\r") return "\\r";
-    if (character === "\t") return "\\t";
-    if (character === "'" || character === '"') return character;
-    return `\\u${character.charCodeAt(0).toString(16).padStart(4, "0")}`;
-  });
-  return `${quote}${escaped}${quote}`;
+// Fragments use LF internally; integration applies the destination file's style.
+const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
+const printerSourceFile = ts.createSourceFile(
+  "input.ts",
+  "",
+  ts.ScriptTarget.Latest,
+);
+
+function printNode(node: ts.Node, sourceFile = printerSourceFile): string {
+  return printer.printNode(ts.EmitHint.Unspecified, node, sourceFile);
 }
 
 function element(
@@ -151,6 +148,54 @@ function element(
     isRenamed: originalName !== undefined,
     isTypeOnly,
   };
+}
+
+function renderElement(imported: ImportElement, singleQuote: boolean): string {
+  const originalName = imported.originalName === undefined
+    ? undefined
+    : imported.originalNameIsStringLiteral
+    ? ts.factory.createStringLiteral(imported.originalName, singleQuote)
+    : ts.factory.createIdentifier(imported.originalName);
+  return printNode(ts.factory.createImportSpecifier(
+    imported.isTypeOnly ?? false,
+    originalName,
+    ts.factory.createIdentifier(imported.name),
+  ));
+}
+
+function renderAttributes(
+  attributes: ImportAttributes,
+  singleQuote: boolean,
+): string {
+  const keyword = attributes.with !== undefined
+    ? "with"
+    : attributes.assert !== undefined
+    ? "assert"
+    : undefined;
+  if (!keyword) return "";
+  const entries = (attributes[keyword] ?? []).map(({ key, value }) => {
+    const name = key.type === "identifier"
+      ? ts.factory.createIdentifier(key.name)
+      : ts.factory.createStringLiteral(key.name, singleQuote);
+    // Parsed values retain their original quotes and escapes when printed with
+    // their source file, unlike synthesized string literals.
+    const sourceFile = ts.createSourceFile(
+      "attribute.ts",
+      value,
+      ts.ScriptTarget.Latest,
+      true,
+    );
+    const statement = sourceFile.statements[0];
+    if (!statement || !ts.isExpressionStatement(statement)) {
+      throw new TypeError(`Invalid import attribute value: ${value}`);
+    }
+    return printNode(
+      ts.factory.createImportAttribute(name, statement.expression),
+      sourceFile,
+    );
+  });
+  const content = entries.length ? ` ${entries.join(", ")} ` : "";
+  return ` ${keyword} {${content}}`;
 }
 
 /** A sortable representation of a TypeScript import declaration. */
@@ -277,70 +322,53 @@ export class Import {
       ...defaultFormattingOptions,
       ...options,
     };
-    const quote = quoteStyle === "single" ? "'" : '"';
+    const singleQuote = quoteStyle === "single";
     const indentString = " ".repeat(indent);
     const bracketIndentString = " ".repeat(bracketIndent);
-    const names: string[] = [];
-    const specifiers: string[] = [];
-    if (this.defaultElement) names.push(this.defaultElement.name);
-    if (this.isNamed) {
-      for (const imported of this.elements) {
-        let name = imported.isTypeOnly ? "type " : "";
-        if (imported.originalName !== undefined) {
-          name += (imported.originalNameIsStringLiteral
-            ? quoteString(imported.originalName, quote)
-            : imported.originalName) + " as ";
-        }
-        specifiers.push(name + imported.name);
-      }
-      if (specifiers.length) {
-        names.push(
-          "{" + bracketIndentString + specifiers.join(", ") +
-            bracketIndentString + "}",
+    const prefix = this.phaseModifier
+      ? `import ${this.phaseModifier} `
+      : "import ";
+    const suffix =
+      printNode(ts.factory.createStringLiteral(this.source.name, singleQuote)) +
+      renderAttributes(this.attributes, singleQuote) + ";";
+    if (this.isSideEffectOnly) return prefix + suffix;
+
+    const specifiers = this.isNamed
+      ? this.elements.map((imported) => renderElement(imported, singleQuote))
+      : [];
+    let namedBindings = specifiers.length
+      ? `{${bracketIndentString}${specifiers.join(", ")}${bracketIndentString}}`
+      : "{}";
+    const bindings = (): string => {
+      const parts: string[] = [];
+      if (this.defaultElement) {
+        parts.push(
+          printNode(ts.factory.createIdentifier(this.defaultElement.name)),
         );
-      } else {
-        names.push("{}");
       }
-    }
-    if (this.isNamespace) names.push(`* as ${this.elements[0].name}`);
-    let output = "import ";
-    if (this.phaseModifier) output += `${this.phaseModifier} `;
-    output += names.join(", ");
-    if (names.length) output += " from ";
-    output += quoteString(this.source.name, quote);
-    const attributeKind = this.attributes.with !== undefined
-      ? "with"
-      : this.attributes.assert !== undefined
-      ? "assert"
-      : undefined;
-    if (attributeKind) {
-      const entries = this.attributes[attributeKind] ?? [];
-      const rendered = entries.map(({ key, value }) => {
-        const name = key.type === "identifier"
-          ? key.name
-          : quoteString(key.name, quote);
-        return `${name}: ${value}`;
-      });
-      output += ` ${attributeKind} {${
-        rendered.length ? ` ${rendered.join(", ")} ` : ""
-      }}`;
-    }
-    output += ";";
-    const overflows = () =>
-      output.split("\n").some((line) => line.length > maxColumns);
-    if (overflows() && this.isNamed && this.elements.length > 1) {
-      const start = output.indexOf("{");
-      const end = output.indexOf("}", start);
-      if (start !== -1 && end !== -1) {
-        output = output.slice(0, start) + "{\n" + indentString +
-          specifiers.join(",\n" + indentString) +
-          (trailingComma ? "," : "") + "\n}" + output.slice(end + 1);
+      if (this.isNamed) parts.push(namedBindings);
+      if (this.isNamespace) {
+        parts.push(printNode(ts.factory.createNamespaceImport(
+          ts.factory.createIdentifier(this.elements[0].name),
+        )));
       }
+      return parts.join(", ");
+    };
+    const render = (fromSeparator: string): string =>
+      prefix + bindings() + fromSeparator + "from " + suffix;
+    const overflows = (text: string): boolean =>
+      text.split("\n").some((line) => line.length > maxColumns);
+
+    let output = render(" ");
+    if (overflows(output) && specifiers.length > 1) {
+      namedBindings = "{\n" + indentString +
+        specifiers.join(",\n" + indentString) +
+        (trailingComma ? "," : "") + "\n}";
+      output = render(" ");
     }
-    if (breakFrom && overflows()) {
-      output = output.replace(" from ", `\n${indentString}from `);
-    }
-    return output;
+    return breakFrom && overflows(output)
+      ? render(`\n${indentString}`)
+      : output;
   }
 }
 
@@ -405,9 +433,14 @@ export class ImportIntegrator {
    *
    * @param sourceFile Source file whose leading imports will be replaced.
    * @param imports Sorted imports, with `null` marking blank lines.
+   * @param newline Newline style of the enclosing file; defaults to the source's style.
    * @returns Source text with the formatted import block integrated.
    */
-  integrate(sourceFile: SourceFile, imports: (Import | null)[]): string {
+  integrate(
+    sourceFile: SourceFile,
+    imports: (Import | null)[],
+    newline: string = sourceFile.text.match(/\r\n|\n|\r/)?.[0] ?? "\n",
+  ): string {
     const first = sourceFile.statements[0];
     if (hasParseErrors(sourceFile)) return sourceFile.text;
     if (!first || !ts.isImportDeclaration(first)) return sourceFile.text;
@@ -442,7 +475,8 @@ export class ImportIntegrator {
       }
       lines.push(imported.toString(this.formatting));
     }
-    return sourceFile.text.slice(0, start) + lines.join("\n") +
+    const block = lines.join("\n").replace(/\r\n|\n|\r/g, newline);
+    return sourceFile.text.slice(0, start) + block +
       sourceFile.text.slice(last.end);
   }
 }
