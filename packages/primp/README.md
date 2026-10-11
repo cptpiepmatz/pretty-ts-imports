@@ -2,14 +2,22 @@
   <img width="250" alt="primp logo" src="https://raw.githubusercontent.com/cptpiepmatz/primp/a2a2b6051eb08e47b23f6ba32ebd01288a135394/icon/primp.svg">
 </p>
 
-# @primp/primp
-
-**Pretty imports, your rules.**
+<h1 align="center">@primp/primp</h1>
+<p align="center">
+  <b>Pretty imports, your rules.</b>
+</p>
 
 <br>
 
+<div align="center">
+
 [![JSR](https://img.shields.io/badge/JSR-pending%20release-8683F2?style=for-the-badge)](https://jsr.io/@primp/primp)
+[![Deno](https://img.shields.io/badge/Deno-2+-000000?style=for-the-badge&logo=deno)](https://deno.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-22.18+-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 [![License](https://img.shields.io/github/license/cptpiepmatz/primp?style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/LICENSE)
+[![Test](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/primp/test.yml?label=Test&style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/.github/workflows/test.yml)
+
+</div>
 
 ## About
 
@@ -358,50 +366,6 @@ The root also exports `Import`, `FileManager`, config types, and extractor
 types. After publication, see the
 [API documentation](https://jsr.io/@primp/primp/doc). Locally, run
 `deno doc packages/primp/mod.ts` from the repository root.
-
-## Migrating from pretty-ts-imports
-
-The original npm packages were `pretty-ts-imports` and
-`@cptpiepmatz/pretty-ts-imports`. This version uses JSR and ESM entry points.
-
-- **CLI:** Replace the old executable invocation with the `/cli` entry point or
-  the Deno-installed `primp` command. Remove `-t` / `--tsconfig`; parsing no
-  longer reads a tsconfig.
-- **Configs:** Convert JSON, JSONC, JSON5, YAML, or TOML configs to a
-  default-exported config module. Replace rule-name strings with imported
-  functions and `"!ruleName"` with `inverse(rule)`.
-- **Custom rules:** Use ESM imports and exports instead of the old CommonJS
-  loader. `OnDemandTranspiler` has been removed.
-- **Library imports:** Use named exports from the root and built-in rules from
-  `/rules/imports`, `/rules/elements`, or `/rules/separators`. Use `import type`
-  for types.
-- **FileManager:** Use `new FileManager(filePaths)`; the tsconfig constructor
-  argument has been removed. Default file discovery filters TypeScript source
-  files, and watch mode watches the selected files.
-- **Runtime:** Upgrade to Deno 2+ or Node.js 22.18+.
-
-To restore the original named-specifier sorting and formatting:
-
-```ts
-import { defineConfig } from "jsr:@primp/primp";
-import {
-  elementName,
-  lowercase,
-  nameSuffix,
-} from "jsr:@primp/primp/rules/elements";
-
-export default defineConfig({
-  sortImportElements: [lowercase, nameSuffix, elementName],
-  formatting: {
-    bracketIndent: 0,
-    trailingComma: false,
-    breakFrom: true,
-  },
-});
-```
-
-See the [full config example](../../examples/configs/primp.config.ts) for a
-custom declaration order and grouping as well.
 
 ## Testing
 

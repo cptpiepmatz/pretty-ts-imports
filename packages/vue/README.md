@@ -2,15 +2,23 @@
   <img width="250" alt="primp logo" src="https://raw.githubusercontent.com/cptpiepmatz/primp/a2a2b6051eb08e47b23f6ba32ebd01288a135394/icon/primp.svg">
 </p>
 
-# @primp/vue
-
-**Pretty imports, your rules.**
+<h1 align="center">@primp/vue</h1>
+<p align="center">
+  <b>Pretty imports, your rules.</b>
+</p>
 
 <br>
 
+<div align="center">
+
 [![JSR](https://img.shields.io/badge/JSR-pending%20release-8683F2?style=for-the-badge)](https://jsr.io/@primp/vue)
+[![Deno](https://img.shields.io/badge/Deno-2+-000000?style=for-the-badge&logo=deno)](https://deno.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-22.18+-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 [![Vue](https://img.shields.io/badge/Vue-3.5+-4FC08D?style=for-the-badge&logo=vue.js)](https://vuejs.org/)
 [![License](https://img.shields.io/github/license/cptpiepmatz/primp?style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/LICENSE)
+[![Test](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/primp/test.yml?label=Test&style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/.github/workflows/test.yml)
+
+</div>
 
 ## About
 

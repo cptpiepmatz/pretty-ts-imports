@@ -1,9 +1,9 @@
 {
   "name": "@primp/vue",
-  "version": "2.0.0",
+  "version": "2.0.0-rc.1",
   "exports": "./mod.ts",
   "imports": {
-    "@primp/primp": "jsr:@primp/primp@^2.0.0",
+    "@primp/primp": "jsr:@primp/primp@2.0.0-rc.1",
     "@vue/compiler-sfc": "npm:@vue/compiler-sfc@^3.5.0"
   }
 }
