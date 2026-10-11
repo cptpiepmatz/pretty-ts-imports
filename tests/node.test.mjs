@@ -15,6 +15,7 @@ import { fileURLToPath } from "node:url";
 
 import ts from "typescript";
 
+import metadata from "../packages/primp/deno.json" with { type: "json" };
 import * as api from "../packages/primp/mod.ts";
 import {
   ConfigHandler,
@@ -96,7 +97,7 @@ test("Node can execute the CLI entry point", () => {
     "--version",
   ], { encoding: "utf8" });
   assert.equal(version.status, 0, version.stderr);
-  assert.match(version.stdout, /^2\.0\.0\s*$/);
+  assert.equal(version.stdout.trim(), metadata.version);
 });
 
 test("Node executes the transpiled CLI without TypeScript support", () => {
@@ -145,7 +146,7 @@ test("Node executes the transpiled CLI without TypeScript support", () => {
       encoding: "utf8",
     });
     assert.equal(version.status, 0, version.stderr);
-    assert.match(version.stdout, /^2\.0\.0\s*$/);
+    assert.equal(version.stdout.trim(), metadata.version);
     const input = join(dir, "input.ts");
     const config = join(dir, "primp.config.mjs");
     const original = 'import z from "z";\nimport a from "a";\n';
