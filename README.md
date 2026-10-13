@@ -14,7 +14,7 @@
 [![Deno](https://img.shields.io/badge/Deno-2+-000000?style=for-the-badge&logo=deno)](https://deno.com/)
 [![Node.js](https://img.shields.io/badge/Node.js-22.18+-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 [![License](https://img.shields.io/github/license/cptpiepmatz/primp?style=for-the-badge)](./LICENSE)
-[![Test](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/primp/test.yml?label=Test&style=for-the-badge)](./.github/workflows/test.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/primp/ci.yml?label=CI&style=for-the-badge)](./.github/workflows/ci.yml)
 
 </div>
 
@@ -121,31 +121,6 @@ In Node projects, use `"@primp/primp"` and its corresponding subpaths instead of
 for CLI flags and configuration, or the [Vue guide](./packages/vue/README.md) to
 add SFC support.
 
-## Examples
-
-- [Configuration](./examples/configs/primp.config.ts): Built-in rules, a custom
-  comparator, and the original formatting style.
-- [Custom comparators](./examples/compare_functions/): Rules for import
-  declarations.
-- [Vue configuration](./examples/vue/primp.config.ts): Register the Vue adapter.
-
-The workspace resolves `@primp/*` imports in these examples to the local
-packages. After publication, API documentation is available on JSR for
-[@primp/primp](https://jsr.io/@primp/primp/doc) and
-[@primp/vue](https://jsr.io/@primp/vue/doc).
-
-## Contributing
-
-Issues and pull requests are welcome. The repository is a Deno workspace with
-the core formatter in `packages/primp`, the Vue adapter in `packages/vue`, and
-shared tests in `tests`.
-
-Use the local CLI while developing:
-
-```sh
-deno task cli src -r
-```
-
 ## Testing
 
 With Deno 2+ and Node.js 22.18+ installed, run:
@@ -161,10 +136,6 @@ deno task test
 separately with `deno task test:deno` and `deno task test:node`. Use
 `deno task fmt` to format the workspace and its imports, and `deno fmt --check`
 to check source formatting.
-
-To inspect the API locally, run `deno doc packages/primp/mod.ts` or
-`deno doc packages/vue/mod.ts`. To validate both packages for publication, run
-`deno publish --dry-run` from the workspace root.
 
 ## License
 
