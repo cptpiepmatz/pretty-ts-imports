@@ -20,7 +20,7 @@
   },
   "tasks": {
     "check": "deno check {packages,tests,examples}/**/*.ts primp.config.ts",
-    "test": "deno task test:*",
+    "test": "deno task test:deno && deno task test:node",
     "test:deno": "deno test --allow-read --allow-write --allow-env --allow-run tests/**/*.test.ts",
     "test:node": "node --test tests/**/*.test.{m,c}js",
     "lint": "deno lint",
