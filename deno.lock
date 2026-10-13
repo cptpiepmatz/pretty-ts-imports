@@ -278,7 +278,7 @@
       },
       "packages/vue": {
         "dependencies": [
-          "jsr:@primp/primp@2",
+          "jsr:@primp/primp@2.0.0-rc.1",
           "npm:@vue/compiler-sfc@^3.5.0"
         ]
       }
