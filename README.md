@@ -10,7 +10,7 @@
 
 <div align="center">
 
-[![JSR](https://img.shields.io/badge/JSR-pending%20release-8683F2?style=for-the-badge)](https://jsr.io/@primp/primp)
+[![JSR](https://jsr.io/badges/@primp/primp?style=for-the-badge)](https://jsr.io/@primp/primp)
 [![Deno](https://img.shields.io/badge/Deno-2+-000000?style=for-the-badge&logo=deno)](https://deno.com/)
 [![Node.js](https://img.shields.io/badge/Node.js-22.18+-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 [![License](https://img.shields.io/github/license/cptpiepmatz/primp?style=for-the-badge)](./LICENSE)
@@ -55,8 +55,8 @@ single-file components.
 
 ## Installation
 
-Primp supports **Deno 2+** and **Node.js 22.18+**. Packages target
-[JSR](https://jsr.io/@primp); the commands below apply after the first release.
+Primp supports **Deno 2+** and **Node.js 22.18+**. Packages are available on
+[JSR](https://jsr.io/@primp).
 
 ```sh
 # Deno

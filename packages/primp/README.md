@@ -11,7 +11,7 @@
 
 <div align="center">
 
-[![JSR](https://img.shields.io/badge/JSR-pending%20release-8683F2?style=for-the-badge)](https://jsr.io/@primp/primp)
+[![JSR](https://jsr.io/badges/@primp/primp?style=for-the-badge)](https://jsr.io/@primp/primp)
 [![Deno](https://img.shields.io/badge/Deno-2+-000000?style=for-the-badge&logo=deno)](https://deno.com/)
 [![Node.js](https://img.shields.io/badge/Node.js-22.18+-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 [![License](https://img.shields.io/github/license/cptpiepmatz/primp?style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/LICENSE)
@@ -44,8 +44,7 @@ Use the CLI to format a project, or call `formatImports` from your own tools.
 
 ## Installation
 
-Requires **Deno 2+** or **Node.js 22.18+**. The package targets JSR; these
-commands apply after its first release.
+Requires **Deno 2+** or **Node.js 22.18+**. The package is available on JSR.
 
 ```sh
 # Deno
@@ -361,7 +360,7 @@ const formatted = new ImportIntegrator(config.formatting)
 ```
 
 The root also exports `Import`, `FileManager`, config types, and extractor
-types. After publication, see the
+types. See the
 [API documentation](https://jsr.io/@primp/primp/doc).
 
 ## License

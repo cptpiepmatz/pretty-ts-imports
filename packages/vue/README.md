@@ -11,7 +11,7 @@
 
 <div align="center">
 
-[![JSR](https://img.shields.io/badge/JSR-pending%20release-8683F2?style=for-the-badge)](https://jsr.io/@primp/vue)
+[![JSR](https://jsr.io/badges/@primp/vue?style=for-the-badge)](https://jsr.io/@primp/vue)
 [![Vue](https://img.shields.io/badge/Vue-3.5+-4FC08D?style=for-the-badge&logo=vue.js)](https://vuejs.org/)
 [![License](https://img.shields.io/github/license/cptpiepmatz/primp?style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/LICENSE)
 [![CI](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/primp/ci.yml?label=CI&style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/.github/workflows/ci.yml)
@@ -41,7 +41,7 @@ For general installation, CLI usage, and configuration, see the
 ## Installation
 
 Add the adapter to a project using [@primp/primp](../primp/README.md). The
-package targets JSR; these commands apply after the first release.
+package is available on JSR.
 
 ```sh
 # Deno
@@ -144,7 +144,7 @@ returns no slices and primp leaves the component unchanged. Inside each
 supported script, the core formatter's leading-import and comment-preservation
 behavior applies.
 
-After publication, see the [API documentation](https://jsr.io/@primp/vue/doc).
+See the [API documentation](https://jsr.io/@primp/vue/doc).
 
 ## License
 
