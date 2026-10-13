@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">primp</h1>
 <p align="center">
-  <b>Pretty imports, your rules.</b>
+  <b>✨ Pretty imports, your rules.</b>
 </p>
 
 <br>

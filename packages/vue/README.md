@@ -4,7 +4,7 @@
 
 <h1 align="center">@primp/vue</h1>
 <p align="center">
-  <b>Pretty imports in Vue components.</b>
+  <b>✨ Pretty imports in Vue components.</b>
 </p>
 
 <br>
