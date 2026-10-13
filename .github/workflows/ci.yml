@@ -5,8 +5,11 @@ on:
 
 jobs:
   ci:
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
       - name: Setup Deno
         uses: denoland/setup-deno@v2
       
