@@ -10,7 +10,8 @@ import type { Extractor, SourceSlice } from "@primp/primp";
 
 /**
  * Extract `<script>` and `<script setup>` content for primp to format.
- * External scripts and unsupported script languages produce no slices.
+ * Supports only TypeScript (`lang="ts"`) and JavaScript (`lang="js"` or
+ * no language). External scripts and unsupported languages produce no slices.
  * If the component cannot be parsed, return no slices so the file stays intact.
  *
  * @param source Complete Vue SFC source.
@@ -21,13 +22,22 @@ export function extractVueScripts(
   source: string,
   filename = "component.vue",
 ): SourceSlice[] {
+  return extractScripts(source, filename);
+}
+
+function extractScripts(
+  source: string,
+  filename: string,
+  language?: "ts" | "js",
+): SourceSlice[] {
   const { descriptor, errors } = parse(source, { filename });
   if (errors.length) return [];
 
   return [descriptor.script, descriptor.scriptSetup]
     .filter((script): script is NonNullable<typeof script> =>
       script !== null && !script.src &&
-      (!script.lang || ["js", "jsx", "ts", "tsx"].includes(script.lang))
+      ["js", "ts"].includes(script.lang || "js") &&
+      (language === undefined || (script.lang || "js") === language)
     )
     .map((script) => ({
       start: script.loc.start.offset,
@@ -36,8 +46,20 @@ export function extractVueScripts(
     }));
 }
 
-/** Vue SFC adapter for `Config.extractors`. */
+/** Vue SFC adapter supporting both TypeScript and JavaScript scripts. */
 export const vueExtractor: Extractor = {
   extensions: ".vue",
   extract: extractVueScripts,
+};
+
+/** Vue SFC adapter supporting only `lang="ts"` scripts. */
+export const tsVueExtractor: Extractor = {
+  extensions: ".vue",
+  extract: (source, filename) => extractScripts(source, filename, "ts"),
+};
+
+/** Vue SFC adapter supporting `lang="js"` scripts and scripts without a language. */
+export const jsVueExtractor: Extractor = {
+  extensions: ".vue",
+  extract: (source, filename) => extractScripts(source, filename, "js"),
 };

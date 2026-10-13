@@ -32,7 +32,7 @@ For general installation, CLI usage, and configuration, see the
 
 - **Both script blocks:** Handle `<script>` and `<script setup>` independently.
 - **JavaScript and TypeScript:** Support scripts without a `lang` attribute and
-  scripts with `lang="js"`, `"jsx"`, `"ts"`, or `"tsx"`.
+  scripts with `lang="js"` or `"ts"`. JSX and TSX scripts are not supported.
 - **Preserve the component:** Templates, styles, custom blocks, and code outside
   the leading imports remain intact.
 - **Shared configuration:** Use the same sorting, grouping, and formatting rules
@@ -40,8 +40,8 @@ For general installation, CLI usage, and configuration, see the
 
 ## Installation
 
-Add the adapter to a project using [@primp/primp](../primp/README.md).
-The package targets JSR; these commands apply after the first release.
+Add the adapter to a project using [@primp/primp](../primp/README.md). The
+package targets JSR; these commands apply after the first release.
 
 ```sh
 # Deno
@@ -73,6 +73,12 @@ Providing an extractor list replaces the core default. Keep `tsExtractor` to
 include ordinary TypeScript files, add `jsExtractor` for standalone JavaScript,
 or use only `[vueExtractor]` to process Vue components. Scripts inside Vue
 components do not require `jsExtractor`.
+
+Use `tsVueExtractor` instead of `vueExtractor` to format only `lang="ts"`
+scripts, or `jsVueExtractor` to format only `lang="js"` scripts and scripts
+without a language. All three match `.vue` files, and the core uses only the
+first matching extractor. To format both languages, use `vueExtractor` rather
+than listing both language-specific extractors.
 
 The [core CLI](../primp/README.md#command-line) will then include `.vue` files.
 See also the [Vue config example](../../examples/vue/primp.config.ts).
@@ -111,11 +117,13 @@ customize the output.
 
 ## API
 
-The package exports two building blocks:
+The package exports these building blocks:
 
 | Export                                 | Purpose                                                                                           |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | `vueExtractor`                         | An `Extractor` matching `.vue` files, ready for `Config.extractors`.                              |
+| `tsVueExtractor`                       | A `.vue` extractor that handles only `lang="ts"` scripts.                                         |
+| `jsVueExtractor`                       | A `.vue` extractor that handles `lang="js"` scripts and scripts without a language.               |
 | `extractVueScripts(source, filename?)` | Return script slices with `start`, `end`, and `content`; the default filename is `component.vue`. |
 
 `extractVueScripts` only extracts source; it does not sort or format imports.
@@ -130,10 +138,11 @@ const scripts = extractVueScripts(
 );
 ```
 
-External `<script src="...">` blocks and unsupported script languages are
-skipped. If Vue's parser reports errors, the extractor returns no slices and
-primp leaves the component unchanged. Inside each supported script, the core
-formatter's leading-import and comment-preservation behavior applies.
+External `<script src="...">` blocks and unsupported script languages (including
+`jsx` and `tsx`) are skipped. If Vue's parser reports errors, the extractor
+returns no slices and primp leaves the component unchanged. Inside each
+supported script, the core formatter's leading-import and comment-preservation
+behavior applies.
 
 After publication, see the [API documentation](https://jsr.io/@primp/vue/doc).
 

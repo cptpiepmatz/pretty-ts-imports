@@ -8,7 +8,12 @@ import {
 } from "@primp/primp";
 import { main } from "@primp/primp/cli";
 import { sourceName } from "@primp/primp/rules/imports";
-import { extractVueScripts, vueExtractor } from "@primp/vue";
+import {
+  extractVueScripts,
+  jsVueExtractor,
+  tsVueExtractor,
+  vueExtractor,
+} from "@primp/vue";
 import { expect } from "@std/expect";
 import { fromFileUrl, join } from "@std/path";
 
@@ -179,6 +184,53 @@ Deno.test("Vue extraction skips external and unsupported scripts", () => {
 Deno.test("Vue leaves malformed scripts unchanged", () => {
   const input = '<script setup lang="ts">\nimport { from "broken";\n</script>';
   expect(formatImports(input, vueConfig, "component.vue")).toBe(input);
+});
+
+Deno.test("Vue language-specific extractors only format their supported scripts", () => {
+  const imports = 'import { b, a } from "pkg";';
+  const sorted = 'import { a, b } from "pkg";';
+  for (const language of [undefined, "js", "ts", "jsx", "tsx", "coffee"]) {
+    for (const tag of ["script", "script setup"]) {
+      const attribute = language === undefined ? "" : ` lang="${language}"`;
+      const input = `<${tag}${attribute}>${imports}</script>`;
+      for (
+        const [extractor, supported] of [
+          [tsVueExtractor, language === "ts"],
+          [jsVueExtractor, language === undefined || language === "js"],
+          [
+            vueExtractor,
+            language === undefined || language === "js" || language === "ts",
+          ],
+        ] as const
+      ) {
+        const slices = extractor.extract(input, "component.vue");
+        expect(slices).toHaveLength(supported ? 1 : 0);
+        expect(
+          formatImports(input, { extractors: [extractor] }, "component.vue"),
+        )
+          .toBe(supported ? input.replace(imports, sorted) : input);
+      }
+      expect(extractVueScripts(input)).toHaveLength(
+        language === undefined || language === "js" || language === "ts"
+          ? 1
+          : 0,
+      );
+    }
+  }
+});
+
+Deno.test("Vue language-specific extractors skip external and malformed components", () => {
+  for (const extractor of [tsVueExtractor, jsVueExtractor]) {
+    for (
+      const input of [
+        '<script lang="ts" src="./external.ts"></script>',
+        '<script src="./external.js"></script>',
+        '<script>import a from "a";</script><script>import b from "b";</script>',
+      ]
+    ) {
+      expect(extractor.extract(input, "component.vue")).toEqual([]);
+    }
+  }
 });
 
 Deno.test("CLI discovers Vue files when the extractor is configured", async () => {
