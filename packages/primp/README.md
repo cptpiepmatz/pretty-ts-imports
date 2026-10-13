@@ -360,8 +360,7 @@ const formatted = new ImportIntegrator(config.formatting)
 ```
 
 The root also exports `Import`, `FileManager`, config types, and extractor
-types. See the
-[API documentation](https://jsr.io/@primp/primp/doc).
+types. See the [API documentation](https://jsr.io/@primp/primp/doc).
 
 ## License
 
