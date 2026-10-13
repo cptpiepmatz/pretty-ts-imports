@@ -15,7 +15,7 @@
 [![Deno](https://img.shields.io/badge/Deno-2+-000000?style=for-the-badge&logo=deno)](https://deno.com/)
 [![Node.js](https://img.shields.io/badge/Node.js-22.18+-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 [![License](https://img.shields.io/github/license/cptpiepmatz/primp?style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/LICENSE)
-[![Test](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/primp/ci.yml?label=CI&style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/.github/workflows/ci.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/primp/ci.yml?label=CI&style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/.github/workflows/ci.yml)
 
 </div>
 
@@ -58,9 +58,7 @@ npx jsr add --npm @primp/primp
 Examples below use JSR specifiers. In a Node project, replace `jsr:@primp/primp`
 with `@primp/primp`, including in `/rules/*` imports.
 
-The package depends on TypeScript 6.x as its parser. Parser compatibility is
-verified against 5.3.3, 5.9.3, and 6.0.3; a Deno import map can select a
-compatible 5.x parser when running from source. A project's own TypeScript
+The package depends on TypeScript 6.x as its parser. A project's own TypeScript
 version can coexist with this dependency. TypeScript 7.x cannot replace it
 because its root export no longer provides the parser APIs used here.
 
@@ -364,22 +362,7 @@ const formatted = new ImportIntegrator(config.formatting)
 
 The root also exports `Import`, `FileManager`, config types, and extractor
 types. After publication, see the
-[API documentation](https://jsr.io/@primp/primp/doc). Locally, run
-`deno doc packages/primp/mod.ts` from the repository root.
-
-## Testing
-
-From the repository root:
-
-```sh
-deno install
-deno task check
-deno task lint
-deno task test
-```
-
-The test task includes the Deno suite and Node smoke tests. See the
-[repository guide](../../README.md#testing) for development commands.
+[API documentation](https://jsr.io/@primp/primp/doc).
 
 ## License
 

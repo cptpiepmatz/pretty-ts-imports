@@ -4,7 +4,7 @@
 
 <h1 align="center">@primp/vue</h1>
 <p align="center">
-  <b>Pretty imports, your rules.</b>
+  <b>Pretty imports in Vue components.</b>
 </p>
 
 <br>
@@ -12,11 +12,9 @@
 <div align="center">
 
 [![JSR](https://img.shields.io/badge/JSR-pending%20release-8683F2?style=for-the-badge)](https://jsr.io/@primp/vue)
-[![Deno](https://img.shields.io/badge/Deno-2+-000000?style=for-the-badge&logo=deno)](https://deno.com/)
-[![Node.js](https://img.shields.io/badge/Node.js-22.18+-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 [![Vue](https://img.shields.io/badge/Vue-3.5+-4FC08D?style=for-the-badge&logo=vue.js)](https://vuejs.org/)
 [![License](https://img.shields.io/github/license/cptpiepmatz/primp?style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/LICENSE)
-[![CI](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/primp/ci.yml?label=CI&style=for-the-badge)](./.github/workflows/ci.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/cptpiepmatz/primp/ci.yml?label=CI&style=for-the-badge)](https://github.com/cptpiepmatz/primp/blob/main/.github/workflows/ci.yml)
 
 </div>
 
@@ -27,8 +25,8 @@
 extract script blocks, then lets primp sort and format their imports using the
 same rules as ordinary TypeScript files.
 
-The adapter is a separate package, so projects that only format TypeScript do
-not need the Vue compiler.
+For general installation, CLI usage, and configuration, see the
+[primp guide](../primp/README.md).
 
 ## Features
 
@@ -42,15 +40,15 @@ not need the Vue compiler.
 
 ## Installation
 
-Requires **Deno 2+** or **Node.js 22.18+**. Both packages target JSR; these
-commands apply after the first release.
+Add the adapter to a project using [@primp/primp](../primp/README.md).
+The package targets JSR; these commands apply after the first release.
 
 ```sh
 # Deno
-deno add jsr:@primp/primp jsr:@primp/vue
+deno add jsr:@primp/vue
 
 # Node.js, through JSR's npm compatibility bridge
-npx jsr add --npm @primp/primp @primp/vue
+npx jsr add --npm @primp/vue
 ```
 
 In Node projects, use `@primp/primp` and `@primp/vue` in imports instead of the
@@ -58,7 +56,7 @@ In Node projects, use `@primp/primp` and `@primp/vue` in imports instead of the
 
 ## Usage
 
-### Command line
+### Configuration
 
 Register the adapter in your project's `primp.config.ts`:
 
@@ -71,32 +69,13 @@ export default defineConfig({
 });
 ```
 
-Run the core CLI to format both TypeScript files and Vue components:
-
-```sh
-deno run --allow-read --allow-write --allow-env jsr:@primp/primp/cli src -r
-
-# Or, after installing the global primp command
-primp src -r
-
-# Check formatting in CI
-primp src -r --check
-```
-
-For Node.js after the JSR npm-bridge installation:
-
-```sh
-node node_modules/@primp/primp/cli.js src -r
-```
-
 Providing an extractor list replaces the core default. Keep `tsExtractor` to
 include ordinary TypeScript files, add `jsExtractor` for standalone JavaScript,
 or use only `[vueExtractor]` to process Vue components. Scripts inside Vue
 components do not require `jsExtractor`.
 
-See the [core CLI guide](../primp/README.md#command-line) for installation,
-flags, and config discovery, or the
-[Vue config example](../../examples/vue/primp.config.ts).
+The [core CLI](../primp/README.md#command-line) will then include `.vue` files.
+See also the [Vue config example](../../examples/vue/primp.config.ts).
 
 ### Library
 
@@ -157,20 +136,6 @@ primp leaves the component unchanged. Inside each supported script, the core
 formatter's leading-import and comment-preservation behavior applies.
 
 After publication, see the [API documentation](https://jsr.io/@primp/vue/doc).
-Locally, run `deno doc packages/vue/mod.ts` from the repository root.
-
-## Testing
-
-The adapter is tested in the shared workspace suite. From the repository root:
-
-```sh
-deno install
-deno task check
-deno task test
-```
-
-See the [repository guide](../../README.md#testing) for the remaining
-development commands.
 
 ## License
 
