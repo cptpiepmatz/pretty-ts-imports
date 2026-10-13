@@ -118,8 +118,8 @@ const formatted = formatImports('import { b, a } from "pkg";\n');
 
 In Node projects, use `"@primp/primp"` and its corresponding subpaths instead of
 `"jsr:@primp/primp"`. See the [core package guide](./packages/primp/README.md)
-for CLI flags and configuration, or the
-[Vue guide](./packages/vue/README.md) to add SFC support.
+for CLI flags and configuration, or the [Vue guide](./packages/vue/README.md) to
+add SFC support.
 
 ## Examples
 
