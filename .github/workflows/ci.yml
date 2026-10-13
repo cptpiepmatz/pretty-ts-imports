@@ -1,0 +1,45 @@
+name: Continuous Integration
+
+on:
+  push:
+
+jobs:
+  ci:
+    runs-on: linux-latest
+    steps:
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+      
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: latest
+          package-manager-cache: false
+      
+      - name: Install deps
+        run: deno install
+
+      - name: Check
+        run: deno check
+
+      - name: Lint
+        run: deno lint
+
+      - name: Format check
+        run: deno task fmt:deno --check
+
+      - name: Primp check
+        run: deno task fmt:primp --check
+
+      - name: Deno tests
+        run: deno task test:deno
+
+      - name: Node tests
+        run: deno task test:node
+
+      - name: Publish check
+        run: deno publish --dry-run
+
+      - name: Assert Clean Repo
+        shell: bash
+        run: test -z "$(git status --porcelain)"
